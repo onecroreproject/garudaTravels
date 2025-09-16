@@ -23,16 +23,16 @@ const customerReviews = [
   {
     id: 3,
     avatar: "/images/client/2.png?height=64&width=64", // Placeholder for customer avatar
-    name: "Maria Garcia",
-    location: "Madrid, Spain",
+    name: "Karthikeyan",
+    location: "Theni, Tamil Nadu",
     content:
        "Tried Garuda's Tirupati darshan package from Chennai last weekend. Everything was on time, and we got hassle-free temple entry. They made the travel easy and peaceful. Good service and great value for the price.",
   },
   {
     id: 4,
     avatar: "/images/client/4.png?height=64&width=64", // Placeholder for customer avatar
-    name: "S.Mounaguru",
-    location: "Dubai, UAE",
+    name: "Pandi Kumar",
+    location: "Madurai, Tamil Nadu",
     content:
       "Booked the Tirupati travel package from Chennai with Garuda Tours. It was a simple and spiritual trip. The team stayed in touch from start to end. I felt safe and satisfied. Would book again for temple tour packages.",
   },
