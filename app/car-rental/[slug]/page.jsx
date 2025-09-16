@@ -8,7 +8,7 @@ import BookingForm from "@/components/booking-form"
 import PermitFeeSection from "@/components/permit-fee"
 import VehiclePricing from "@/components/vehicle-price"
 import Link from "next/link"
-import { ChevronRight, BadgeCheck, Users, Fuel, Settings, Clock, Shield } from 'lucide-react'
+import { ChevronRight, BadgeCheck, Users, Fuel, Settings, Clock, Shield, Star, Thermometer, MapPin, IndianRupee, Car, Zap } from 'lucide-react'
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
@@ -150,48 +150,117 @@ function CarRentalPage() {
             <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Available Vehicles</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {packageData.carTypes.map((car, index) => (
-                <Card key={car.id || index} className="overflow-hidden hover:shadow-lg transition-shadow">
+                <Card key={car.id || index} className="overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:scale-105 bg-white border border-gray-200">
                   {car.imageUrl && (
-                    <div className="aspect-video relative">
+                    <div className="aspect-video relative overflow-hidden">
                       <img
                         src={car.imageUrl || "/placeholder.svg?height=200&width=300&query=car rental vehicle"}
                         alt={car.name}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                       />
+                      {/* Rating Badge */}
+                      <div className="absolute top-3 right-3 bg-gradient-to-r from-yellow-400 to-orange-500 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1 shadow-lg">
+                        <Star className="w-4 h-4 text-white fill-current" />
+                        <span className="text-sm font-bold text-white">3.5</span>
+                      </div>
                     </div>
                   )}
                   <CardContent className="p-6">
-                    <h3 className="text-xl font-bold text-gray-800 mb-2">{car.name}</h3>
+                    {/* Car Name and Rating */}
+                    <div className="flex justify-between items-start mb-4">
+                      <h3 className="text-xl font-bold text-gray-800 flex-1">{car.name}</h3>
+                   
+                    </div>
                     
-                    {/* Car Specifications */}
+                    {/* Car Specifications Grid */}
                     <div className="grid grid-cols-2 gap-3 mb-4">
+                      {/* A/C Status */}
+                      <div className="flex items-center gap-2 text-sm">
+                        <div className="p-1.5 bg-blue-100 rounded-full">
+                          <Thermometer className="w-3.5 h-3.5 text-blue-600" />
+                        </div>
+                        <span className="text-gray-700 font-medium">A/C</span>
+                      </div>
+                      
+                      {/* Seating */}
                       {car.seating && (
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
-                          <Users className="w-4 h-4" />
-                          <span>{car.seating} Seater</span>
+                        <div className="flex items-center gap-2 text-sm">
+                          <div className="p-1.5 bg-green-100 rounded-full">
+                            <Users className="w-3.5 h-3.5 text-green-600" />
+                          </div>
+                          <span className="text-gray-700 font-medium">{car.seating} Seater</span>
                         </div>
                       )}
+                      
+                      {/* Fuel Type */}
                       {car.fuelType && (
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
-                          <Fuel className="w-4 h-4" />
-                          <span>{car.fuelType}</span>
+                        <div className="flex items-center gap-2 text-sm">
+                          <div className="p-1.5 bg-orange-100 rounded-full">
+                            <Fuel className="w-3.5 h-3.5 text-orange-600" />
+                          </div>
+                          <span className="text-gray-700 font-medium">{car.fuelType}</span>
                         </div>
                       )}
+                      
+                      {/* Transmission */}
                       {car.transmission && (
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
-                          <Settings className="w-4 h-4" />
-                          <span>{car.transmission}</span>
+                        <div className="flex items-center gap-2 text-sm">
+                          <div className="p-1.5 bg-purple-100 rounded-full">
+                            <Settings className="w-3.5 h-3.5 text-purple-600" />
+                          </div>
+                          <span className="text-gray-700 font-medium">{car.transmission}</span>
                         </div>
                       )}
                     </div>
 
-                    {/* Car Features */}
-                    {car.features && (
-                      <div className="mb-4">
-                        <h4 className="font-semibold text-gray-800 mb-2">Features:</h4>
-                        <p className="text-sm text-gray-600">{car.features}</p>
+                    {/* Pricing Information */}
+                    <div className="bg-gray-50 rounded-lg p-4 mb-4">
+                      <div className="grid grid-cols-2 gap-3 text-sm">
+                        {/* Minimum KM */}
+                        <div className="flex items-center gap-2">
+                          <div className="p-1.5 bg-indigo-100 rounded-full">
+                            <MapPin className="w-3.5 h-3.5 text-indigo-600" />
+                          </div>
+                          <div>
+                            <span className="text-gray-500 block">Min KM</span>
+                            <span className="font-semibold text-gray-800">100 KM</span>
+                          </div>
+                        </div>
+                        
+                        {/* Price per KM */}
+                        <div className="flex items-center gap-2">
+                          <div className="p-1.5 bg-emerald-100 rounded-full">
+                            <Zap className="w-3.5 h-3.5 text-emerald-600" />
+                          </div>
+                          <div>
+                            <span className="text-gray-500 block">Per KM</span>
+                            <span className="font-semibold text-gray-800">₹12</span>
+                          </div>
+                        </div>
                       </div>
-                    )}
+                      
+                      {/* Total Amount */}
+                      <div className="mt-3 pt-3 border-t border-gray-200">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <div className="p-1.5 bg-yellow-100 rounded-full">
+                              <IndianRupee className="w-4 h-4 text-yellow-600" />
+                            </div>
+                            <span className="text-gray-600 font-medium">Total Amount</span>
+                          </div>
+                          <span className="text-xl font-bold text-blue-600">₹1,200</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Book Now Button */}
+                    <button 
+                      className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                      onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
+                    >
+                      <Car className="w-5 h-5" />
+                      Book Now
+                    </button>
                   </CardContent>
                 </Card>
               ))}
@@ -220,7 +289,7 @@ function CarRentalPage() {
       )}
 
       {/* Pricing Plans Section */}
-      {packageData.pricingPlans && packageData.pricingPlans.length > 0 && (
+      {/* {packageData.pricingPlans && packageData.pricingPlans.length > 0 && (
         <section className="py-12 px-4 bg-gray-50">
           <div className="container mx-auto">
             <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Pricing Plans</h2>
@@ -231,7 +300,6 @@ function CarRentalPage() {
                     <h3 className="text-xl font-bold text-gray-800 mb-2">{plan.duration}</h3>
                     <div className="text-2xl font-bold text-blue-600 mb-4">{plan.price}</div>
                     
-                    {/* Plan Features */}
                     {plan.features && plan.features.length > 0 && (
                       <div>
                         <h4 className="font-semibold text-gray-800 mb-2">Features:</h4>
@@ -251,7 +319,7 @@ function CarRentalPage() {
             </div>
           </div>
         </section>
-      )}
+      )} */}
 
          {/* Dynamic Sections */}
       {packageData.sections && packageData.sections.length > 0 && (

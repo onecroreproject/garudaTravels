@@ -2,10 +2,11 @@ import { doc, getDoc, getDocs, collection, query, where } from "firebase/firesto
 import { db } from "@/lib/firebase"
 import Image from "next/image"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Check, Shirt, Star, ShieldCheck, Users, Clock, MapPin, Wallet, BriefcaseMedical, UserCheck, Award, Phone, Mail, MessageCircle, XCircle } from 'lucide-react' // Added new icons for Why Choose Us
+import { Check, Shirt, Star, ShieldCheck, Users, Clock, MapPin, Wallet, BriefcaseMedical, UserCheck, Award, Phone, Mail, MessageCircle, XCircle, GraduationCap, Flower } from 'lucide-react' // Added new icons for Why Choose Us
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import BookingForm from "@/components/booking-form"
+import TirupatiPackageHero from "@/components/tirupati-package-hero"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -32,6 +33,10 @@ const IconMap = {
   Phone: Phone,
   Mail: Mail,
   MessageCircle: MessageCircle,
+  // CMS icon name mappings
+  'map pin': MapPin,
+  'graduation': GraduationCap,
+  'flower': Flower,
   // Add other icons here if needed in the future
 }
 
@@ -49,12 +54,27 @@ export default async function TirupatiPackageDetailPage({ params }) {
     const docSnap = await getDoc(docRef)
 
     if (docSnap.exists()) {
-      packageData = { id: docSnap.id, ...docSnap.data() }
+      const rawData = docSnap.data()
+      // Convert Firebase timestamps and other complex objects to plain objects
+      packageData = {
+        id: docSnap.id,
+        ...rawData,
+        createdAt: rawData.createdAt ? rawData.createdAt.toDate().toISOString() : null,
+        updatedAt: rawData.updatedAt ? rawData.updatedAt.toDate().toISOString() : null,
+      }
 
       // Fetch other packages (excluding the current one)
       const q = query(collection(db, "tirupati-package"), where("url", "!=", slug))
       const querySnapshot = await getDocs(q)
-      otherPackages = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+      otherPackages = querySnapshot.docs.map((doc) => {
+        const rawData = doc.data()
+        return {
+          id: doc.id,
+          ...rawData,
+          createdAt: rawData.createdAt ? rawData.createdAt.toDate().toISOString() : null,
+          updatedAt: rawData.updatedAt ? rawData.updatedAt.toDate().toISOString() : null,
+        }
+      })
     } else {
       error = "Package not found."
     }
@@ -86,73 +106,120 @@ export default async function TirupatiPackageDetailPage({ params }) {
     <div className="min-h-screen bg-white">
       <Header />
 
-      <main className="container mx-auto px-4 py-12">
-        {/* Hero Section */}
-        <section className="mb-12 text-center">
-          {packageData.images && packageData.images.length > 0 && (
-            <div className="relative w-full h-96 rounded-lg overflow-hidden shadow-lg mb-6">
-              <Image
-                src={packageData.images[0] || "/placeholder.svg?height=400&width=800&query=featured travel image"}
-                alt={`${packageData.title} featured image`}
-                fill
-                style={{ objectFit: "cover" }}
-                className="transition-transform duration-300 hover:scale-105"
-              />
-            </div>
-          )}
-          <h1 className="text-5xl font-bold text-gray-800 mb-4">{packageData.title}</h1>
-          {/* {packageData.subtitle && <p className="text-xl text-gray-600 mb-6">{packageData.subtitle}</p>}
-          <Breadcrumb className="justify-center">
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink asChild>
-                  <Link href="/">Home</Link>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>{packageData.title}</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb> */}
-        </section>
+      <main>
+        <TirupatiPackageHero packageData={packageData || {}} />
+        
+        <div className="container mx-auto px-4 py-12">
 
-        {/* Booking Form and Why Choose Us Section - Adjusted Layout */}
-        <section className=" px-4 bg-gray-100 mb-10">
-          <div className="container mx-auto flex flex-col gap-12 items-center">
-            {/* Booking Form */}
-            <div>
+         {/* Booking Form and Why Choose Us Section - Always 75/25 Layout */}
+         <section id="booking" className="mb-10">
+           <div className="container mx-auto px-4">
+             <div className="flex flex-col lg:flex-row gap-14 items-stretch">
+               {/* Left Side - Booking Form (75%) */}
+               <div className="w-full lg:w-3/4 order-2 lg:order-1">
               <BookingForm />
             </div>
 
-          
-          </div>
-        </section>
-
-          {/* Custom "Why Choose Us" Section */}
-            {packageData.whyChooseUsItems && packageData.whyChooseUsItems.length > 0 && (
-              <div className="flex flex-col items-center w-full mb-10">
-                <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Why Choose Us</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-                  {packageData.whyChooseUsItems?.map((item) => {
+               {/* Right Side - Why Choose Us (25%) */}
+               <div className="w-full lg:w-1/4 order-1 lg:order-2">
+                 <div className="flex flex-col items-center lg:items-start w-full h-full">
+                   <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6 text-center lg:text-left">Why Choose Us</h2>
+                   <div className="grid grid-cols-1 gap-4 w-full flex-1">
+                     {/* Show custom items if available, otherwise show default items */}
+                     {(packageData.whyChooseUsItems && packageData.whyChooseUsItems.length > 0) ? (
+                       packageData.whyChooseUsItems.map((item) => {
                     const IconComponent = IconMap[item.iconName]
                     if (!IconComponent) return null
                     return (
                       <div
                         key={item.id}
-                        className="flex flex-col items-center text-center p-6 bg-white rounded-lg shadow-md border border-gray-200 transition-transform duration-200 hover:scale-[1.02]"
-                      >
-                        <div className="mb-4">
-                          <IconComponent className="h-12 w-12 text-blue-600" />
+                             className="group relative overflow-hidden bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-blue-300 h-20 flex items-center"
+                           >
+                             {/* Background Glow Effect */}
+                             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                             
+                             {/* Content */}
+                             <div className="relative p-4 w-full">
+                               <div className="flex items-center">
+                                 <div className="mr-4 flex-shrink-0">
+                                   <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                                     <IconComponent className="h-5 w-5 text-white" />
+                                   </div>
+                                 </div>
+                                 <div className="flex-1">
+                                   <h3 className="text-sm lg:text-base font-semibold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 leading-tight">
+                                     {item.title}
+                                   </h3>
+                                 </div>
+                               </div>
                         </div>
-                        <h3 className="text-xl font-bold text-gray-800 mb-2">{item.title}</h3>
-                        {/* Description is intentionally removed as per user request */}
                       </div>
                     )
-                  })}
+                       })
+                     ) : (
+                       /* Default Why Choose Us items */
+                       <>
+                         <div className="group relative overflow-hidden bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-blue-300 h-20 flex items-center">
+                           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                           <div className="relative p-4 w-full">
+                             <div className="flex items-center">
+                               <div className="mr-4 flex-shrink-0">
+                                 <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                                   <ShieldCheck className="h-5 w-5 text-white" />
+                                 </div>
+                               </div>
+                               <div className="flex-1">
+                                 <h3 className="text-sm lg:text-base font-semibold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 leading-tight">
+                                   Trusted & Reliable
+                                 </h3>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+                         
+                         <div className="group relative overflow-hidden bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-blue-300 h-20 flex items-center">
+                           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                           <div className="relative p-4 w-full">
+                             <div className="flex items-center">
+                               <div className="mr-4 flex-shrink-0">
+                                 <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                                   <Users className="h-5 w-5 text-white" />
+                                 </div>
+                               </div>
+                               <div className="flex-1">
+                                 <h3 className="text-sm lg:text-base font-semibold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 leading-tight">
+                                   Expert Guidance
+                                 </h3>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+                         
+                         <div className="group relative overflow-hidden bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-blue-300 h-20 flex items-center">
+                           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                           <div className="relative p-4 w-full">
+                             <div className="flex items-center">
+                               <div className="mr-4 flex-shrink-0">
+                                 <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                                   <Award className="h-5 w-5 text-white" />
+                                 </div>
+                               </div>
+                               <div className="flex-1">
+                                 <h3 className="text-sm lg:text-base font-semibold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 leading-tight">
+                                   Best Service
+                                 </h3>
+                               </div>
+                             </div>
                 </div>
               </div>
-            )}
+                       </>
+                     )}
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </section>
 
         {/* Overview Section */}
         {packageData.content && (
@@ -434,32 +501,125 @@ export default async function TirupatiPackageDetailPage({ params }) {
 
 
 
-        {/* Package Includes Section */}
+        {/* Special Notes To the Pilgrim Section */}
+        <section className="mb-8">
+          <div className="text-center mb-4">
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Special Notes To the Pilgrim</h2>
+            <div className="w-16 h-1 bg-gradient-to-r from-orange-400 to-orange-600 mx-auto rounded-full"></div>
+          </div>
+          
+          <div className="relative overflow-hidden bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 rounded-xl border-l-4 border-orange-500 p-5 shadow-lg">
+            {/* Decorative Background Pattern */}
+            <div className="absolute top-0 right-0 w-20 h-20 bg-orange-100 rounded-full -translate-y-10 translate-x-10 opacity-30"></div>
+            <div className="absolute bottom-0 left-0 w-16 h-16 bg-amber-100 rounded-full translate-y-8 -translate-x-8 opacity-40"></div>
+            
+            <div className="relative z-10">
+              <ul className="space-y-3">
+                <li className="group flex items-start p-3 bg-white/60 rounded-lg hover:bg-white/80 transition-all duration-300 hover:shadow-md">
+                  <div className="w-2 h-2 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full mt-1.5 mr-3 flex-shrink-0 shadow-sm"></div>
+                  <div>
+                    <span className="font-bold text-gray-800 text-base">Children Below 12:</span>
+                    <span className="text-gray-700 ml-2 text-sm">No darshan ticket needed. Carry valid age-proof.</span>
+                  </div>
+                </li>
+                <li className="group flex items-start p-3 bg-white/60 rounded-lg hover:bg-white/80 transition-all duration-300 hover:shadow-md">
+                  <div className="w-2 h-2 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full mt-1.5 mr-3 flex-shrink-0 shadow-sm"></div>
+                  <div>
+                    <span className="font-bold text-gray-800 text-base">ID Proof:</span>
+                    <span className="text-gray-700 ml-2 text-sm">Bring the same ID used for booking (Aadhaar/Passport).</span>
+                  </div>
+                </li>
+                <li className="group flex items-start p-3 bg-white/60 rounded-lg hover:bg-white/80 transition-all duration-300 hover:shadow-md">
+                  <div className="w-2 h-2 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full mt-1.5 mr-3 flex-shrink-0 shadow-sm"></div>
+                  <div>
+                    <span className="font-bold text-gray-800 text-base">Dress Code:</span>
+                    <span className="text-gray-700 ml-2 text-sm">Traditional is mandatory (Men: dhoti/pants with shirt; Women: saree/salwar).</span>
+                  </div>
+                </li>
+                <li className="group flex items-start p-3 bg-white/60 rounded-lg hover:bg-white/80 transition-all duration-300 hover:shadow-md">
+                  <div className="w-2 h-2 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full mt-1.5 mr-3 flex-shrink-0 shadow-sm"></div>
+                  <div>
+                    <span className="font-bold text-gray-800 text-base">Prasadam:</span>
+                    <span className="text-gray-700 ml-2 text-sm">One laddu is included with the special entry ticket. Extra laddus can be bought at <span className="font-semibold text-orange-600">₹50 each</span>.</span>
+                  </div>
+                </li>
+                <li className="group flex items-start p-3 bg-white/60 rounded-lg hover:bg-white/80 transition-all duration-300 hover:shadow-md">
+                  <div className="w-2 h-2 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full mt-1.5 mr-3 flex-shrink-0 shadow-sm"></div>
+                  <div>
+                    <span className="font-bold text-gray-800 text-base">Tickets:</span>
+                    <span className="text-gray-700 ml-2 text-sm">Book your Chennai to Tirupati Package early as tickets are limited.</span>
+                  </div>
+                </li>
+                <li className="group flex items-start p-3 bg-white/60 rounded-lg hover:bg-white/80 transition-all duration-300 hover:shadow-md">
+                  <div className="w-2 h-2 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full mt-1.5 mr-3 flex-shrink-0 shadow-sm"></div>
+                  <div>
+                    <span className="font-bold text-gray-800 text-base">Dress Code Details:</span>
+                    <span className="text-gray-700 ml-2 text-sm">Women must wear Saree, Half Saree, or Chudidar with Dupatta. Men must wear Dhoti with Shirt, or Kurta with Pyjama.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Package Includes and Passenger Notes - Enhanced Side by Side Layout */}
+        <section className="mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Left Side - Package Includes */}
         {packageData.includes && packageData.includes.length > 0 && (
-          <section className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-6">What's Included</h2>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <div className="text-center mb-6">
+                  <h2 className="text-2xl font-bold text-gray-800 mb-2">What's Included</h2>
+                  <div className="w-16 h-1 bg-gradient-to-r from-green-400 to-green-600 mx-auto rounded-full"></div>
+                </div>
+                <div className="relative overflow-hidden bg-white rounded-2xl shadow-xl border border-gray-100 p-6 hover:shadow-2xl transition-all duration-300">
+                  {/* Decorative Background */}
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-green-50 rounded-full -translate-y-10 translate-x-10"></div>
+                  
+                  <div className="relative z-10">
+                    <ul className="space-y-4">
               {packageData.includes.map((item) => (
-                <li key={item.id} className="flex items-center text-gray-700">
-                  <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
-                  <span>{item.text}</span>
+                        <li key={item.id} className="group flex items-start p-3 bg-green-50/50 rounded-xl hover:bg-green-50 transition-all duration-300">
+                          <div className="p-2 bg-gradient-to-r from-green-500 to-green-600 rounded-full mr-4 flex-shrink-0 shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                            <Check className="h-5 w-5 text-white" />
+                          </div>
+                          <span className="text-gray-700 font-medium leading-relaxed">{item.text}</span>
                 </li>
               ))}
             </ul>
-          </section>
+                  </div>
+                </div>
+              </div>
         )}
 
-        {/* Passenger Notes Section */}
+            {/* Right Side - Passenger Notes */}
         {packageData.passengerNotes && packageData.passengerNotes.length > 0 && (
-          <section className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-6">Important Passenger Notes</h2>
-            <ul className="list-disc list-inside space-y-2 text-gray-700">
+              <div>
+                <div className="text-center mb-6">
+                  <h2 className="text-2xl font-bold text-gray-800 mb-2">Important Passenger Notes</h2>
+                  <div className="w-16 h-1 bg-gradient-to-r from-blue-400 to-blue-600 mx-auto rounded-full"></div>
+                </div>
+                <div className="relative overflow-hidden bg-white rounded-2xl shadow-xl border border-gray-100 p-6 hover:shadow-2xl transition-all duration-300">
+                  {/* Decorative Background */}
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-blue-50 rounded-full -translate-y-10 translate-x-10"></div>
+                  
+                  <div className="relative z-10">
+                    <ul className="space-y-4">
               {packageData.passengerNotes.map((item) => (
-                <li key={item.id}>{item.text}</li>
+                        <li key={item.id} className="group flex items-start p-3 bg-blue-50/50 rounded-xl hover:bg-blue-50 transition-all duration-300">
+                          <div className="p-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full mr-4 flex-shrink-0 shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                            <div className="w-3 h-3 bg-white rounded-full"></div>
+                          </div>
+                          <span className="text-gray-700 font-medium leading-relaxed">{item.text}</span>
+                        </li>
               ))}
             </ul>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
           </section>
-        )}
 
         {/* Places We Cover Section */}
         {packageData.sightseeingPlaces && packageData.sightseeingPlaces.length > 0 && (
@@ -651,6 +811,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
             </Accordion>
           </section>
         )}
+        </div>
       </main>
 
       <Footer />

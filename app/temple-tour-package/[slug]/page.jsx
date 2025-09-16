@@ -460,10 +460,14 @@ function TemplePackagePage() {
                   {packageData.sections.map((section, index) => (
                     <div key={section.id || index} className="bg-white rounded-lg shadow-sm p-6">
                       <h2 className="text-2xl font-bold text-gray-800 mb-4">{section.title}</h2>
-                      <div
-                        className="text-gray-700 leading-relaxed"
-                        dangerouslySetInnerHTML={{ __html: section.content }}
-                      />
+                      <div className="text-gray-700 leading-relaxed">
+                        <div 
+                          className="whitespace-pre-line"
+                          style={{ whiteSpace: 'pre-line' }}
+                        >
+                          {section.content}
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
