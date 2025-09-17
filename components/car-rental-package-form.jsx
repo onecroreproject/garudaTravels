@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast"
 import { X } from 'lucide-react'
 import { isAuthenticated } from "@/lib/custom-auth"
 import { Switch } from "@/components/ui/switch"
+import EditableTitle from "@/components/editable-title"
 
 // Helper to generate unique IDs for dynamic fields
 const generateUniqueId = () => Math.random().toString(36).substring(2, 15)
@@ -29,6 +30,16 @@ export default function CarRentalPackageForm({ packageId }) {
   const [packageOrder, setPackageOrder] = useState(1)
   const [subtitle, setSubtitle] = useState("")
   const [content, setContent] = useState("")
+
+  // Section titles state
+  const [sectionTitles, setSectionTitles] = useState({
+    carTypes: "Car Types",
+    serviceFeatures: "Service Features",
+    pricingPlans: "Pricing Plans",
+    termsAndConditions: "Terms and Conditions",
+    sections: "Sections",
+    frequentlyAskedQuestions: "Frequently Asked Questions"
+  })
 
   // Image management
   const [images, setImages] = useState([])
@@ -48,6 +59,15 @@ export default function CarRentalPackageForm({ packageId }) {
   const [clientAuthenticated, setClientAuthenticated] = useState(false)
 
   const isEditMode = !!packageId
+
+  // Helper function to update section titles - Updated
+  const updateSectionTitle = (sectionKey, newTitle) => {
+    setSectionTitles(prev => ({
+      ...prev,
+      [sectionKey]: newTitle
+    }))
+    setIsDirty(true)
+  }
 
   // Client-side authentication check
   useEffect(() => {
@@ -112,10 +132,24 @@ export default function CarRentalPackageForm({ packageId }) {
             setTitle(data.title || "")
             setPackageOrder(data.order || 1)
             setImages(data.images || [])
+
+            // Set section titles with defaults
+            setSectionTitles(data.sectionTitles || {
+              carTypes: "Car Types",
+              serviceFeatures: "Service Features",
+              pricingPlans: "Pricing Plans",
+              termsAndConditions: "Terms and Conditions",
+              sections: "Sections",
+              frequentlyAskedQuestions: "Frequently Asked Questions"
+            })
             setCarTypes(
               data.carTypes?.map((car) => ({
                 ...car,
                 imageFile: null,
+                rating: car.rating || "",
+                pricePerKm: car.pricePerKm || "",
+                minKm: car.minKm || "",
+                driverBeta: car.driverBeta || "",
               })) || [],
             )
             setServiceFeatures(data.serviceFeatures || [])
@@ -205,7 +239,11 @@ export default function CarRentalPackageForm({ packageId }) {
       transmission: "", 
       features: "", 
       imageUrl: "", 
-      imageFile: null 
+      imageFile: null,
+      rating: "",
+      pricePerKm: "",
+      minKm: "",
+      driverBeta: ""
     }])
     setIsDirty(true)
   }
@@ -381,6 +419,10 @@ export default function CarRentalPackageForm({ packageId }) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
+    
+    console.log("Form submission started...")
+    console.log("Package URL:", packageUrl)
+    console.log("Car Types:", carTypes)
 
     if (!packageUrl) {
       toast({
@@ -429,6 +471,10 @@ export default function CarRentalPackageForm({ packageId }) {
             transmission: car.transmission,
             features: car.features,
             imageUrl: carImageUrl,
+            rating: car.rating,
+            pricePerKm: car.pricePerKm,
+            minKm: car.minKm,
+            driverBeta: car.driverBeta,
           }
         }),
       )
@@ -471,9 +517,13 @@ export default function CarRentalPackageForm({ packageId }) {
         subtitle,
         content,
         isActive,
+        sectionTitles, // Add section titles
         createdAt: isEditMode ? (await getDoc(doc(db, "carRentalPackages", packageId))).data().createdAt : Timestamp.now(),
         updatedAt: Timestamp.now(),
       }
+      
+      console.log("Processed Car Types:", processedCarTypes)
+      console.log("Package Data to be saved:", packageData)
 
       // Save/Update document in Firestore using packageUrl as document ID
       const docRef = doc(db, "carRentalPackages", packageUrl)
@@ -554,22 +604,15 @@ export default function CarRentalPackageForm({ packageId }) {
             </div>
 
             {/* Package Title */}
-            <div>
-              <Label htmlFor="title">
-                Package Title<span className="text-red-500">*</span>
-              </Label>
-              <Input
-                id="title"
-                type="text"
-                value={title}
-                onChange={(e) => {
-                  setTitle(e.target.value)
-                  setIsDirty(true)
-                }}
-                required
-                placeholder="Eg: Premium Car Rental Service"
-              />
-            </div>
+            <EditableTitle
+              title={title}
+              onTitleChange={(newTitle) => {
+                setTitle(newTitle)
+                setIsDirty(true)
+              }}
+              placeholder="Eg: Premium Car Rental Service"
+              required={true}
+            />
 
             {/* Package Order */}
             <div>
@@ -692,7 +735,14 @@ export default function CarRentalPackageForm({ packageId }) {
 
             {/* Car Types */}
             <div>
-              <h4 className="text-lg font-semibold mb-2">Car Types</h4>
+              <EditableTitle
+                title={sectionTitles.carTypes}
+                onTitleChange={(newTitle) => updateSectionTitle('carTypes', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-6 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {carTypes.map((car) => (
                   <div key={car.id} className="border border-gray-300 p-4 rounded-md bg-white relative">
@@ -761,6 +811,52 @@ export default function CarRentalPackageForm({ packageId }) {
                       </div>
                     </div>
 
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                      <div>
+                        <Label htmlFor={`car-rating-${car.id}`}>Rating</Label>
+                        <Input
+                          id={`car-rating-${car.id}`}
+                          type="number"
+                          step="0.1"
+                          min="0"
+                          max="5"
+                          value={car.rating || ""}
+                          onChange={(e) => updateCarTypeField(car.id, "rating", e.target.value)}
+                          placeholder="Eg: 4.5"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor={`car-price-per-km-${car.id}`}>Price per KM (₹)</Label>
+                        <Input
+                          id={`car-price-per-km-${car.id}`}
+                          type="number"
+                          value={car.pricePerKm || ""}
+                          onChange={(e) => updateCarTypeField(car.id, "pricePerKm", e.target.value)}
+                          placeholder="Eg: 12"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor={`car-min-km-${car.id}`}>Minimum KM</Label>
+                        <Input
+                          id={`car-min-km-${car.id}`}
+                          type="number"
+                          value={car.minKm || ""}
+                          onChange={(e) => updateCarTypeField(car.id, "minKm", e.target.value)}
+                          placeholder="Eg: 100"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor={`car-driver-beta-${car.id}`}>Driver Beta (₹)</Label>
+                        <Input
+                          id={`car-driver-beta-${car.id}`}
+                          type="number"
+                          value={car.driverBeta || ""}
+                          onChange={(e) => updateCarTypeField(car.id, "driverBeta", e.target.value)}
+                          placeholder="Eg: 500"
+                        />
+                      </div>
+                    </div>
+
                     <div className="mb-4">
                       <Label htmlFor={`car-image-${car.id}`}>Car Image</Label>
                       <Input
@@ -815,7 +911,14 @@ export default function CarRentalPackageForm({ packageId }) {
 
             {/* Service Features */}
             <div>
-              <h4 className="text-lg font-semibold mb-2">Service Features</h4>
+              <EditableTitle
+                title={sectionTitles.serviceFeatures}
+                onTitleChange={(newTitle) => updateSectionTitle('serviceFeatures', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-2 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {serviceFeatures.map((item) => (
                   <div key={item.id} className="flex gap-2 items-end">
@@ -842,9 +945,16 @@ export default function CarRentalPackageForm({ packageId }) {
               </div>
             </div>
 
-            {/* Pricing Plans */}
-            <div>
-              <h4 className="text-lg font-semibold mb-2">Pricing Plans</h4>
+            {/* Pricing Plans - Hidden */}
+            {/* <div>
+              <EditableTitle
+                title={sectionTitles.pricingPlans}
+                onTitleChange={(newTitle) => updateSectionTitle('pricingPlans', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-6 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {pricingPlans.map((plan) => (
                   <div key={plan.id} className="border border-gray-300 p-4 rounded-md bg-white relative">
@@ -882,7 +992,6 @@ export default function CarRentalPackageForm({ packageId }) {
                       </div>
                     </div>
 
-                    {/* Plan Features */}
                     <div>
                       <Label>Plan Features</Label>
                       <div className="space-y-2 mt-2">
@@ -916,11 +1025,18 @@ export default function CarRentalPackageForm({ packageId }) {
                   Add Pricing Plan
                 </Button>
               </div>
-            </div>
+            </div> */}
 
             {/* Terms and Conditions */}
             <div>
-              <h4 className="text-lg font-semibold mb-2">Terms and Conditions</h4>
+              <EditableTitle
+                title={sectionTitles.termsAndConditions}
+                onTitleChange={(newTitle) => updateSectionTitle('termsAndConditions', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-2 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {termsAndConditions.map((item) => (
                   <div key={item.id} className="flex gap-2 items-end">
@@ -949,7 +1065,14 @@ export default function CarRentalPackageForm({ packageId }) {
 
             {/* Sections (Updated Structure - Same as Tirupati) */}
             <div>
-              <h4 className="heading text-lg font-semibold mb-2">Sections</h4>
+              <EditableTitle
+                title={sectionTitles.sections}
+                onTitleChange={(newTitle) => updateSectionTitle('sections', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {sections.map((section) => (
                   <div key={section.id} className="border border-gray-300 p-4 rounded-md bg-white relative">
@@ -966,17 +1089,15 @@ export default function CarRentalPackageForm({ packageId }) {
 
                     {/* Content Title */}
                     <div className="mb-4">
-                      <Label htmlFor={`section-title-${section.id}`}>Content Title</Label>
-                      <Input
-                        id={`section-title-${section.id}`}
-                        type="text"
-                        value={section.contentTitle}
-                        onChange={(e) => {
-                          updateSectionField(section.id, "contentTitle", e.target.value)
+                      <EditableTitle
+                        title={section.contentTitle}
+                        onTitleChange={(newTitle) => {
+                          updateSectionField(section.id, "contentTitle", newTitle)
                           setIsDirty(true)
                         }}
                         placeholder="Enter content title"
-                        className="w-full"
+                        showEditIcon={true}
+                        required={false}
                       />
                     </div>
 
@@ -1089,7 +1210,14 @@ export default function CarRentalPackageForm({ packageId }) {
 
             {/* FAQs */}
             <div>
-              <h4 className="text-lg font-semibold mb-2">Frequently Asked Questions</h4>
+              <EditableTitle
+                title={sectionTitles.frequentlyAskedQuestions}
+                onTitleChange={(newTitle) => updateSectionTitle('frequentlyAskedQuestions', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {faqs.map((faq) => (
                   <div key={faq.id} className="border border-gray-300 p-4 rounded-md bg-white relative">

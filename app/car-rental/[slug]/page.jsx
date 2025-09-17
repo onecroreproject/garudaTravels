@@ -147,115 +147,128 @@ function CarRentalPage() {
       {packageData.carTypes && packageData.carTypes.length > 0 && (
         <section className="py-12 px-4 bg-gray-50">
           <div className="container mx-auto">
-            <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Available Vehicles</h2>
+            <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">{packageData.sectionTitles?.carTypes || "Available Vehicles"}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {packageData.carTypes.map((car, index) => (
-                <Card key={car.id || index} className="overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:scale-105 bg-white border border-gray-200">
-                  {car.imageUrl && (
-                    <div className="aspect-video relative overflow-hidden">
-                      <img
-                        src={car.imageUrl || "/placeholder.svg?height=200&width=300&query=car rental vehicle"}
-                        alt={car.name}
-                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-                      />
-                      {/* Rating Badge */}
-                      <div className="absolute top-3 right-3 bg-gradient-to-r from-yellow-400 to-orange-500 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1 shadow-lg">
-                        <Star className="w-4 h-4 text-white fill-current" />
-                        <span className="text-sm font-bold text-white">3.5</span>
+                <Card key={car.id || index} className="overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:scale-105 bg-white border border-gray-200 flex flex-col h-full">
+                  {/* Image Section */}
+                  <div className="relative">
+                    {car.imageUrl ? (
+                      <div className="aspect-video relative overflow-hidden">
+                        <img
+                          src={car.imageUrl}
+                          alt={car.name}
+                          className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                        />
+                        {/* Rating Badge */}
+                        {car.rating && (
+                          <div className="absolute top-3 right-3 bg-gradient-to-r from-yellow-400 to-orange-500 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1 shadow-lg">
+                            <Star className="w-4 h-4 text-white fill-current" />
+                            <span className="text-sm font-bold text-white">{car.rating}</span>
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  )}
-                  <CardContent className="p-6">
-                    {/* Car Name and Rating */}
-                    <div className="flex justify-between items-start mb-4">
-                      <h3 className="text-xl font-bold text-gray-800 flex-1">{car.name}</h3>
-                   
+                    ) : (
+                      <div className="aspect-video bg-gray-100 flex items-center justify-center">
+                        <div className="text-center text-gray-400">
+                          <Car className="w-12 h-12 mx-auto mb-2" />
+                          <p className="text-sm">No Image</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Content Section - Flex to fill remaining space */}
+                  <CardContent className="p-6 flex flex-col flex-grow">
+                    {/* Car Name */}
+                    <div className="mb-4">
+                      <h3 className="text-xl font-bold text-gray-800 text-center">{car.name}</h3>
                     </div>
                     
                     {/* Car Specifications Grid */}
-                    <div className="grid grid-cols-2 gap-3 mb-4">
-                      {/* A/C Status */}
-                      <div className="flex items-center gap-2 text-sm">
-                        <div className="p-1.5 bg-blue-100 rounded-full">
+                    <div className="grid grid-cols-2 gap-3 mb-4 flex-grow">
+                      {/* A/C Status - Always show */}
+                      <div className="flex items-center gap-2 text-sm bg-blue-50 rounded-lg p-3">
+                        <div className="p-1.5 bg-blue-100 rounded-full flex-shrink-0">
                           <Thermometer className="w-3.5 h-3.5 text-blue-600" />
                         </div>
                         <span className="text-gray-700 font-medium">A/C</span>
                       </div>
                       
                       {/* Seating */}
-                      {car.seating && (
-                        <div className="flex items-center gap-2 text-sm">
-                          <div className="p-1.5 bg-green-100 rounded-full">
-                            <Users className="w-3.5 h-3.5 text-green-600" />
-                          </div>
-                          <span className="text-gray-700 font-medium">{car.seating} Seater</span>
+                      <div className="flex items-center gap-2 text-sm bg-green-50 rounded-lg p-3">
+                        <div className="p-1.5 bg-green-100 rounded-full flex-shrink-0">
+                          <Users className="w-3.5 h-3.5 text-green-600" />
                         </div>
-                      )}
+                        <span className="text-gray-700 font-medium">{car.seating || "N/A"} Seater</span>
+                      </div>
                       
                       {/* Fuel Type */}
-                      {car.fuelType && (
-                        <div className="flex items-center gap-2 text-sm">
-                          <div className="p-1.5 bg-orange-100 rounded-full">
-                            <Fuel className="w-3.5 h-3.5 text-orange-600" />
-                          </div>
-                          <span className="text-gray-700 font-medium">{car.fuelType}</span>
+                      <div className="flex items-center gap-2 text-sm bg-orange-50 rounded-lg p-3">
+                        <div className="p-1.5 bg-orange-100 rounded-full flex-shrink-0">
+                          <Fuel className="w-3.5 h-3.5 text-orange-600" />
                         </div>
-                      )}
+                        <span className="text-gray-700 font-medium">{car.fuelType || "N/A"}</span>
+                      </div>
                       
                       {/* Transmission */}
-                      {car.transmission && (
-                        <div className="flex items-center gap-2 text-sm">
-                          <div className="p-1.5 bg-purple-100 rounded-full">
-                            <Settings className="w-3.5 h-3.5 text-purple-600" />
-                          </div>
-                          <span className="text-gray-700 font-medium">{car.transmission}</span>
+                      <div className="flex items-center gap-2 text-sm bg-purple-50 rounded-lg p-3">
+                        <div className="p-1.5 bg-purple-100 rounded-full flex-shrink-0">
+                          <Settings className="w-3.5 h-3.5 text-purple-600" />
                         </div>
-                      )}
+                        <span className="text-gray-700 font-medium">{car.transmission || "N/A"}</span>
+                      </div>
                     </div>
 
-                    {/* Pricing Information */}
-                    <div className="bg-gray-50 rounded-lg p-4 mb-4">
-                      <div className="grid grid-cols-2 gap-3 text-sm">
-                        {/* Minimum KM */}
-                        <div className="flex items-center gap-2">
-                          <div className="p-1.5 bg-indigo-100 rounded-full">
-                            <MapPin className="w-3.5 h-3.5 text-indigo-600" />
-                          </div>
-                          <div>
-                            <span className="text-gray-500 block">Min KM</span>
-                            <span className="font-semibold text-gray-800">100 KM</span>
-                          </div>
-                        </div>
-                        
-                        {/* Price per KM */}
-                        <div className="flex items-center gap-2">
-                          <div className="p-1.5 bg-emerald-100 rounded-full">
-                            <Zap className="w-3.5 h-3.5 text-emerald-600" />
-                          </div>
-                          <div>
-                            <span className="text-gray-500 block">Per KM</span>
-                            <span className="font-semibold text-gray-800">₹12</span>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Total Amount */}
-                      <div className="mt-3 pt-3 border-t border-gray-200">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <div className="p-1.5 bg-yellow-100 rounded-full">
-                              <IndianRupee className="w-4 h-4 text-yellow-600" />
+                    {/* Pricing Information - Only show if data exists */}
+                    {(car.minKm || car.pricePerKm || car.driverBeta) && (
+                      <div className="bg-gray-50 rounded-lg p-4 mb-4">
+                        <div className="space-y-3">
+                          {/* Minimum KM */}
+                          {car.minKm && (
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <div className="p-1.5 bg-indigo-100 rounded-full">
+                                  <MapPin className="w-3.5 h-3.5 text-indigo-600" />
+                                </div>
+                                <span className="text-gray-600 text-sm">Min KM</span>
+                              </div>
+                              <span className="font-semibold text-gray-800">{car.minKm} KM</span>
                             </div>
-                            <span className="text-gray-600 font-medium">Total Amount</span>
-                          </div>
-                          <span className="text-xl font-bold text-blue-600">₹1,200</span>
+                          )}
+                          
+                          {/* Price per KM */}
+                          {car.pricePerKm && (
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <div className="p-1.5 bg-emerald-100 rounded-full">
+                                  <Zap className="w-3.5 h-3.5 text-emerald-600" />
+                                </div>
+                                <span className="text-gray-600 text-sm">Per KM</span>
+                              </div>
+                              <span className="font-semibold text-gray-800">₹{car.pricePerKm}</span>
+                            </div>
+                          )}
+                          
+                          {/* Driver Beta */}
+                          {car.driverBeta && (
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <div className="p-1.5 bg-amber-100 rounded-full">
+                                  <Users className="w-3.5 h-3.5 text-amber-600" />
+                                </div>
+                                <span className="text-gray-600 text-sm">Driver Beta</span>
+                              </div>
+                              <span className="font-semibold text-gray-800">₹{car.driverBeta}</span>
+                            </div>
+                          )}
                         </div>
                       </div>
-                    </div>
+                    )}
 
-                    {/* Book Now Button */}
+                    {/* Book Now Button - Always at bottom */}
                     <button 
-                      className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                      className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 mt-auto"
                       onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
                     >
                       <Car className="w-5 h-5" />
@@ -273,7 +286,7 @@ function CarRentalPage() {
       {packageData.serviceFeatures && packageData.serviceFeatures.length > 0 && (
         <section className="py-12 px-4 bg-white">
           <div className="container mx-auto">
-            <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Service Features</h2>
+            <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">{packageData.sectionTitles?.serviceFeatures || "Service Features"}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {packageData.serviceFeatures.map((feature, index) => (
                 <div key={feature.id || index} className="text-center p-6 bg-gray-50 rounded-lg">
@@ -372,7 +385,7 @@ function CarRentalPage() {
       {packageData.termsAndConditions && packageData.termsAndConditions.length > 0 && (
         <section className="py-12 px-4 bg-white">
           <div className="container mx-auto">
-            <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Terms and Conditions</h2>
+            <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">{packageData.sectionTitles?.termsAndConditions || "Terms and Conditions"}</h2>
             <Card className="max-w-4xl mx-auto">
               <CardContent className="p-6">
                 <ul className="space-y-3">
@@ -393,7 +406,7 @@ function CarRentalPage() {
       {/* {packageData.faqs && packageData.faqs.length > 0 && (
         <section className="py-12 px-4 bg-gray-50">
           <div className="container mx-auto">
-            <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Frequently Asked Questions</h2>
+            <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">{packageData.sectionTitles?.frequentlyAskedQuestions || "Frequently Asked Questions"}</h2>
             <div className="max-w-3xl mx-auto space-y-4">
               {packageData.faqs.map((faq, index) => (
                 <Card key={faq.id || index}>
@@ -412,7 +425,7 @@ function CarRentalPage() {
   <section className="py-12 px-4 bg-gray-50">
     <div className="container mx-auto">
       <h2 className="text-3xl font-bold text-center text-gray-800 mb-10">
-        Frequently Asked Questions
+        {packageData.sectionTitles?.frequentlyAskedQuestions || "Frequently Asked Questions"}
       </h2>
 
       <div className="max-w-3xl mx-auto space-y-4">

@@ -1,11 +1,13 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { usePathname } from "next/navigation"
 import { MapPin, PhoneCall, Menu, X, ChevronDown, User, Calendar, Car, Crown, Repeat1, CarFront } from 'lucide-react'
 import { collection, getDocs } from "firebase/firestore"
 import { db } from "@/lib/firebase"
 
 export function Header() {
+  const pathname = usePathname()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [mobileDropdowns, setMobileDropdowns] = useState({
     tirupati: false,
@@ -15,6 +17,14 @@ export function Header() {
   const [carRentalPackages, setCarRentalPackages] = useState([])
   const [templePackages, setTemplePackages] = useState([])
   const [loading, setLoading] = useState(true)
+
+  // Helper function to check if current path is active
+  const isActive = (path) => {
+    if (path === '/') {
+      return pathname === '/'
+    }
+    return pathname.startsWith(path)
+  }
 
   // Fetch dynamic packages
   useEffect(() => {
@@ -67,16 +77,34 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
-            <a href="/" className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">
+            <a 
+              href="/" 
+              className={`font-medium transition-colors duration-200 ${
+                isActive('/') 
+                  ? 'text-blue-600 border-b-2 border-blue-600' 
+                  : 'text-gray-700 hover:text-blue-600'
+              }`}
+            >
               Home
             </a>
-            <a href="/about" className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">
+            <a 
+              href="/about" 
+              className={`font-medium transition-colors duration-200 ${
+                isActive('/about') 
+                  ? 'text-blue-600 border-b-2 border-blue-600' 
+                  : 'text-gray-700 hover:text-blue-600'
+              }`}
+            >
               About
             </a>
 
-            {/* Tirupati Packages Dropdown - Keep as is */}
+            {/* Tirupati Packages Dropdown */}
             <div className="relative group">
-              <button className="flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200 border-b-2 border-blue-600">
+              <button className={`flex items-center font-medium transition-colors duration-200 ${
+                isActive('/tirupati-package') 
+                  ? 'text-blue-600 border-b-2 border-blue-600' 
+                  : 'text-gray-700 hover:text-blue-600'
+              }`}>
                 Tirupati Packages
                 <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
               </button>
@@ -198,7 +226,11 @@ export function Header() {
 
             {/* Car Rental Packages Dropdown - Dynamic */}
             <div className="relative group">
-              <button className="flex items-center text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">
+              <button className={`flex items-center font-medium transition-colors duration-200 ${
+                isActive('/car-rental') 
+                  ? 'text-blue-600 border-b-2 border-blue-600' 
+                  : 'text-gray-700 hover:text-blue-600'
+              }`}>
                 Car Rental Packages
                 <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
               </button>
@@ -228,7 +260,11 @@ export function Header() {
 
             {/* Temple Tour Packages Dropdown - Dynamic */}
              <div className="relative group">
-              <button className="flex items-center text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">
+              <button className={`flex items-center font-medium transition-colors duration-200 ${
+                isActive('/temple-tour-package') 
+                  ? 'text-blue-600 border-b-2 border-blue-600' 
+                  : 'text-gray-700 hover:text-blue-600'
+              }`}>
                 Temple Tour Packages
                 <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
               </button>
@@ -281,7 +317,14 @@ export function Header() {
               </div>
             </div>
 
-            <a href="/contact" className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">
+            <a 
+              href="/contact" 
+              className={`font-medium transition-colors duration-200 ${
+                isActive('/contact') 
+                  ? 'text-blue-600 border-b-2 border-blue-600' 
+                  : 'text-gray-700 hover:text-blue-600'
+              }`}
+            >
               Contact
             </a>
           </nav>
@@ -334,25 +377,37 @@ export function Header() {
             aria-modal="true"
           >
             <nav className="py-4 space-y-2 border-t border-gray-100 h-full overflow-y-auto">
-              {/* Keep the ENTIRE existing mobile menu content below exactly as-is */}
+              {/* Mobile Navigation Links */}
               <a
                 href="/"
-                className="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors duration-200"
+                className={`block px-4 py-3 rounded-md transition-colors duration-200 ${
+                  isActive('/') 
+                    ? 'text-blue-600 bg-blue-50 font-semibold' 
+                    : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                }`}
               >
                 Home
               </a>
               <a
                 href="/under-construction"
-                className="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors duration-200"
+                className={`block px-4 py-3 rounded-md transition-colors duration-200 ${
+                  isActive('/about') 
+                    ? 'text-blue-600 bg-blue-50 font-semibold' 
+                    : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                }`}
               >
                 About Us
               </a>
 
-              {/* Mobile Tirupati Packages Dropdown - Keep as is */}
+              {/* Mobile Tirupati Packages Dropdown */}
               <div className="space-y-1">
                 <button
                   onClick={() => toggleMobileDropdown("tirupati")}
-                  className="flex items-center justify-between w-full px-4 py-3 text-blue-600 font-semibold hover:bg-blue-50 rounded-md transition-colors duration-200"
+                  className={`flex items-center justify-between w-full px-4 py-3 rounded-md transition-colors duration-200 ${
+                    isActive('/tirupati-package') 
+                      ? 'text-blue-600 bg-blue-50 font-semibold' 
+                      : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                  }`}
                 >
                   Tirupati Packages
                   <ChevronDown
@@ -450,7 +505,11 @@ export function Header() {
               <div className="space-y-1">
                 <button
                   onClick={() => toggleMobileDropdown("carRental")}
-                  className="flex items-center justify-between w-full px-4 py-3 text-gray-800 font-medium hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors duration-200"
+                  className={`flex items-center justify-between w-full px-4 py-3 rounded-md transition-colors duration-200 ${
+                    isActive('/car-rental') 
+                      ? 'text-blue-600 bg-blue-50 font-semibold' 
+                      : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                  }`}
                 >
                   Car Rental Packages
                   <ChevronDown
@@ -484,7 +543,11 @@ export function Header() {
               <div className="space-y-1">
                 <button
                   onClick={() => toggleMobileDropdown("templeTour")}
-                  className="flex items-center justify-between w-full px-4 py-3 text-gray-800 font-medium hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors duration-200"
+                  className={`flex items-center justify-between w-full px-4 py-3 rounded-md transition-colors duration-200 ${
+                    isActive('/temple-tour-package') 
+                      ? 'text-blue-600 bg-blue-50 font-semibold' 
+                      : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                  }`}
                 >
                   Temple Tour Packages
                   <ChevronDown
@@ -522,7 +585,11 @@ export function Header() {
               </a>
               <a
                 href="/contact"
-                className="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors duration-200"
+                className={`block px-4 py-3 rounded-md transition-colors duration-200 ${
+                  isActive('/contact') 
+                    ? 'text-blue-600 bg-blue-50 font-semibold' 
+                    : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                }`}
               >
                 Contact Us
               </a>
