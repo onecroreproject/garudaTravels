@@ -12,6 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
 import { X } from 'lucide-react'
 import { isAuthenticated } from "@/lib/custom-auth" // Import custom auth check
+import EditableTitle from "@/components/editable-title"
 
 // Helper to generate unique IDs for dynamic fields
 const generateUniqueId = () => Math.random().toString(36).substring(2, 15)
@@ -26,6 +27,20 @@ export default function PackageForm({ packageType, packageId }) {
   const [title, setTitle] = useState("")
   const [packageOrder, setPackageOrder] = useState(1) // New: Package Order
   const [tripDays, setTripDays] = useState("1") // New: Trip Days
+
+  // Section titles state
+  const [sectionTitles, setSectionTitles] = useState({
+    packagesAndCars: "Packages and Cars",
+    packageIncludes: "Package Includes",
+    packageItinerary: "Package Itinerary",
+    passengerNotes: "Passenger Notes",
+    sightseeingPlaces: "Sightseeing Places",
+    dressCode: "Dress Code",
+    carPrices: "Car Prices",
+    sections: "Sections",
+    faq: "FAQ",
+    whyChooseUsItems: "Why Choose Us Items"
+  })
 
   // Image management
   const [images, setImages] = useState([]) // Stores URLs of existing images
@@ -53,6 +68,15 @@ export default function PackageForm({ packageType, packageId }) {
   const [clientAuthenticated, setClientAuthenticated] = useState(false) // New state for client-side auth
 
   const isEditMode = !!packageId // packageId will now be the URL slug
+
+  // Helper function to update section titles
+  const updateSectionTitle = (sectionKey, newTitle) => {
+    setSectionTitles(prev => ({
+      ...prev,
+      [sectionKey]: newTitle
+    }))
+    setIsDirty(true)
+  }
 
   // Client-side authentication check
   useEffect(() => {
@@ -86,6 +110,20 @@ export default function PackageForm({ packageType, packageId }) {
             setPackageOrder(data.order || 1)
             setTripDays(data.days || "1")
             setImages(data.images || [])
+
+            // Set section titles with defaults
+            setSectionTitles(data.sectionTitles || {
+              packagesAndCars: "Packages and Cars",
+              packageIncludes: "Package Includes",
+              packageItinerary: "Package Itinerary",
+              passengerNotes: "Passenger Notes",
+              sightseeingPlaces: "Sightseeing Places",
+              dressCode: "Dress Code",
+              carPrices: "Car Prices",
+              sections: "Sections",
+              faq: "FAQ",
+              whyChooseUsItems: "Why Choose Us Items"
+            })
             setPackagesAndCars(data.packagesAndCars || [])
             setIncludes(data.includes || [])
             setItineraries(data.itineraries || [])
@@ -653,6 +691,7 @@ export default function PackageForm({ packageType, packageId }) {
         whyChooseUsItems, // Save the updated whyChooseUsItems
         maleDressCodeImages: allMaleDressCodeUrls,
         femaleDressCodeImages: allFemaleDressCodeUrls,
+        sectionTitles, // Add section titles
         createdAt: isEditMode ? (await getDoc(doc(db, packageType, packageId))).data().createdAt : Timestamp.now(),
         updatedAt: Timestamp.now(),
       }
@@ -733,21 +772,15 @@ export default function PackageForm({ packageType, packageId }) {
             </div>
 
             {/* Package Title */}
-            <div>
-              <Label htmlFor="title">
-                Package Title<span className="text-red-500">*</span>
-              </Label>
-              <Input
-                id="title"
-                type="text"
-                value={title}
-                onChange={(e) => {
-                  setTitle(e.target.value)
+            <EditableTitle
+              title={title}
+              onTitleChange={(newTitle) => {
+                setTitle(newTitle)
                   setIsDirty(true)
                 }}
                 placeholder="Eg: Chennai to Tirupati"
+              required={true}
               />
-            </div>
 
             {/* Package Order */}
             <div>
@@ -857,7 +890,14 @@ export default function PackageForm({ packageType, packageId }) {
 
             {/* Packages and Cars (Updated Nested Structure) */}
             <div>
-              <h4 className="heading text-lg font-semibold mb-2">Packages and Cars</h4>
+              <EditableTitle
+                title={sectionTitles.packagesAndCars}
+                onTitleChange={(newTitle) => updateSectionTitle('packagesAndCars', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-6 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {packagesAndCars.map((pkg) => (
                   <div key={pkg.id} className="border border-gray-300 p-4 rounded-md bg-white relative">
@@ -953,7 +993,14 @@ export default function PackageForm({ packageType, packageId }) {
 
             {/* Package Includes */}
             <div>
-              <h4 className="heading text-lg font-semibold mb-2">Package Includes</h4>
+              <EditableTitle
+                title={sectionTitles.packageIncludes}
+                onTitleChange={(newTitle) => updateSectionTitle('packageIncludes', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-2 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {includes.map((item) => (
                   <div key={item.id} className="flex gap-2 items-end">
@@ -985,7 +1032,14 @@ export default function PackageForm({ packageType, packageId }) {
 
             {/* Package Itinerary */}
             <div>
-              <h4 className="heading text-lg font-semibold mb-2">Package Itinerary</h4>
+              <EditableTitle
+                title={sectionTitles.packageItinerary}
+                onTitleChange={(newTitle) => updateSectionTitle('packageItinerary', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-2 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {itineraries.map((item) => (
                   <div key={item.id} className="flex gap-2 items-end">
@@ -1017,7 +1071,14 @@ export default function PackageForm({ packageType, packageId }) {
 
             {/* Passenger Notes */}
             <div>
-              <h4 className="heading text-lg font-semibold mb-2">Passenger Notes</h4>
+              <EditableTitle
+                title={sectionTitles.passengerNotes}
+                onTitleChange={(newTitle) => updateSectionTitle('passengerNotes', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-2 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {passengerNotes.map((item) => (
                   <div key={item.id} className="flex gap-2 items-end">
@@ -1049,7 +1110,14 @@ export default function PackageForm({ packageType, packageId }) {
 
             {/* Sightseeing Places */}
             <div>
-              <h4 className="heading text-lg font-semibold mb-2">Sightseeing Places</h4>
+              <EditableTitle
+                title={sectionTitles.sightseeingPlaces}
+                onTitleChange={(newTitle) => updateSectionTitle('sightseeingPlaces', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {sightseeingPlaces.map((place) => (
                   <div key={place.id} className="border border-gray-300 p-4 rounded-md bg-white relative">
@@ -1124,7 +1192,14 @@ export default function PackageForm({ packageType, packageId }) {
 
             {/* Dress Code */}
             <div>
-              <h4 className="heading text-lg font-semibold mb-2">Dress Code</h4>
+              <EditableTitle
+                title={sectionTitles.dressCode}
+                onTitleChange={(newTitle) => updateSectionTitle('dressCode', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Male Dress Code */}
@@ -1258,7 +1333,14 @@ export default function PackageForm({ packageType, packageId }) {
 
             {/* Car Prices (Updated Nested Structure) */}
             <div>
-              <h4 className="heading text-lg font-semibold mb-2">Car Prices</h4>
+              <EditableTitle
+                title={sectionTitles.carPrices}
+                onTitleChange={(newTitle) => updateSectionTitle('carPrices', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-6 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {carPrices.map((car) => (
                   <div key={car.id} className="border border-gray-300 p-4 rounded-md bg-white relative">
@@ -1411,7 +1493,14 @@ export default function PackageForm({ packageType, packageId }) {
 
             {/* Sections (Updated Structure) */}
             <div>
-              <h4 className="heading text-lg font-semibold mb-2">Sections</h4>
+              <EditableTitle
+                title={sectionTitles.sections}
+                onTitleChange={(newTitle) => updateSectionTitle('sections', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {sections.map((section) => (
                   <div key={section.id} className="border border-gray-300 p-4 rounded-md bg-white relative">
@@ -1428,17 +1517,15 @@ export default function PackageForm({ packageType, packageId }) {
 
                     {/* Content Title */}
                     <div className="mb-4">
-                      <Label htmlFor={`section-title-${section.id}`}>Content Title</Label>
-                      <Input
-                        id={`section-title-${section.id}`}
-                        type="text"
-                        value={section.contentTitle}
-                        onChange={(e) => {
-                          updateSectionField(section.id, "contentTitle", e.target.value)
+                      <EditableTitle
+                        title={section.contentTitle}
+                        onTitleChange={(newTitle) => {
+                          updateSectionField(section.id, "contentTitle", newTitle)
                           setIsDirty(true)
                         }}
                         placeholder="Enter content title"
-                        className="w-full"
+                        showEditIcon={true}
+                        required={false}
                       />
                     </div>
 
@@ -1551,7 +1638,14 @@ export default function PackageForm({ packageType, packageId }) {
 
             {/* FAQs */}
             <div>
-              <h4 className="heading text-lg font-semibold mb-2">FAQ :</h4>
+              <EditableTitle
+                title={sectionTitles.faq}
+                onTitleChange={(newTitle) => updateSectionTitle('faq', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {faqs.map((item) => (
                   <div key={item.id} className="flex flex-col gap-2">
@@ -1601,7 +1695,14 @@ export default function PackageForm({ packageType, packageId }) {
 
             {/* Why Choose Us */}
             <div>
-              <h4 className="heading text-lg font-semibold mb-2">Why Choose Us Items:</h4>
+              <EditableTitle
+                title={sectionTitles.whyChooseUsItems}
+                onTitleChange={(newTitle) => updateSectionTitle('whyChooseUsItems', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {whyChooseUsItems.map((item) => (
                   <div

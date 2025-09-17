@@ -14,9 +14,12 @@ const initialVehicleImages = [
 
 const initialWhyChooseUsItems = [
   { id: 1, src: "/images/feed/1.png?height=64&width=64", title: "24/7 Support" },
-  { id: 2, src: "/images/feed/2.png?height=64&width=64", title: "Clean Vehicles" },
+  { id: 2, src: "/images/feed/2.png?height=64&width=64", title: "A/C Vehicles" },
   { id: 3, src: "/images/feed/3.png?height=64&width=64", title: "Experienced Drivers" },
-  { id: 4, src: "/images/feed/4.png?height=64&width=64", title: "Affordable Prices" },
+  { id: 4, src: "/images/feed/5.png?height=64&width=64", title: "Pick‑up/Drop‑off in Chennai" },
+  { id: 5, src: "/images/feed/6.png?height=64&width=64", title: "Transparent Pricing" },
+  { id: 6, src: "/images/feed/7.png?height=64&width=64", title: "Safe & Secure" },
+
 ]
 
 export default function VehicleFeatures() {

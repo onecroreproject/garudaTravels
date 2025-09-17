@@ -8,22 +8,22 @@ const slides = [
   {
     id: 1,
     image: "/images/slider3.png",
-    title: "Best Temple Tour Packages from Chennai – Spiritual Travel with Garuda",
-    description:"Plan your spiritual journey with Garuda’s temple tour packages from Chennai to Tirupati, Rameswaram, Kanchipuram & more. Comfortable rides, expert planning & divine experiences.",
-    buttonText: "Explore Packages",
+    title: "Temple Tour Packages from Chennai – Book Now",
+    description:"Explore divine temples like Tirupati, Rameswaram & Kanchipuram. Garuda offers trusted temple tour packages from Chennai with expert planning.",
+    buttonText: "View Packages",
   },
   {
     id: 2,
     image: "/images/hero2.png",
-    title: "Chennai to Tirupati One Day Package – Easy & Spiritual",
-    description:"Book the top-rated Chennai to Tirupati one-day package from Chennai. Enjoy hassle-free VIP darshan, comfortable travel and fast reservations with Garuda’s Chennai to Tirupati travel package.",
-    buttonText:"Book One-Day Package"
+    title: "Chennai to Tirupati One Day Tour – Fast & Easy",
+    description:"Book your Chennai to Tirupati one day package with VIP darshan, smooth travel & quick booking via Garuda.",
+    buttonText:"Book 1-Day Trip"
   },
   {
     id: 3,
     image: "/images/hero1.png",
     title: "Tirupati Darshan Package from Chennai – VIP & Quick",
-    description:"Opt for a Tirupati darshan package from Chennai with priority access. Garuda’s VIP darshan package from Chennai to Tirupati ensures peaceful darshan and personalized support.",
+    description:" Choose Garuda’s VIP Tirupati darshan package from Chennai for a peaceful, guided temple visit with fast-track access.",
     buttonText: "Book VIP Darshan",
   },
 ]

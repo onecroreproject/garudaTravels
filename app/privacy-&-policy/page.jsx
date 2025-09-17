@@ -2,13 +2,14 @@ import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export const metadata = {
-  title: "Privacy Policy | Tours & Travels",
+  title: "Privacy Policy | Garuda Tours and Travels",
   description:
-    "Learn how Tours & Travels collects, uses, and protects your personal information. Read our Privacy Policy.",
+    "Learn how Garuda Tours and Travels collects, uses, and protects your personal information. Read our Privacy Policy.",
 }
 
 const sections = [
   { id: "introduction", title: "Introduction" },
+  { id: "who-we-are", title: "Who We Are" },
   { id: "information-we-collect", title: "Information We Collect" },
   { id: "how-we-use-information", title: "How We Use Information" },
   { id: "sharing-of-information", title: "Sharing of Information" },
@@ -48,9 +49,15 @@ export default function PrivacyPolicyPage() {
           </nav>
 
           <h1 className="text-3xl font-bold text-gray-900 md:text-4xl">Privacy Policy</h1>
-          <p className="mt-2 text-gray-600">Your privacy matters to us at Tours & Travels.</p>
+          <p className="mt-2 text-gray-600">Your privacy matters to us at Garuda Tours and Travels.</p>
           <div className="mt-4 inline-flex items-center rounded-md bg-white px-3 py-1.5 text-xs text-gray-600 shadow-sm ring-1 ring-gray-200">
-            Last updated: <span className="ml-1 font-medium text-gray-800">{lastUpdated}</span>
+            Effective Date: <span className="ml-1 font-medium text-gray-800">September 17, 2025</span>
+          </div>
+          <div className="mt-2 inline-flex items-center rounded-md bg-white px-3 py-1.5 text-xs text-gray-600 shadow-sm ring-1 ring-gray-200">
+            Website: <span className="ml-1 font-medium text-gray-800">www.garudatoursandtravels.com</span>
+          </div>
+          <div className="mt-2 inline-flex items-center rounded-md bg-white px-3 py-1.5 text-xs text-gray-600 shadow-sm ring-1 ring-gray-200">
+            Brand Name: <span className="ml-1 font-medium text-gray-800">Garuda Tours and Travels</span>
           </div>
         </div>
       </section>
@@ -66,9 +73,18 @@ export default function PrivacyPolicyPage() {
               </CardHeader>
               <CardContent className="text-gray-700 leading-relaxed">
                 <p>
-                  This Privacy Policy explains how Tours & Travels ("we", "us", or "our") collects, uses, and discloses
-                  your information when you use our website, make bookings, or interact with our services. By using our
-                  services, you agree to the terms of this policy.
+                  At Garuda Tours and Travels, we are committed to safeguarding your privacy and maintaining your trust. This Privacy Policy outlines how we collect, use, and protect your personal information when you visit our website or book one of our premium Chennai to Tirupati one-day tour packages, two-day Tirupati pilgrimage trips, or other customized temple tour packages from Chennai. Your privacy is important to us, and we are fully dedicated to transparent data practices in compliance with legal standards and customer expectations.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card id="who-we-are" className="scroll-mt-24">
+              <CardHeader>
+                <CardTitle>1. Who We Are</CardTitle>
+              </CardHeader>
+              <CardContent className="text-gray-700 leading-relaxed">
+                <p>
+                  Garuda Tours and Travels is a leading travel operator based in Chennai, specializing in Tirupati tour packages, including VIP darshan services, home pickup and drop, and all-inclusive pilgrimage tours. Our goal is to provide a hassle-free divine travel experience with utmost customer satisfaction. Our privacy practices reflect our values of trust, transparency, and respect for your data.
                 </p>
               </CardContent>
             </Card>
@@ -219,10 +235,11 @@ export default function PrivacyPolicyPage() {
                   If you have questions about this Privacy Policy or our data practices, you can reach us at:
                 </p>
                 <address className="not-italic text-gray-800">
-                  <div className="font-medium">Tours & Travels</div>
+                  <div className="font-medium">Garuda Tours and Travels</div>
                   <div>Customer Support</div>
                   <div>Email: <a className="underline hover:no-underline" href="mailto:garudattd1@gmail.com">garudattd1@gmail.com</a></div>
                   <div>Phone: <a className="underline hover:no-underline" href="tel:+919840789844">9840789844, 9840789857</a></div>
+                  <div>Website: <a className="underline hover:no-underline" href="https://www.garudatoursandtravels.com">www.garudatoursandtravels.com</a></div>
                 </address>
               </CardContent>
             </Card>

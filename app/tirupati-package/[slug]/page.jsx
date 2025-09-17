@@ -224,7 +224,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
         {/* Overview Section */}
         {packageData.content && (
           <section className="mb-12 p-6 bg-gray-50 rounded-lg shadow-sm border border-gray-200 text-center">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Overview</h2>
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">{packageData.sectionTitles?.overview || "Overview"}</h2>
             <div
               className="prose max-w-none text-gray-700 mx-auto mb-6"
               dangerouslySetInnerHTML={{ __html: packageData.content }}
@@ -240,7 +240,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
         {packageData.carPrices && packageData.carPrices.length > 0 && (
           <section className="mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
-              {packageData.title} Package Price Details
+              {packageData.sectionTitles?.carPrices || "Package Price Details"}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {packageData.carPrices.map((car) => (
@@ -326,7 +326,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
 
      {packageData.packagesAndCars && packageData.packagesAndCars.length > 0 && (
   <section className="mb-12">
-    <h2 className="text-3xl font-bold text-gray-800 mb-10 text-center">Packages & Cars</h2>
+    <h2 className="text-3xl font-bold text-gray-800 mb-10 text-center">{packageData.sectionTitles?.packagesAndCars || "Packages & Cars"}</h2>
 
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {packageData.packagesAndCars.map((packageItem) => (
@@ -385,7 +385,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
           {/* Additional Packages and Cars Section */}
           {(packageData.packages || packageData.cars || packageData.additionalPackages || packageData.carTypes) && (
             <section className="mb-12">
-              <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">Available Packages & Cars</h2>
+              <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">{packageData.sectionTitles?.packagesAndCars || "Available Packages & Cars"}</h2>
               
               {/* Display Packages if available */}
               {packageData.packages && packageData.packages.length > 0 && (
@@ -624,7 +624,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
         {/* Places We Cover Section */}
         {packageData.sightseeingPlaces && packageData.sightseeingPlaces.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Places We Cover in the Package</h2>
+            <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">{packageData.sectionTitles?.sightseeingPlaces || "Places We Cover in the Package"}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {packageData.sightseeingPlaces.map((item) => (
                 <div key={item.id} className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -652,7 +652,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
           {packageData.itineraries && packageData.itineraries.length > 0 && (
             <div>
               <h2 className="text-3xl font-bold text-gray-800 mb-6">
-                Itinerary ({packageData.days} Day{packageData.days > 1 ? "s" : ""})
+                {packageData.sectionTitles?.packageItinerary || `Itinerary (${packageData.days} Day${packageData.days > 1 ? "s" : ""})`}
               </h2>
               <ol className="space-y-4">
                 {packageData.itineraries.map((item, index) => (
@@ -670,7 +670,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
           {/* Dress Code */}
           {(packageData.maleDressCodeImages?.length > 0 || packageData.femaleDressCodeImages?.length > 0) && (
             <div className="p-6 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
-              <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Dress Code</h2>
+              <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">{packageData.sectionTitles?.dressCode || "Dress Code"}</h2>
               <div className="grid grid-cols-1 gap-8">
                 {packageData.femaleDressCodeImages?.[0] && (
                   <Card className="overflow-hidden">
@@ -722,7 +722,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
         {/* Dynamic Sections */}
         {packageData.sections && packageData.sections.length > 0 && (
           <section className="mb-12 space-y-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">More Details</h2>
+            <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">{packageData.sectionTitles?.sections || "More Details"}</h2>
             {packageData.sections.map((section) => (
               <div key={section.id} className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 {section.imageUrl && (
@@ -798,7 +798,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
         {/* FAQs Section */}
         {packageData.faqs && packageData.faqs.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-6">Frequently Asked Questions</h2>
+            <h2 className="text-3xl font-bold text-gray-800 mb-6">{packageData.sectionTitles?.faq || "Frequently Asked Questions"}</h2>
             <Accordion type="single" collapsible className="w-full">
               {packageData.faqs.map((faq) => (
                 <AccordionItem key={faq.id} value={faq.id}>

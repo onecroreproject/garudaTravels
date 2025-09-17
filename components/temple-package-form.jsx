@@ -14,6 +14,7 @@ import { X } from "lucide-react"
 import { isAuthenticated } from "@/lib/custom-auth"
 import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
+import EditableTitle from "@/components/editable-title"
 
 // Helper to generate unique IDs for dynamic fields
 const generateUniqueId = () => Math.random().toString(36).substring(2, 15)
@@ -60,7 +61,7 @@ const cleanEmptyFields = (data) => {
   return data
 }
 
-// Helper function to ensure arrays have proper structure when fetching
+  // Helper function to ensure arrays have proper structure when fetching
 const ensureArrayStructure = (data, defaultStructure = { id: generateUniqueId(), text: "" }) => {
   if (!Array.isArray(data)) return []
 
@@ -95,6 +96,21 @@ export default function TemplePackageForm({ packageId }) {
   const [subtitle, setSubtitle] = useState("")
   const [content, setContent] = useState("")
 
+  // Section titles state
+  const [sectionTitles, setSectionTitles] = useState({
+    templeList: "Temple List",
+    tourHighlights: "Tour Highlights", 
+    packageIncludes: "Package Includes",
+    packageExcludes: "Package Excludes",
+    packageItinerary: "Package Itinerary",
+    importantNotes: "Important Notes",
+    frequentlyAskedQuestions: "Frequently Asked Questions",
+    carPrices: "Car Prices",
+    sections: "Sections",
+    sightseeingPlaces: "Sightseeing Places",
+    whyChooseUsItems: "Why Choose Us Items"
+  })
+
   // Image management
   const [images, setImages] = useState([])
   const [newImageFiles, setNewImageFiles] = useState([])
@@ -118,6 +134,15 @@ export default function TemplePackageForm({ packageId }) {
   const [clientAuthenticated, setClientAuthenticated] = useState(false)
 
   const isEditMode = !!packageId
+
+  // Helper function to update section titles
+  const updateSectionTitle = (sectionKey, newTitle) => {
+    setSectionTitles(prev => ({
+      ...prev,
+      [sectionKey]: newTitle
+    }))
+    setIsDirty(true)
+  }
 
   // Client-side authentication check
   useEffect(() => {
@@ -190,6 +215,21 @@ export default function TemplePackageForm({ packageId }) {
             setSubtitle(data.subtitle || "")
             setContent(data.content || "")
             setIsActive(data.isActive !== undefined ? data.isActive : true)
+
+            // Set section titles with defaults
+            setSectionTitles(data.sectionTitles || {
+              templeList: "Temple List",
+              tourHighlights: "Tour Highlights", 
+              packageIncludes: "Package Includes",
+              packageExcludes: "Package Excludes",
+              packageItinerary: "Package Itinerary",
+              importantNotes: "Important Notes",
+              frequentlyAskedQuestions: "Frequently Asked Questions",
+              carPrices: "Car Prices",
+              sections: "Sections",
+              sightseeingPlaces: "Sightseeing Places",
+              whyChooseUsItems: "Why Choose Us Items"
+            })
 
             // Set images array, filter out empty strings
             setImages((data.images || []).filter((img) => img && img.trim() !== ""))
@@ -514,6 +554,7 @@ export default function TemplePackageForm({ packageId }) {
         order: packageOrder,
         days: tripDays,
         isActive,
+        sectionTitles, // Add section titles to the package data
         createdAt: isEditMode ? (await getDoc(doc(db, "templePackages", packageId))).data().createdAt : Timestamp.now(),
         updatedAt: Timestamp.now(),
       }
@@ -667,22 +708,15 @@ export default function TemplePackageForm({ packageId }) {
             </div>
 
             {/* Package Title */}
-            <div>
-              <Label htmlFor="title">
-                Package Title<span className="text-red-500">*</span>
-              </Label>
-              <Input
-                id="title"
-                type="text"
-                value={title}
-                onChange={(e) => {
-                  setTitle(e.target.value)
-                  setIsDirty(true)
-                }}
-                required
-                placeholder="Eg: South India Temple Tour Package"
-              />
-            </div>
+            <EditableTitle
+              title={title}
+              onTitleChange={(newTitle) => {
+                setTitle(newTitle)
+                setIsDirty(true)
+              }}
+              placeholder="Eg: South India Temple Tour Package"
+              required={true}
+            />
 
             {/* Package Order */}
             <div>
@@ -827,7 +861,14 @@ export default function TemplePackageForm({ packageId }) {
 
             {/* Temple List */}
             <div>
-              <h4 className="text-lg font-semibold mb-2">Temple List</h4>
+              <EditableTitle
+                title={sectionTitles.templeList}
+                onTitleChange={(newTitle) => updateSectionTitle('templeList', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-6 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {templeList.map((temple) => (
                   <div key={temple.id} className="border border-gray-300 p-4 rounded-md bg-white relative">
@@ -912,7 +953,14 @@ export default function TemplePackageForm({ packageId }) {
 
             {/* Tour Highlights */}
             <div>
-              <h4 className="text-lg font-semibold mb-2">Tour Highlights</h4>
+              <EditableTitle
+                title={sectionTitles.tourHighlights}
+                onTitleChange={(newTitle) => updateSectionTitle('tourHighlights', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-2 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {tourHighlights.map((item) => (
                   <div key={item.id} className="flex gap-2 items-end">
@@ -941,7 +989,14 @@ export default function TemplePackageForm({ packageId }) {
 
             {/* Package Includes */}
             <div>
-              <h4 className="text-lg font-semibold mb-2">Package Includes</h4>
+              <EditableTitle
+                title={sectionTitles.packageIncludes}
+                onTitleChange={(newTitle) => updateSectionTitle('packageIncludes', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-2 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {includes.map((item) => (
                   <div key={item.id} className="flex gap-2 items-end">
@@ -970,7 +1025,14 @@ export default function TemplePackageForm({ packageId }) {
 
             {/* Package Excludes */}
             <div>
-              <h4 className="text-lg font-semibold mb-2">Package Excludes</h4>
+              <EditableTitle
+                title={sectionTitles.packageExcludes}
+                onTitleChange={(newTitle) => updateSectionTitle('packageExcludes', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-2 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {excludes.map((item) => (
                   <div key={item.id} className="flex gap-2 items-end">
@@ -999,7 +1061,14 @@ export default function TemplePackageForm({ packageId }) {
 
             {/* Package Itinerary */}
             <div>
-              <h4 className="text-lg font-semibold mb-2">Package Itinerary</h4>
+              <EditableTitle
+                title={sectionTitles.packageItinerary}
+                onTitleChange={(newTitle) => updateSectionTitle('packageItinerary', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-2 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {itineraries.map((item) => (
                   <div key={item.id} className="flex gap-2 items-end">
@@ -1028,7 +1097,14 @@ export default function TemplePackageForm({ packageId }) {
 
             {/* Important Notes */}
             <div>
-              <h4 className="text-lg font-semibold mb-2">Important Notes</h4>
+              <EditableTitle
+                title={sectionTitles.importantNotes}
+                onTitleChange={(newTitle) => updateSectionTitle('importantNotes', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-2 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {importantNotes.map((item) => (
                   <div key={item.id} className="flex gap-2 items-end">
@@ -1057,7 +1133,14 @@ export default function TemplePackageForm({ packageId }) {
 
             {/* FAQs */}
             <div>
-              <h4 className="text-lg font-semibold mb-2">Frequently Asked Questions</h4>
+              <EditableTitle
+                title={sectionTitles.frequentlyAskedQuestions}
+                onTitleChange={(newTitle) => updateSectionTitle('frequentlyAskedQuestions', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {faqs.map((faq) => (
                   <div key={faq.id} className="border border-gray-300 p-4 rounded-md bg-white relative">
@@ -1104,7 +1187,14 @@ export default function TemplePackageForm({ packageId }) {
 
             {/* Car Prices */}
             <div>
-              <h4 className="text-lg font-semibold mb-2">Car Prices</h4>
+              <EditableTitle
+                title={sectionTitles.carPrices}
+                onTitleChange={(newTitle) => updateSectionTitle('carPrices', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {carPrices.map((carPrice) => (
                   <div key={carPrice.id} className="border border-gray-300 p-4 rounded-md bg-white relative">
@@ -1150,7 +1240,14 @@ export default function TemplePackageForm({ packageId }) {
 
             {/* Sections */}
             <div>
-              <h4 className="text-lg font-semibold mb-2">Sections</h4>
+              <EditableTitle
+                title={sectionTitles.sections}
+                onTitleChange={(newTitle) => updateSectionTitle('sections', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {sections.map((section) => (
                   <div key={section.id} className="border border-gray-300 p-4 rounded-md bg-white relative">
@@ -1166,13 +1263,15 @@ export default function TemplePackageForm({ packageId }) {
                     </Button>
                     <div className="space-y-3">
                       <div>
-                        <Label htmlFor={`section-title-${section.id}`}>Title</Label>
-                        <Input
-                          id={`section-title-${section.id}`}
-                          type="text"
-                          value={section.title}
-                          onChange={(e) => updateSection(section.id, "title", e.target.value)}
+                        <EditableTitle
+                          title={section.title}
+                          onTitleChange={(newTitle) => {
+                            updateSection(section.id, "title", newTitle)
+                            setIsDirty(true)
+                          }}
                           placeholder="Eg: Overview"
+                          showEditIcon={true}
+                          required={false}
                         />
                       </div>
                       <div>
@@ -1197,7 +1296,14 @@ export default function TemplePackageForm({ packageId }) {
 
             {/* Sightseeing Places */}
             <div>
-              <h4 className="text-lg font-semibold mb-2">Sightseeing Places</h4>
+              <EditableTitle
+                title={sectionTitles.sightseeingPlaces}
+                onTitleChange={(newTitle) => updateSectionTitle('sightseeingPlaces', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {sightseeingPlaces.map((place) => (
                   <div key={place.id} className="border border-gray-300 p-4 rounded-md bg-white relative">
@@ -1244,7 +1350,14 @@ export default function TemplePackageForm({ packageId }) {
 
             {/* Why Choose Us */}
             <div>
-              <h4 className="text-lg font-semibold mb-2">Why Choose Us Items</h4>
+              <EditableTitle
+                title={sectionTitles.whyChooseUsItems}
+                onTitleChange={(newTitle) => updateSectionTitle('whyChooseUsItems', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
               <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {whyChooseUsItems.map((item) => (
                   <div
@@ -1287,16 +1400,15 @@ export default function TemplePackageForm({ packageId }) {
                       </p>
                     </div>
                     <div>
-                      <Label htmlFor={`why-us-title-${item.id}`}>Title</Label>
-                      <Input
-                        id={`why-us-title-${item.id}`}
-                        type="text"
-                        value={item.title}
-                        onChange={(e) => {
-                          updateWhyChooseUsItem(item.id, "title", e.target.value)
+                      <EditableTitle
+                        title={item.title}
+                        onTitleChange={(newTitle) => {
+                          updateWhyChooseUsItem(item.id, "title", newTitle)
                           setIsDirty(true)
                         }}
                         placeholder="Eg: 5-Star Rated Service"
+                        showEditIcon={true}
+                        required={false}
                       />
                     </div>
                     <div>
