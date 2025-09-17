@@ -38,8 +38,7 @@ export default function PackageForm({ packageType, packageId }) {
     dressCode: "Dress Code",
     carPrices: "Car Prices",
     sections: "Sections",
-    faq: "FAQ",
-    whyChooseUsItems: "Why Choose Us Items"
+    faq: "FAQ"
   })
 
   // Image management
@@ -56,7 +55,6 @@ export default function PackageForm({ packageType, packageId }) {
   const [carPrices, setCarPrices] = useState([]) // Array of { id, carName, imageUrl, imageFile, prices: [{ id, label, value }] }
   const [sections, setSections] = useState([]) // Array of { id, hasImage, imageUrl, imageFile, contentTitle, contentDescription, listInfo: [{ id, text }] }
   const [faqs, setFaqs] = useState([]) // Corresponds to 'faq' in HTML
-  const [whyChooseUsItems, setWhyChooseUsItems] = useState([])
 
   const [maleDressCodeImages, setMaleDressCodeImages] = useState([]) // Stores URLs of existing male dress code images
   const [newMaleDressCodeFiles, setNewMaleDressCodeFiles] = useState([]) // Stores File objects for new male dress code uploads
@@ -121,8 +119,7 @@ export default function PackageForm({ packageType, packageId }) {
               dressCode: "Dress Code",
               carPrices: "Car Prices",
               sections: "Sections",
-              faq: "FAQ",
-              whyChooseUsItems: "Why Choose Us Items"
+              faq: "FAQ"
             })
             setPackagesAndCars(data.packagesAndCars || [])
             setIncludes(data.includes || [])
@@ -154,14 +151,6 @@ export default function PackageForm({ packageType, packageId }) {
               })) || [],
             )
             setFaqs(data.faqs || [])
-            // Filter out description when loading existing items
-            setWhyChooseUsItems(
-              data.whyChooseUsItems?.map((item) => ({
-                id: item.id,
-                iconName: item.iconName,
-                title: item.title,
-              })) || [],
-            )
             setMaleDressCodeImages(data.maleDressCodeImages || [])
             setNewMaleDressCodeFiles([]) // Clear any pending new files on load
             setFemaleDressCodeImages(data.femaleDressCodeImages || [])
@@ -486,21 +475,6 @@ export default function PackageForm({ packageType, packageId }) {
     setIsDirty(true)
   }
 
-  // Why Choose Us Handlers
-  const addWhyChooseUsItem = () => {
-    setWhyChooseUsItems((prev) => [...prev, { id: generateUniqueId(), iconName: "", title: "" }])
-    setIsDirty(true)
-  }
-
-  const updateWhyChooseUsItem = (id, field, value) => {
-    setWhyChooseUsItems((prev) => prev.map((item) => (item.id === id ? { ...item, [field]: value } : item)))
-    setIsDirty(true)
-  }
-
-  const removeWhyChooseUsItem = (id) => {
-    setWhyChooseUsItems((prev) => prev.filter((item) => item.id !== id))
-    setIsDirty(true)
-  }
 
   // FAQs (e.g., { question: "Q?", answer: "A." })
   const addFaq = () => {
@@ -688,7 +662,6 @@ export default function PackageForm({ packageType, packageId }) {
         carPrices: processedCarPrices, // Use the processed car prices
         sections: processedSections, // Use the processed sections
         faqs,
-        whyChooseUsItems, // Save the updated whyChooseUsItems
         maleDressCodeImages: allMaleDressCodeUrls,
         femaleDressCodeImages: allFemaleDressCodeUrls,
         sectionTitles, // Add section titles
@@ -1693,77 +1666,6 @@ export default function PackageForm({ packageType, packageId }) {
               </div>
             </div>
 
-            {/* Why Choose Us */}
-            <div>
-              <EditableTitle
-                title={sectionTitles.whyChooseUsItems}
-                onTitleChange={(newTitle) => updateSectionTitle('whyChooseUsItems', newTitle)}
-                placeholder="Enter section title"
-                showEditIcon={true}
-                required={false}
-                className="mb-2"
-              />
-              <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
-                {whyChooseUsItems.map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex flex-col gap-2 border border-gray-300 p-4 rounded-md bg-white relative"
-                  >
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      size="icon"
-                      className="absolute top-2 right-2 h-6 w-6 rounded-full"
-                      onClick={() => removeWhyChooseUsItem(item.id)}
-                    >
-                      <X className="h-4 w-4" />
-                      <span className="sr-only">Remove item</span>
-                    </Button>
-                    <div>
-                      <Label htmlFor={`why-us-icon-${item.id}`}>Icon Name (Lucide React)</Label>
-                      <Input
-                        id={`why-us-icon-${item.id}`}
-                        type="text"
-                        value={item.iconName}
-                        onChange={(e) => {
-                          updateWhyChooseUsItem(item.id, "iconName", e.target.value)
-                          setIsDirty(true)
-                        }}
-                        placeholder="Eg: Star, ShieldCheck, Users"
-                      />
-                      <p className="text-sm text-gray-500 mt-1">
-                        Use names from{" "}
-                        <a
-                          href="https://lucide.dev/icons/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-600 hover:underline"
-                        >
-                          Lucide React
-                        </a>{" "}
-                        (e.g., Star, ShieldCheck, Users, Clock, MapPin, Wallet).
-                      </p>
-                    </div>
-                    <div>
-                      <Label htmlFor={`why-us-title-${item.id}`}>Title</Label>
-                      <Input
-                        id={`why-us-title-${item.id}`}
-                        type="text"
-                        value={item.title}
-                        onChange={(e) => {
-                          updateWhyChooseUsItem(item.id, "title", e.target.value)
-                          setIsDirty(true)
-                        }}
-                        placeholder="Eg: 5-Star Rated Service"
-                      />
-                    </div>
-                  </div>
-                ))}
-                <Button type="button" onClick={addWhyChooseUsItem} className="mt-3">
-                  Add Why Choose Us Item
-                </Button>
-              </div>
-            </div>
 
             {/* Submit and Cancel Buttons */}
             <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white" disabled={loading}>

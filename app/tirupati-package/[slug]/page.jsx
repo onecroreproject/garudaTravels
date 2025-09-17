@@ -125,100 +125,82 @@ export default async function TirupatiPackageDetailPage({ params }) {
                  <div className="flex flex-col items-center lg:items-start w-full h-full">
                    <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6 text-center lg:text-left">Why Choose Us</h2>
                    <div className="grid grid-cols-1 gap-4 w-full flex-1">
-                     {/* Show custom items if available, otherwise show default items */}
-                     {(packageData.whyChooseUsItems && packageData.whyChooseUsItems.length > 0) ? (
-                       packageData.whyChooseUsItems.map((item) => {
-                    const IconComponent = IconMap[item.iconName]
-                    if (!IconComponent) return null
-                    return (
-                      <div
-                        key={item.id}
-                             className="group relative overflow-hidden bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-blue-300 h-20 flex items-center"
-                           >
-                             {/* Background Glow Effect */}
-                             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                             
-                             {/* Content */}
-                             <div className="relative p-4 w-full">
-                               <div className="flex items-center">
-                                 <div className="mr-4 flex-shrink-0">
-                                   <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
-                                     <IconComponent className="h-5 w-5 text-white" />
-                                   </div>
-                                 </div>
-                                 <div className="flex-1">
-                                   <h3 className="text-sm lg:text-base font-semibold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 leading-tight">
-                                     {item.title}
-                                   </h3>
-                                 </div>
-                               </div>
+                     <div className="group relative overflow-hidden bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-blue-300 h-20 flex items-center">
+                       <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                       <div className="relative p-4 w-full">
+                         <div className="flex items-center">
+                           <div className="mr-4 flex-shrink-0">
+                             <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                               <ShieldCheck className="h-5 w-5 text-white" />
+                             </div>
+                           </div>
+                           <div className="flex-1">
+                             <h3 className="text-sm lg:text-base font-semibold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 leading-tight">
+                               Trusted Tirupati Travel Experts
+                             </h3>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                     
+                     <div className="group relative overflow-hidden bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-blue-300 h-20 flex items-center">
+                       <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                       <div className="relative p-4 w-full">
+                         <div className="flex items-center">
+                           <div className="mr-4 flex-shrink-0">
+                             <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                               <MapPin className="h-5 w-5 text-white" />
+                             </div>
+                           </div>
+                           <div className="flex-1">
+                             <h3 className="text-sm lg:text-base font-semibold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 leading-tight">
+                               Door-to-Door Pickup & Drop
+                             </h3>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                     
+                     <div className="group relative overflow-hidden bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-blue-300 h-20 flex items-center">
+                       <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                       <div className="relative p-4 w-full">
+                         <div className="flex items-center">
+                           <div className="mr-4 flex-shrink-0">
+                             <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                               <Check className="h-5 w-5 text-white" />
+                             </div>
+                           </div>
+                           <div className="flex-1">
+                             <h3 className="text-sm lg:text-base font-semibold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 leading-tight">
+                               Confirmed Darshan Tickets
+                             </h3>
+                           </div>
+                         </div>
+                       </div>
+          </div>
+                     
+                     <div className="group relative overflow-hidden bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-blue-300 h-20 flex items-center">
+                       <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                       <div className="relative p-4 w-full">
+                         <div className="flex items-center">
+                           <div className="mr-4 flex-shrink-0">
+                             <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                               <Wallet className="h-5 w-5 text-white" />
+                             </div>
+                           </div>
+                           <div className="flex-1">
+                             <h3 className="text-sm lg:text-base font-semibold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 leading-tight">
+                               Affordable & Transparent Pricing
+                             </h3>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
                         </div>
                       </div>
-                    )
-                       })
-                     ) : (
-                       /* Default Why Choose Us items */
-                       <>
-                         <div className="group relative overflow-hidden bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-blue-300 h-20 flex items-center">
-                           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                           <div className="relative p-4 w-full">
-                             <div className="flex items-center">
-                               <div className="mr-4 flex-shrink-0">
-                                 <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
-                                   <ShieldCheck className="h-5 w-5 text-white" />
-                                 </div>
-                               </div>
-                               <div className="flex-1">
-                                 <h3 className="text-sm lg:text-base font-semibold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 leading-tight">
-                                   Trusted & Reliable
-                                 </h3>
-                               </div>
-                             </div>
-                           </div>
-                         </div>
-                         
-                         <div className="group relative overflow-hidden bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-blue-300 h-20 flex items-center">
-                           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                           <div className="relative p-4 w-full">
-                             <div className="flex items-center">
-                               <div className="mr-4 flex-shrink-0">
-                                 <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
-                                   <Users className="h-5 w-5 text-white" />
-                                 </div>
-                               </div>
-                               <div className="flex-1">
-                                 <h3 className="text-sm lg:text-base font-semibold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 leading-tight">
-                                   Expert Guidance
-                                 </h3>
-                               </div>
-                             </div>
-                           </div>
-                         </div>
-                         
-                         <div className="group relative overflow-hidden bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-blue-300 h-20 flex items-center">
-                           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                           <div className="relative p-4 w-full">
-                             <div className="flex items-center">
-                               <div className="mr-4 flex-shrink-0">
-                                 <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
-                                   <Award className="h-5 w-5 text-white" />
-                                 </div>
-                               </div>
-                               <div className="flex-1">
-                                 <h3 className="text-sm lg:text-base font-semibold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 leading-tight">
-                                   Best Service
-                                 </h3>
-                               </div>
-                             </div>
                 </div>
               </div>
-                       </>
-                     )}
-                   </div>
-                 </div>
-               </div>
-             </div>
-           </div>
          </section>
 
         {/* Overview Section */}
