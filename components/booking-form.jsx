@@ -81,7 +81,7 @@ export default function BookingForm() {
 
   return (
     <>
-      <section className="py-12 px-4 bg-gray-100 flex flex-col items-center justify-center min-h-screen" id="booking">
+      <section className="py-6 px-4 flex flex-col items-center justify-center" id="booking">
         {/* <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold text-center text-gray-800 mb-8">
             {" "}

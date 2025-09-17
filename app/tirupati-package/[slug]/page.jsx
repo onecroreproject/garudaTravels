@@ -109,12 +109,12 @@ export default async function TirupatiPackageDetailPage({ params }) {
       <main>
         <TirupatiPackageHero packageData={packageData || {}} />
         
-        <div className="container mx-auto px-4 py-12">
+        <div className="container mx-auto px-4 py-6">
 
          {/* Booking Form and Why Choose Us Section - Always 75/25 Layout */}
          <section id="booking" className="mb-10">
-           <div className="container mx-auto px-4">
-             <div className="flex flex-col lg:flex-row gap-14 items-stretch">
+           <div className="px-2">
+             <div className="flex flex-col lg:flex-row gap-8 items-stretch">
                {/* Left Side - Booking Form (75%) */}
                <div className="w-full lg:w-3/4 order-2 lg:order-1">
               <BookingForm />
