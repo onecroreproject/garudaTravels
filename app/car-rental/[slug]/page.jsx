@@ -415,6 +415,63 @@ export default async function CarRentalPage({ params }) {
         </div>
       )}
 
+      {/* Package Includes and Passenger Notes - Redesigned Card Layout */}
+      <section className="mb-12">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Left Side - Package Includes */}
+          {packageData.includes && packageData.includes.length > 0 && (
+            <div>
+              <div className="text-center mb-6">
+                <h2 className="text-2xl font-bold text-gray-800 mb-2">{packageData.sectionTitles?.includes || "What's Included"}</h2>
+                <div className="w-16 h-1 bg-gradient-to-r from-green-400 to-green-600 mx-auto rounded-full"></div>
+              </div>
+              <div className="space-y-4">
+                {packageData.includes.map((item) => (
+                  <div key={item.id} className="bg-green-50 rounded-xl shadow-md border border-green-100 p-4 hover:shadow-lg transition-all duration-300">
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex-shrink-0 shadow-sm">
+                        <BadgeCheck className="h-4 w-4 text-white" />
+                      </div>
+                      <div 
+                        className="text-gray-700 font-medium leading-relaxed whitespace-pre-line flex-1"
+                        dangerouslySetInnerHTML={{ __html: item.text || "" }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Right Side - Passenger Notes */}
+          {packageData.passengerNotes && packageData.passengerNotes.length > 0 && (
+            <div>
+              <div className="text-center mb-6">
+                <h2 className="text-2xl font-bold text-gray-800 mb-2">{packageData.sectionTitles?.passengerNotes || "Important Passenger Notes"}</h2>
+                <div className="w-16 h-1 bg-gradient-to-r from-blue-400 to-blue-600 mx-auto rounded-full"></div>
+              </div>
+              <div className="space-y-4">
+                {packageData.passengerNotes.map((item) => (
+                  <div key={item.id} className="bg-blue-50 rounded-xl shadow-md border border-blue-100 p-4 hover:shadow-lg transition-all duration-300">
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex-shrink-0 shadow-sm">
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      </div>
+                      <div 
+                        className="text-gray-700 font-medium leading-relaxed whitespace-pre-line flex-1"
+                        dangerouslySetInnerHTML={{ __html: item.text || "" }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          </div>
+        </div>
+      </section>
+
       {/* Terms and Conditions Section */}
       {packageData.termsAndConditions && packageData.termsAndConditions.length > 0 && (
         <section className="py-12 px-4 bg-white">

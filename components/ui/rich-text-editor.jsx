@@ -53,7 +53,7 @@ export default function RichTextEditor({
   }
 
   return (
-    <div className={`border border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent ${className}`}>
+    <div className={`relative border border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent ${className}`}>
       {/* Toolbar */}
       <div className="flex items-center gap-1 p-2 border-b border-gray-200 bg-gray-50 rounded-t-md">
         <Button
@@ -131,32 +131,32 @@ export default function RichTextEditor({
       </div>
 
       {/* Editor */}
-      <div
-        ref={editorRef}
-        contentEditable
-        onInput={handleInput}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        className={`min-h-[${rows * 1.5}rem] p-3 outline-none text-gray-700 ${
-          isFocused ? "bg-white" : "bg-white"
-        }`}
-        style={{ minHeight: `${rows * 1.5}rem` }}
-        data-placeholder={placeholder}
-        suppressContentEditableWarning={true}
-      />
+      <div className="relative">
+        <div
+          ref={editorRef}
+          contentEditable
+          onInput={handleInput}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          className={`min-h-[${rows * 1.5}rem] p-3 outline-none text-gray-700 ${
+            isFocused ? "bg-white" : "bg-white"
+          }`}
+          style={{ minHeight: `${rows * 1.5}rem` }}
+          data-placeholder={placeholder}
+          suppressContentEditableWarning={true}
+        />
 
-      {/* Placeholder */}
-      {!value && !isFocused && (
-        <div className="absolute top-[3.5rem] left-3 text-gray-400 pointer-events-none">
-          {placeholder}
-        </div>
-      )}
+        {/* Placeholder */}
+        {!value && !isFocused && (
+          <div className="absolute top-3 left-3 text-gray-400 pointer-events-none z-10 select-none">
+            {placeholder}
+          </div>
+        )}
+      </div>
 
       <style jsx>{`
         [contenteditable]:empty:before {
-          content: attr(data-placeholder);
-          color: #9ca3af;
-          pointer-events: none;
+          content: none;
         }
         [contenteditable]:focus:before {
           content: none;
