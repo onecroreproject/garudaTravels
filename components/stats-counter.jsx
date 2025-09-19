@@ -135,8 +135,8 @@ export default function StatsCounter() {
                 ref={(el) => (refs.current[index] = el)} // Assign ref directly
                 className="flex flex-col items-center p-4"
               >
-                <div className="relative w-24 h-24 rounded-full bg-white border-2 border-red-500 flex items-center justify-center mb-4 shadow-md transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                  <Icon className="h-12 w-12 text-red-500" />
+                <div className="relative w-24 h-24 rounded-full bg-white border-2 border-blue-500 flex items-center justify-center mb-4 shadow-md transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                  <Icon className="h-12 w-12 text-blue-500" />
                 </div>
                 <h3 className="text-5xl font-bold text-gray-800 mb-2">{displayValue}</h3>
                 <p className="text-lg text-gray-600">{stat.label}</p>

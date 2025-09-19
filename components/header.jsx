@@ -72,7 +72,9 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <img src="/logo.webp" alt="Logo" className="h-6 md:h-8 lg:h-10 w-auto" />
+            <a href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity duration-200">
+              <img src="/logo.webp" alt="Garuda Tours Logo" className="h-6 md:h-8 lg:h-10 w-auto" />
+            </a>
           </div>
 
           {/* Desktop Navigation */}

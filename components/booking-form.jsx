@@ -108,12 +108,12 @@ export default function BookingForm() {
         {/* Main Booking Form */}
         <div className="form">
           <div className="w-full max-w-2xl mb-0 ms-0">
-            <div className="flex gap-4">
+            <div className="flex gap-2 mb-8">
               {/* Tirupati Package */}
               <label
-                className={`flex-1   bg-white font-light px-4 py-3 text-center cursor-pointer transition-colors duration-200 ease-in-out ${selectedPackage === "Tirupati Package"
-                    ? "bg-blue-600 text-white"
-                    : "bg-white text-gray-700 hover:bg-gray-100"
+                className={`flex-1 bg-white/80 backdrop-blur-sm font-semibold px-6 py-4 text-center cursor-pointer transition-all duration-300 ease-in-out rounded-xl shadow-lg border-2 ${selectedPackage === "Tirupati Package"
+                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white border-blue-500 transform scale-105 shadow-xl"
+                    : "bg-white/80 text-gray-700 hover:bg-blue-50 border-gray-200 hover:border-blue-300 hover:shadow-md"
                   }`}
               >
                 <input
@@ -124,14 +124,16 @@ export default function BookingForm() {
                   onChange={handlePackageChange}
                   className="sr-only"
                 />
-                Tirupati Package
+                <span className="flex items-center justify-center gap-2">
+                  Tirupati Package
+                </span>
               </label>
 
               {/* Car Rental Package */}
               <label
-                className={`flex-1     bg-white font-light px-4 py-3 text-center cursor-pointer transition-colors duration-200 ease-in-out ${selectedPackage === "Car Rental Package"
-                    ? "bg-blue-600 text-white"
-                    : "bg-white text-gray-700 hover:bg-gray-100"
+                className={`flex-1 bg-white/80 backdrop-blur-sm font-semibold px-6 py-4 text-center cursor-pointer transition-all duration-300 ease-in-out rounded-xl shadow-lg border-2 ${selectedPackage === "Car Rental Package"
+                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white border-blue-500 transform scale-105 shadow-xl"
+                    : "bg-white/80 text-gray-700 hover:bg-blue-50 border-gray-200 hover:border-blue-300 hover:shadow-md"
                   }`}
               >
                 <input
@@ -142,14 +144,16 @@ export default function BookingForm() {
                   onChange={handlePackageChange}
                   className="sr-only"
                 />
-                Car Rental Package
+                <span className="flex items-center justify-center gap-2">
+                  Car Rental Package
+                </span>
               </label>
 
               {/* Temple Tour Package */}
               <label
-                className={`flex-1   border-b-0   bg-white font-light px-4 py-3 text-center cursor-pointer transition-colors duration-200 ease-in-out ${selectedPackage === "Temple Tour Package"
-                    ? "bg-blue-600 text-white"
-                    : "bg-white text-gray-700 hover:bg-gray-100"
+                className={`flex-1 bg-white/80 backdrop-blur-sm font-semibold px-6 py-4 text-center cursor-pointer transition-all duration-300 ease-in-out rounded-xl shadow-lg border-2 ${selectedPackage === "Temple Tour Package"
+                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white border-blue-500 transform scale-105 shadow-xl"
+                    : "bg-white/80 text-gray-700 hover:bg-blue-50 border-gray-200 hover:border-blue-300 hover:shadow-md"
                   }`}
               >
                 <input
@@ -160,15 +164,16 @@ export default function BookingForm() {
                   onChange={handlePackageChange}
                   className="sr-only"
                 />
-                Temple Tour Package
+                <span className="flex items-center justify-center gap-2">
+                  Temple Tour Package
+                </span>
               </label>
             </div>
           </div>
-          <div className="bg-white p-8 border-t-0 shadow-lg max-w-4xl mt-0 w-full">
-            <h2 className="text-4xl font-bold text-center text-gray-800 mb-8">Book Now</h2>
+          <div className="bg-transparent p-0 border-t-0 shadow-none max-w-4xl mt-0 w-full">
             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Row 1 */}
-              <div>
+              <div className="relative group">
                 <input
                   type="text"
                   name="name"
@@ -176,10 +181,11 @@ export default function BookingForm() {
                   onChange={handleInputChange}
                   placeholder="Your Name"
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-6 py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl"
                 />
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
               </div>
-              <div>
+              <div className="relative group">
                 <input
                   type="email"
                   name="email"
@@ -187,10 +193,11 @@ export default function BookingForm() {
                   onChange={handleInputChange}
                   placeholder="Email"
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-6 py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl"
                 />
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
               </div>
-              <div>
+              <div className="relative group">
                 <input
                   type="tel"
                   name="phone"
@@ -198,12 +205,13 @@ export default function BookingForm() {
                   onChange={handleInputChange}
                   placeholder="Phone Number"
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-6 py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl"
                 />
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
               </div>
 
               {/* Row 2 */}
-              <div>
+              <div className="relative group">
                 <input
                   type="number"
                   name="persons"
@@ -212,40 +220,42 @@ export default function BookingForm() {
                   placeholder="No. of Persons"
                   required
                   min="1"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-6 py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl"
                 />
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
               </div>
-              <div className="relative">
+              <div className="relative group">
                 <input
                   type="date"
                   name="date"
                   value={formData.date}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-10"
+                  className="w-full px-6 py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl"
                 />
-
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
               </div>
-              <div className="relative">
+              <div className="relative group">
                 <input
                   type="time"
                   name="time"
                   value={formData.time}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-10"
+                  className="w-full px-6 py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl"
                 />
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
               </div>
 
               {/* Conditional Dropdowns */}
               {selectedPackage === "Car Rental Package" && (
-                <div className="md:col-span-1">
+                <div className="md:col-span-3 relative group">
                   <select
                     name="selectedOption"
                     value={formData.selectedOption}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-500"
+                    className="w-full px-6 py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-gray-700"
                   >
                     <option value="">Km Based Rental</option>
                     {/* <option value="Swift/Etios">Swift/Etios</option>
@@ -253,17 +263,18 @@ export default function BookingForm() {
                     <option value="SUV">SUV</option>
                     <option value="Van">Van</option> */}
                   </select>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
               )}
 
               {(selectedPackage === "Tirupati Package" || selectedPackage === "Temple Tour Package") && (
-                <div className="md:col-span-1">
+                <div className="md:col-span-3 relative group">
                   <select
                     name="selectedOption"
                     value={formData.selectedOption}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-500"
+                    className="w-full px-6 py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-gray-700"
                   >
                     <option value="">-- Select a Package --</option>
                     {selectedPackage === "Tirupati Package" && (
@@ -328,26 +339,39 @@ export default function BookingForm() {
               )}
 
               {/* Your Message */}
-              <div className="md:col-span-3">
+              <div className="md:col-span-3 relative group">
                 <textarea
                   name="message"
                   value={formData.message}
                   onChange={handleInputChange}
                   placeholder="Your Message"
                   rows={4}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-y"
+                  className="w-full px-6 py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl resize-y"
                 ></textarea>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
               </div>
 
               {/* Submit Button */}
-              <div className="md:col-span-3 flex justify-center mt-4">
+              <div className="md:col-span-3 flex justify-center mt-8">
                 <Button
                   type="submit"
                   size="lg"
                   disabled={isSubmitting}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-12 py-4 text-xl font-bold rounded-xl shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
-                  {isSubmitting ? "Submitting..." : "Submit"}
+                  {isSubmitting ? (
+                    <span className="flex items-center gap-2">
+                      <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Submitting...
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-2">
+                      Submit Booking
+                    </span>
+                  )}
                 </Button>
               </div>
             </form>
