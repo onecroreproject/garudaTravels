@@ -26,26 +26,26 @@ export default function VehicleFeatures() {
   const [visibleVehicles, setVisibleVehicles] = useState(initialVehicleImages)
   const [visibleWhyUsItems, setVisibleWhyUsItems] = useState(initialWhyChooseUsItems)
 
-  // Vehicle Carousel loop
+  // Continuous auto-sliding for vehicles - like running text
   useEffect(() => {
     const interval = setInterval(() => {
       setVisibleVehicles((prev) => {
         const [first, ...rest] = prev
         return [...rest, first]
       })
-    }, 3000)
+    }, 3000) // Smooth continuous sliding every 3 seconds
 
     return () => clearInterval(interval)
   }, [])
 
-  // Why Choose Us loop
+  // Continuous auto-sliding for why choose us - like running text
   useEffect(() => {
     const interval = setInterval(() => {
       setVisibleWhyUsItems((prev) => {
         const [first, ...rest] = prev
         return [...rest, first]
       })
-    }, 2500)
+    }, 2500) // Smooth continuous sliding every 2.5 seconds
 
     return () => clearInterval(interval)
   }, [])
@@ -67,7 +67,7 @@ export default function VehicleFeatures() {
           {visibleVehicles.map((image, index) => (
             <div
               key={`${image.id}-${index}`}
-              className="flex-shrink-0 w-64 snap-center mr-2 last:mr-0 transition-all duration-300"
+              className="flex-shrink-0 w-64 snap-center mr-2 last:mr-0 transition-all duration-1000 ease-in-out transform hover:scale-105"
             >
               <Image
                 src={image.src || "/placeholder.svg"}
@@ -89,7 +89,7 @@ export default function VehicleFeatures() {
           {visibleWhyUsItems.map((item, index) => (
             <div
               key={`${item.id}-${index}`}
-              className="flex-shrink-0 flex flex-col items-center justify-center snap-center mb-0 last:mb-0"
+              className="flex-shrink-0 flex flex-col items-center justify-center snap-center mb-0 last:mb-0 transition-all duration-1000 ease-in-out transform hover:scale-105"
             >
               <Image
                 src={item.src || "/placeholder.svg"}
@@ -108,7 +108,7 @@ export default function VehicleFeatures() {
     </div>
   </div>
 
-  {/* Hide Scrollbar */}
+  {/* Enhanced Scrollbar and Continuous Smooth Scrolling */}
   <style jsx>{`
     .hide-scrollbar::-webkit-scrollbar {
       display: none;
@@ -116,6 +116,28 @@ export default function VehicleFeatures() {
     .hide-scrollbar {
       -ms-overflow-style: none;
       scrollbar-width: none;
+    }
+    
+    /* Continuous smooth scrolling like running text */
+    .scroll-smooth {
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Ultra-smooth continuous transitions */
+    .transition-all {
+      transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    /* Continuous sliding animation */
+    @keyframes continuousSlide {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+    
+    /* Smooth continuous movement */
+    .continuous-slide {
+      animation: continuousSlide 15s linear infinite;
     }
   `}</style>
 </section>

@@ -65,17 +65,34 @@ export default function HeroSlider() {
             className="w-full h-full bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url(${slide.image})` }}
           >
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-black bg-opacity-50" />
+            {/* Enhanced Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/60" />
 
-            {/* Content */}
+            {/* Enhanced Content */}
             <div className="relative z-10 flex items-center justify-center h-full">
-              <div className="text-center text-white px-4 max-w-4xl">
-                <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">{slide.title}</h1>
-                <p className="text-lg md:text-xl lg:text-2xl mb-8 leading-relaxed opacity-90">{slide.description}</p>
-                <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg">
-                  {slide.buttonText || "Learn More"}
-                </Button>
+              <div className="text-center text-white px-4 max-w-5xl">
+          
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight drop-shadow-2xl">
+                  {/* <span className="block mb-2">{slide.title.split('–')[0]}</span> */}
+                  <span className="bg-gradient-to-r from-yellow-300 via-orange-300 to-yellow-300 bg-clip-text text-transparent drop-shadow-lg">
+                    { slide.title}
+                  </span>
+                </h1>
+                
+                <p className="text-xl md:text-2xl lg:text-3xl mb-10 leading-relaxed opacity-95 drop-shadow-md max-w-4xl mx-auto font-light">
+                  {slide.description}
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                  <a href="#booking">
+                    <Button size="lg" className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-10 py-5 text-xl font-bold shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300 rounded-xl">
+                      {"Book Now"}
+                    </Button>
+                  </a>
+                 
+                </div>
+                
+       
               </div>
             </div>
           </div>

@@ -128,7 +128,7 @@ export default function Footer() {
       <div className=" text-gray-400 text-sm py-4 mt-4">
         {/* Reduced mt-12 to mt-8 */}
         <div className="container flex flex-col md:flex-row justify-between items-center">
-          <p className="mb-2 md:mb-0">Copyright © 2025 Garuda Tours & Travels All rights reserved.</p>
+          <p className="mb-2 md:mb-0">Copyright © 2025 Garuda Tours & Travels All rights reserved.  Developed by <a href="https://www.thereciprocalsolutions.com" className="text-blue-400">The Reciprocal Solutions </a></p>
         </div>
       </div>
 
