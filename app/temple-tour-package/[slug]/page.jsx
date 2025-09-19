@@ -312,10 +312,10 @@ export default async function TemplePackagePage({ params }) {
                     Package Overview
                   </h2>
                   <div className="space-y-4">
-                      <div 
+                    <div 
                         className="text-gray-700 leading-relaxed whitespace-pre-line"
                         dangerouslySetInnerHTML={{ __html: packageData.content || "" }}
-                      />
+                    />
                   </div>
                 </div>
               )}

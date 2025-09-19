@@ -39,6 +39,8 @@ export default function CarRentalPackageForm({ packageId }) {
     pricingPlans: "Pricing Plans",
     termsAndConditions: "Terms and Conditions",
     sections: "Sections",
+    includes: "What's Included",
+    passengerNotes: "Important Passenger Notes",
     frequentlyAskedQuestions: "Frequently Asked Questions"
   })
 
@@ -52,6 +54,8 @@ export default function CarRentalPackageForm({ packageId }) {
   const [pricingPlans, setPricingPlans] = useState([])
   const [termsAndConditions, setTermsAndConditions] = useState([])
   const [sections, setSections] = useState([]) // Added sections field like Tirupati
+  const [includes, setIncludes] = useState([]) // Added includes field like Tirupati
+  const [passengerNotes, setPassengerNotes] = useState([]) // Added passenger notes field like Tirupati
   const [faqs, setFaqs] = useState([])
   const [isActive, setIsActive] = useState(true)
 
@@ -180,6 +184,8 @@ export default function CarRentalPackageForm({ packageId }) {
                 listInfo: s.listInfo || [],
               })) || [],
             )
+            setIncludes(data.includes || [])
+            setPassengerNotes(data.passengerNotes || [])
             setFaqs(data.faqs || [])
             setSubtitle(data.subtitle || "")
             setContent(data.content || "")
@@ -435,6 +441,34 @@ export default function CarRentalPackageForm({ packageId }) {
     setIsDirty(true)
   }
 
+  // Includes handlers
+  const addInclude = () => {
+    setIncludes((prev) => [...prev, { id: generateUniqueId(), text: "" }])
+    setIsDirty(true)
+  }
+  const updateInclude = (id, value) => {
+    setIncludes((prev) => prev.map((item) => (item.id === id ? { ...item, text: value } : item)))
+    setIsDirty(true)
+  }
+  const removeInclude = (id) => {
+    setIncludes((prev) => prev.filter((item) => item.id !== id))
+    setIsDirty(true)
+  }
+
+  // Passenger Notes handlers
+  const addPassengerNote = () => {
+    setPassengerNotes((prev) => [...prev, { id: generateUniqueId(), text: "" }])
+    setIsDirty(true)
+  }
+  const updatePassengerNote = (id, value) => {
+    setPassengerNotes((prev) => prev.map((item) => (item.id === id ? { ...item, text: value } : item)))
+    setIsDirty(true)
+  }
+  const removePassengerNote = (id) => {
+    setPassengerNotes((prev) => prev.filter((item) => item.id !== id))
+    setIsDirty(true)
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
@@ -532,6 +566,8 @@ export default function CarRentalPackageForm({ packageId }) {
         pricingPlans,
         termsAndConditions,
         sections: processedSections, // Add processed sections
+        includes, // Add includes field
+        passengerNotes, // Add passenger notes field
         faqs,
         subtitle,
         content,
@@ -1319,6 +1355,88 @@ export default function CarRentalPackageForm({ packageId }) {
                 ))}
                 <Button type="button" onClick={addSection} className="mt-3">
                   Add Section
+                </Button>
+              </div>
+            </div>
+
+            {/* What's Included */}
+            <div>
+              <EditableTitle
+                title={sectionTitles.includes}
+                onTitleChange={(newTitle) => updateSectionTitle('includes', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+              />
+              <div className="space-y-3">
+                {includes.map((item) => (
+                  <div key={item.id} className="relative">
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      size="icon"
+                      className="absolute top-2 right-2 h-6 w-6 rounded-full"
+                      onClick={() => removeInclude(item.id)}
+                    >
+                      <X className="h-4 w-4" />
+                      <span className="sr-only">Remove Include</span>
+                    </Button>
+                    <div className="pr-10">
+                      <RichTextEditor
+                        value={item.text}
+                        onChange={(content) => {
+                          updateInclude(item.id, content)
+                          setIsDirty(true)
+                        }}
+                        placeholder="Eg: Pickup and drop from your location"
+                        rows={2}
+                      />
+                    </div>
+                  </div>
+                ))}
+                <Button type="button" onClick={addInclude} className="mt-3">
+                  Add Include
+                </Button>
+              </div>
+            </div>
+
+            {/* Important Passenger Notes */}
+            <div>
+              <EditableTitle
+                title={sectionTitles.passengerNotes}
+                onTitleChange={(newTitle) => updateSectionTitle('passengerNotes', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+              />
+              <div className="space-y-3">
+                {passengerNotes.map((item) => (
+                  <div key={item.id} className="relative">
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      size="icon"
+                      className="absolute top-2 right-2 h-6 w-6 rounded-full"
+                      onClick={() => removePassengerNote(item.id)}
+                    >
+                      <X className="h-4 w-4" />
+                      <span className="sr-only">Remove Passenger Note</span>
+                    </Button>
+                    <div className="pr-10">
+                      <RichTextEditor
+                        value={item.text}
+                        onChange={(content) => {
+                          updatePassengerNote(item.id, content)
+                          setIsDirty(true)
+                        }}
+                        placeholder="Eg: Please carry valid ID proof"
+                        rows={2}
+                      />
+                    </div>
+                  </div>
+                ))}
+                <Button type="button" onClick={addPassengerNote} className="mt-3">
+                  Add Passenger Note
                 </Button>
               </div>
             </div>
