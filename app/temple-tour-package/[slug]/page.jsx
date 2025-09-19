@@ -285,76 +285,10 @@ function TemplePackagePage() {
                     Package Overview
                   </h2>
                   <div className="space-y-4">
-                    {packageData.content
-                      .split(
-                        /(?=Departure & Return:|Distance Covered:|Vehicle Options:|Tour Duration:|Highlights:|Includes:|Excludes:)/,
-                      )
-                      .map((section, index) => {
-                        if (!section.trim()) return null
-
-                        // Extract section title and content
-                        const lines = section
-                          .trim()
-                          .split("\n")
-                          .filter((line) => line.trim())
-                        if (lines.length === 0) return null
-
-                        const firstLine = lines[0]
-                        const isStructuredSection = firstLine.includes(":")
-
-                        if (isStructuredSection) {
-                          const [title, ...contentLines] = firstLine.split(":")
-                          const remainingContent = lines.slice(1).join(" ")
-                          const fullContent = contentLines.join(":") + " " + remainingContent
-
-                          // Handle Includes and Excludes specially
-                          if (title.trim() === "Includes") {
-                            return (
-                              <div
-                                key={index}
-                                className="border-l-4 border-green-500 pl-4 py-2 bg-green-50 rounded-r-lg"
-                              >
-                                <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
-                                  <CheckCircle className="w-4 h-4" />
-                                  {title.trim()}:
-                                </h4>
-                                <p className="text-gray-700 leading-relaxed flex items-start gap-2">
-                                  <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                                  {fullContent.trim()}
-                                </p>
-                              </div>
-                            )
-                          } else if (title.trim() === "Excludes") {
-                            return (
-                              <div key={index} className="border-l-4 border-red-500 pl-4 py-2 bg-red-50 rounded-r-lg">
-                                <h4 className="font-semibold text-red-800 mb-2 flex items-center gap-2">
-                                  <XCircle className="w-4 h-4" />
-                                  {title.trim()}:
-                                </h4>
-                                <p className="text-gray-700 leading-relaxed flex items-start gap-2">
-                                  <XCircle className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
-                                  {fullContent.trim()}
-                                </p>
-                              </div>
-                            )
-                          } else {
-                            // Regular structured sections
-                            return (
-                              <div key={index} className="border-l-4 border-blue-500 pl-4 py-2">
-                                <h4 className="font-semibold text-gray-800 mb-1">{title.trim()}:</h4>
-                                <p className="text-gray-700 leading-relaxed">{fullContent.trim()}</p>
-                              </div>
-                            )
-                          }
-                        } else {
-                          // Regular paragraph content
-                          return (
-                            <div key={index} className="text-gray-700 leading-relaxed">
-                              <p>{section.trim()}</p>
-                            </div>
-                          )
-                        }
-                      })}
+                    <div 
+                      className="prose prose-sm max-w-none"
+                      dangerouslySetInnerHTML={{ __html: packageData.content }}
+                    />
                   </div>
                 </div>
               )}
@@ -370,7 +304,10 @@ function TemplePackagePage() {
                     {packageData.tourHighlights.map((highlight, index) => (
                       <div key={highlight.id || index} className="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
                         <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-700">{highlight.text}</span>
+                        <div 
+                          className="text-gray-700 prose prose-sm max-w-none"
+                          dangerouslySetInnerHTML={{ __html: highlight.text }}
+                        />
                       </div>
                     ))}
                   </div>
@@ -399,7 +336,10 @@ function TemplePackagePage() {
                         )}
                         <h4 className="font-semibold text-gray-800 mb-2">{temple.name}</h4>
                         {temple.description && (
-                          <p className="text-sm text-gray-600 leading-relaxed">{temple.description}</p>
+                          <div 
+                            className="text-sm text-gray-600 leading-relaxed prose prose-sm max-w-none"
+                            dangerouslySetInnerHTML={{ __html: temple.description }}
+                          />
                         )}
                       </div>
                     ))}
@@ -423,7 +363,10 @@ function TemplePackagePage() {
                           </div>
                         </div>
                         <div className="flex-1">
-                          <p className="text-gray-700 leading-relaxed">{item.text}</p>
+                          <div 
+                            className="text-gray-700 leading-relaxed prose prose-sm max-w-none"
+                            dangerouslySetInnerHTML={{ __html: item.text }}
+                          />
                         </div>
                       </div>
                     ))}
@@ -446,7 +389,10 @@ function TemplePackagePage() {
                       >
                         <h4 className="font-semibold text-gray-800 mb-2">{place.name}</h4>
                         {place.description && (
-                          <p className="text-sm text-gray-600 leading-relaxed">{place.description}</p>
+                          <div 
+                            className="text-sm text-gray-600 leading-relaxed prose prose-sm max-w-none"
+                            dangerouslySetInnerHTML={{ __html: place.description }}
+                          />
                         )}
                       </div>
                     ))}
@@ -462,11 +408,9 @@ function TemplePackagePage() {
                       <h2 className="text-2xl font-bold text-gray-800 mb-4">{section.title}</h2>
                       <div className="text-gray-700 leading-relaxed">
                         <div 
-                          className="whitespace-pre-line"
-                          style={{ whiteSpace: 'pre-line' }}
-                        >
-                          {section.content}
-                        </div>
+                          className="prose prose-sm max-w-none"
+                          dangerouslySetInnerHTML={{ __html: section.content }}
+                        />
                       </div>
                     </div>
                   ))}
@@ -486,7 +430,10 @@ function TemplePackagePage() {
                       {packageData.includes.map((item, index) => (
                         <li key={item.id || index} className="flex items-start gap-3">
                           <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                          <span className="text-sm text-gray-700">{item.text}</span>
+                          <div 
+                            className="text-sm text-gray-700 prose prose-sm max-w-none"
+                            dangerouslySetInnerHTML={{ __html: item.text }}
+                          />
                         </li>
                       ))}
                     </ul>
@@ -504,7 +451,10 @@ function TemplePackagePage() {
                       {packageData.excludes.map((item, index) => (
                         <li key={item.id || index} className="flex items-start gap-3">
                           <XCircle className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
-                          <span className="text-sm text-gray-700">{item.text}</span>
+                          <div 
+                            className="text-sm text-gray-700 prose prose-sm max-w-none"
+                            dangerouslySetInnerHTML={{ __html: item.text }}
+                          />
                         </li>
                       ))}
                     </ul>
@@ -523,7 +473,10 @@ function TemplePackagePage() {
                     {packageData.importantNotes.map((note, index) => (
                       <li key={note.id || index} className="flex items-start gap-3">
                         <span className="text-yellow-600 mt-1 font-bold">•</span>
-                        <span className="text-sm text-gray-700">{note.text}</span>
+                        <div 
+                          className="text-sm text-gray-700 prose prose-sm max-w-none"
+                          dangerouslySetInnerHTML={{ __html: note.text }}
+                        />
                       </li>
                     ))}
                   </ul>
@@ -541,11 +494,14 @@ function TemplePackagePage() {
                     {packageData.faqs.map((faq, index) => (
                       <AccordionItem key={faq.id || index} value={`item-${index}`} className="border-b border-gray-200">
                         <AccordionTrigger className="text-left hover:no-underline py-4">
-                          <span className="text-base font-bold text-gray-800">{faq.question}</span>
+                          <div 
+                            className="text-base font-bold text-gray-800 prose prose-sm max-w-none"
+                            dangerouslySetInnerHTML={{ __html: faq.question }}
+                          />
                         </AccordionTrigger>
                         <AccordionContent className="pb-4">
                           <div
-                            className="text-gray-600 leading-relaxed"
+                            className="text-gray-600 leading-relaxed prose prose-sm max-w-none"
                             dangerouslySetInnerHTML={{ __html: faq.answer }}
                           />
                         </AccordionContent>
@@ -734,7 +690,12 @@ function TemplePackagePage() {
                       <div className="text-orange-600">{renderIcon(item.iconName)}</div>
                     </div>
                     <h3 className="text-lg font-semibold text-gray-800 mb-2">{item.title}</h3>
-                    {item.description && <p className="text-sm text-gray-600 leading-relaxed">{item.description}</p>}
+                    {item.description && (
+                      <div 
+                        className="text-sm text-gray-600 leading-relaxed prose prose-sm max-w-none"
+                        dangerouslySetInnerHTML={{ __html: item.description }}
+                      />
+                    )}
                   </div>
                 ))}
               </div>
