@@ -1,8 +1,4 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { useParams } from "next/navigation"
-import { collection, getDocs } from "firebase/firestore"
+import { doc, getDoc, getDocs, collection, query, where } from "firebase/firestore"
 import { db } from "@/lib/firebase"
 import BookingForm from "@/components/booking-form"
 import Link from "next/link"
@@ -34,38 +30,76 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
-function TemplePackagePage() {
-  const params = useParams()
-  const [packageData, setPackageData] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [activeImageIndex, setActiveImageIndex] = useState(0)
-
-  useEffect(() => {
-    async function fetchPackageData() {
-      try {
-        setLoading(true)
-        const querySnapshot = await getDocs(collection(db, "templePackages"))
-        const packages = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-        const foundPackage = packages.find((pkg) => pkg.url === params.slug)
-
-        if (foundPackage && foundPackage.isActive) {
-          setPackageData(foundPackage)
-        } else {
-          setError("Temple package not found or inactive")
-        }
-      } catch (err) {
-        console.error("Error fetching temple package:", err)
-        setError("Failed to load temple package")
-      } finally {
-        setLoading(false)
+// Generate dynamic metadata
+export async function generateMetadata({ params }) {
+  const { slug } = params
+  
+  try {
+    const docRef = doc(db, "templePackages", slug)
+    const docSnap = await getDoc(docRef)
+    
+    if (docSnap.exists()) {
+      const data = docSnap.data()
+      const seoData = data.seoData || {}
+      
+      return {
+        title: seoData.pageTitle || data.title || "Temple Tour Package | Garuda Tours and Travels",
+        description: seoData.metaDescription || data.subtitle || "Book your temple tour package with Garuda Tours and Travels. Professional service, expert guides, and spiritual journey.",
+        keywords: seoData.metaKeywords || "temple tour, spiritual journey, south india temples, garuda tours, travel",
+        openGraph: {
+          title: seoData.ogTitle || seoData.pageTitle || data.title || "Temple Tour Package | Garuda Tours and Travels",
+          description: seoData.ogDescription || seoData.metaDescription || data.subtitle || "Book your temple tour package with Garuda Tours and Travels",
+          images: seoData.ogImage ? [seoData.ogImage] : (data.images?.[0] ? [data.images[0]] : []),
+          type: 'website',
+        },
+        twitter: {
+          card: 'summary_large_image',
+          title: seoData.ogTitle || seoData.pageTitle || data.title || "Temple Tour Package | Garuda Tours and Travels",
+          description: seoData.ogDescription || seoData.metaDescription || data.subtitle || "Book your temple tour package with Garuda Tours and Travels",
+          images: seoData.ogImage ? [seoData.ogImage] : (data.images?.[0] ? [data.images[0]] : []),
+        },
       }
     }
+  } catch (error) {
+    console.error("Error generating metadata:", error)
+  }
+  
+  // Fallback metadata
+  return {
+    title: "Temple Tour Package | Garuda Tours and Travels",
+    description: "Book your temple tour package with Garuda Tours and Travels. Professional service, expert guides, and spiritual journey.",
+    keywords: "temple tour, spiritual journey, south india temples, garuda tours, travel",
+  }
+}
 
-    if (params.slug) {
-      fetchPackageData()
+// This is a Server Component, so it can directly fetch data
+export default async function TemplePackagePage({ params }) {
+  const { slug } = params
+
+  let packageData = null
+  let error = null
+
+  try {
+    // Fetch current package data
+    const docRef = doc(db, "templePackages", slug)
+    const docSnap = await getDoc(docRef)
+
+    if (docSnap.exists()) {
+      const rawData = docSnap.data()
+      // Convert Firebase timestamps and other complex objects to plain objects
+      packageData = {
+        id: docSnap.id,
+        ...rawData,
+        createdAt: rawData.createdAt ? rawData.createdAt.toDate().toISOString() : null,
+        updatedAt: rawData.updatedAt ? rawData.updatedAt.toDate().toISOString() : null,
+      }
+    } else {
+      error = "Temple package not found or inactive."
     }
-  }, [params.slug])
+  } catch (err) {
+    console.error("Error fetching temple package:", err)
+    error = "Failed to load temple package details. Please try again later."
+  }
 
 
   const renderIcon = (iconName) => {
@@ -93,29 +127,14 @@ function TemplePackagePage() {
     return <IconComponent className="w-8 h-8" />
   }
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <Header />
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading temple package...</p>
-          </div>
-        </div>
-        <Footer />
-      </div>
-    )
-  }
-
-  if (error || !packageData) {
+  if (error) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Header />
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="text-center">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">Package Not Found</h2>
-            <p className="text-gray-600 mb-6">{error || "The requested temple package could not be found."}</p>
+            <p className="text-gray-600 mb-6">{error}</p>
             <Link
               href="/"
               className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition-all"
@@ -123,6 +142,18 @@ function TemplePackagePage() {
               Back to Home
             </Link>
           </div>
+        </div>
+        <Footer />
+      </div>
+    )
+  }
+
+  if (!packageData) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        <div className="flex items-center justify-center min-h-[400px]">
+          <p className="text-lg text-gray-700">Loading temple package details...</p>
         </div>
         <Footer />
       </div>
@@ -226,10 +257,8 @@ function TemplePackagePage() {
               {/* Main Image */}
               <div className="mb-6">
                 <img
-                  src={
-                    packageData.images[activeImageIndex] || "/placeholder.svg?height=400&width=800&query=temple tour"
-                  }
-                  alt={`${packageData.title} - Image ${activeImageIndex + 1}`}
+                  src={packageData.images[0] || "/placeholder.svg?height=400&width=800&query=temple tour"}
+                  alt={`${packageData.title} - Main Image`}
                   className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
                 />
               </div>
@@ -240,19 +269,17 @@ function TemplePackagePage() {
                   {packageData.images.slice(0, 6).map((image, index) => (
                     <div
                       key={index}
-                      className={`flex-shrink-0 cursor-pointer rounded-lg overflow-hidden border-2 transition-all ${activeImageIndex === index ? "border-blue-500" : "border-transparent"
-                        }`}
-                      onClick={() => setActiveImageIndex(index)}
+                      className="flex-shrink-0 rounded-lg overflow-hidden border-2 border-transparent"
                     >
                       <img
                         src={image || "/placeholder.svg"}
                         alt={`Thumbnail ${index + 1}`}
-                        className="w-20 h-16 object-cover hover:opacity-80 transition-opacity"
+                        className="w-20 h-16 object-cover"
                       />
                     </div>
                   ))}
                   {packageData.images.length > 6 && (
-                    <div className="flex-shrink-0 w-20 h-16 bg-gray-100 rounded-lg flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors">
+                    <div className="flex-shrink-0 w-20 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
                       <div className="text-center">
                         <Eye className="w-4 h-4 mx-auto mb-1 text-gray-600" />
                         <span className="text-xs text-gray-600">+{packageData.images.length - 6}</span>
@@ -713,4 +740,3 @@ function TemplePackagePage() {
   )
 }
 
-export default TemplePackagePage

@@ -55,6 +55,16 @@ export default function CarRentalPackageForm({ packageId }) {
   const [faqs, setFaqs] = useState([])
   const [isActive, setIsActive] = useState(true)
 
+  // SEO fields
+  const [seoData, setSeoData] = useState({
+    pageTitle: "",
+    metaDescription: "",
+    metaKeywords: "",
+    ogTitle: "",
+    ogDescription: "",
+    ogImage: ""
+  })
+
   const [loading, setLoading] = useState(false)
   const [initialLoading, setInitialLoading] = useState(true)
   const [clientAuthenticated, setClientAuthenticated] = useState(false)
@@ -174,6 +184,14 @@ export default function CarRentalPackageForm({ packageId }) {
             setSubtitle(data.subtitle || "")
             setContent(data.content || "")
             setIsActive(data.isActive !== undefined ? data.isActive : true)
+            setSeoData(data.seoData || {
+              pageTitle: "",
+              metaDescription: "",
+              metaKeywords: "",
+              ogTitle: "",
+              ogDescription: "",
+              ogImage: ""
+            })
           } else {
             toast({
               title: "Error",
@@ -518,6 +536,7 @@ export default function CarRentalPackageForm({ packageId }) {
         subtitle,
         content,
         isActive,
+        seoData, // Add SEO data
         sectionTitles, // Add section titles
         createdAt: isEditMode ? (await getDoc(doc(db, "carRentalPackages", packageId))).data().createdAt : Timestamp.now(),
         updatedAt: Timestamp.now(),
@@ -730,6 +749,98 @@ export default function CarRentalPackageForm({ packageId }) {
                   </div>
                 </div>
               )}
+            </div>
+
+            {/* SEO Settings */}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">SEO Settings</h3>
+              <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="pageTitle">Page Title</Label>
+                    <Input
+                      id="pageTitle"
+                      type="text"
+                      value={seoData.pageTitle}
+                      onChange={(e) => {
+                        setSeoData(prev => ({ ...prev, pageTitle: e.target.value }))
+                        setIsDirty(true)
+                      }}
+                      placeholder="Custom page title for SEO"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">Appears in browser tab and search results</p>
+                  </div>
+                  <div>
+                    <Label htmlFor="metaKeywords">Meta Keywords</Label>
+                    <Input
+                      id="metaKeywords"
+                      type="text"
+                      value={seoData.metaKeywords}
+                      onChange={(e) => {
+                        setSeoData(prev => ({ ...prev, metaKeywords: e.target.value }))
+                        setIsDirty(true)
+                      }}
+                      placeholder="car rental, vehicle, hire, transport"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">Comma-separated keywords</p>
+                  </div>
+                </div>
+                <div>
+                  <Label htmlFor="metaDescription">Meta Description</Label>
+                  <RichTextEditor
+                    value={seoData.metaDescription}
+                    onChange={(content) => {
+                      setSeoData(prev => ({ ...prev, metaDescription: content }))
+                      setIsDirty(true)
+                    }}
+                    placeholder="Brief description of the car rental service for search engines"
+                    rows={3}
+                  />
+                  <p className="text-xs text-gray-500 mt-1">Recommended: 150-160 characters</p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="ogTitle">Open Graph Title</Label>
+                    <Input
+                      id="ogTitle"
+                      type="text"
+                      value={seoData.ogTitle}
+                      onChange={(e) => {
+                        setSeoData(prev => ({ ...prev, ogTitle: e.target.value }))
+                        setIsDirty(true)
+                      }}
+                      placeholder="Title for social media sharing"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">For Facebook, WhatsApp sharing</p>
+                  </div>
+                  <div>
+                    <Label htmlFor="ogImage">Open Graph Image URL</Label>
+                    <Input
+                      id="ogImage"
+                      type="url"
+                      value={seoData.ogImage}
+                      onChange={(e) => {
+                        setSeoData(prev => ({ ...prev, ogImage: e.target.value }))
+                        setIsDirty(true)
+                      }}
+                      placeholder="https://example.com/image.jpg"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">Image for social media sharing</p>
+                  </div>
+                </div>
+                <div>
+                  <Label htmlFor="ogDescription">Open Graph Description</Label>
+                  <RichTextEditor
+                    value={seoData.ogDescription}
+                    onChange={(content) => {
+                      setSeoData(prev => ({ ...prev, ogDescription: content }))
+                      setIsDirty(true)
+                    }}
+                    placeholder="Description for social media sharing"
+                    rows={2}
+                  />
+                </div>
+              </div>
             </div>
 
             {/* Car Types */}
