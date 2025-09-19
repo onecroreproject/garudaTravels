@@ -40,6 +40,48 @@ const IconMap = {
   // Add other icons here if needed in the future
 }
 
+// Generate dynamic metadata
+export async function generateMetadata({ params }) {
+  const { slug } = params
+  
+  try {
+    const docRef = doc(db, "tirupati-package", slug)
+    const docSnap = await getDoc(docRef)
+    
+    if (docSnap.exists()) {
+      const data = docSnap.data()
+      const seoData = data.seoData || {}
+      
+      return {
+        title: seoData.pageTitle || data.title || "Tirupati Package | Garuda Tours and Travels",
+        description: seoData.metaDescription || data.subtitle || "Book your Tirupati package with Garuda Tours and Travels. Professional service, confirmed darshan tickets, and door-to-door pickup.",
+        keywords: seoData.metaKeywords || "tirupati, balaji, darshan, package, garuda tours, travel",
+        openGraph: {
+          title: seoData.ogTitle || seoData.pageTitle || data.title || "Tirupati Package | Garuda Tours and Travels",
+          description: seoData.ogDescription || seoData.metaDescription || data.subtitle || "Book your Tirupati package with Garuda Tours and Travels",
+          images: seoData.ogImage ? [seoData.ogImage] : (data.images?.[0] ? [data.images[0]] : []),
+          type: 'website',
+        },
+        twitter: {
+          card: 'summary_large_image',
+          title: seoData.ogTitle || seoData.pageTitle || data.title || "Tirupati Package | Garuda Tours and Travels",
+          description: seoData.ogDescription || seoData.metaDescription || data.subtitle || "Book your Tirupati package with Garuda Tours and Travels",
+          images: seoData.ogImage ? [seoData.ogImage] : (data.images?.[0] ? [data.images[0]] : []),
+        },
+      }
+    }
+  } catch (error) {
+    console.error("Error generating metadata:", error)
+  }
+  
+  // Fallback metadata
+  return {
+    title: "Tirupati Package | Garuda Tours and Travels",
+    description: "Book your Tirupati package with Garuda Tours and Travels. Professional service, confirmed darshan tickets, and door-to-door pickup.",
+    keywords: "tirupati, balaji, darshan, package, garuda tours, travel",
+  }
+}
+
 // This is a Server Component, so it can directly fetch data
 export default async function TirupatiPackageDetailPage({ params }) {
   const { slug } = params
@@ -260,33 +302,19 @@ export default async function TirupatiPackageDetailPage({ params }) {
                         {car.includes && (
                           <div>
                             <p className="font-semibold text-gray-700">Includes:</p>
-                            <ul className="list-none p-0 m-0 text-sm text-gray-600">
-                              {car.includes
-                                .split("\n")
-                                .filter((item) => item.trim() !== "")
-                                .map((item, index) => (
-                                  <li key={index} className="flex items-center">
-
-                                    <span className="whitespace-pre-wrap">{item.trim()}</span>
-                                  </li>
-                                ))}
-                            </ul>
+                            <div 
+                              className="text-sm text-gray-600 prose prose-sm max-w-none"
+                              dangerouslySetInnerHTML={{ __html: car.includes }}
+                            />
                           </div>
                         )}
                         {car.excludes && (
                           <div>
                             <h4 className="font-semibold text-gray-700">Excludes:</h4>
-                            <ul className="list-none p-0 m-0 text-sm text-gray-600">
-                              {car.excludes
-                                .split("\n")
-                                .filter((item) => item.trim() !== "")
-                                .map((item, index) => (
-                                  <li key={index} className="flex items-center">
-                                    <XCircle className="h-4 w-4 text-red-500 mr-2 flex-shrink-0" />
-                                    <span className="whitespace-pre-wrap">{item.trim()}</span>
-                                  </li>
-                                ))}
-                            </ul>
+                            <div 
+                              className="text-sm text-gray-600 prose prose-sm max-w-none"
+                              dangerouslySetInnerHTML={{ __html: car.excludes }}
+                            />
                           </div>
                         )}
                       </div>
@@ -565,7 +593,10 @@ export default async function TirupatiPackageDetailPage({ params }) {
                           <div className="p-2 bg-gradient-to-r from-green-500 to-green-600 rounded-full mr-4 flex-shrink-0 shadow-md group-hover:shadow-lg transition-shadow duration-300">
                             <Check className="h-5 w-5 text-white" />
                           </div>
-                          <span className="text-gray-700 font-medium leading-relaxed">{item.text}</span>
+                          <div 
+                            className="text-gray-700 font-medium leading-relaxed prose prose-sm max-w-none"
+                            dangerouslySetInnerHTML={{ __html: item.text }}
+                          />
                 </li>
               ))}
             </ul>
@@ -592,7 +623,10 @@ export default async function TirupatiPackageDetailPage({ params }) {
                           <div className="p-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full mr-4 flex-shrink-0 shadow-md group-hover:shadow-lg transition-shadow duration-300">
                             <div className="w-3 h-3 bg-white rounded-full"></div>
                           </div>
-                          <span className="text-gray-700 font-medium leading-relaxed">{item.text}</span>
+                          <div 
+                            className="text-gray-700 font-medium leading-relaxed prose prose-sm max-w-none"
+                            dangerouslySetInnerHTML={{ __html: item.text }}
+                          />
                         </li>
               ))}
             </ul>
@@ -620,7 +654,10 @@ export default async function TirupatiPackageDetailPage({ params }) {
                     />
                   </div>
                   <div className="p-4 text-center">
-                    <h3 className="text-xl font-semibold text-gray-800">{item.text}</h3>
+                    <div 
+                      className="text-xl font-semibold text-gray-800 prose prose-sm max-w-none"
+                      dangerouslySetInnerHTML={{ __html: item.text }}
+                    />
                   </div>
                 </div>
               ))}
@@ -628,32 +665,12 @@ export default async function TirupatiPackageDetailPage({ params }) {
           </section>
         )}
 
-        {/* Itinerary & Dress Code Section */}
-        <section className="mb-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Itinerary */}
-          {packageData.itineraries && packageData.itineraries.length > 0 && (
-            <div>
-              <h2 className="text-3xl font-bold text-gray-800 mb-6">
-                {packageData.sectionTitles?.packageItinerary || `Itinerary (${packageData.days} Day${packageData.days > 1 ? "s" : ""})`}
-              </h2>
-              <ol className="space-y-4">
-                {packageData.itineraries.map((item, index) => (
-                  <li key={item.id} className="flex items-start">
-                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 text-white font-bold text-sm flex-shrink-0 mr-3">
-                      {index + 1}
-                    </div>
-                    <p className="text-lg text-gray-700">{item.text}</p>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          )}
-
-          {/* Dress Code */}
-          {(packageData.maleDressCodeImages?.length > 0 || packageData.femaleDressCodeImages?.length > 0) && (
+        {/* Dress Code Section */}
+        {(packageData.maleDressCodeImages?.length > 0 || packageData.femaleDressCodeImages?.length > 0) && (
+          <section className="mb-12">
             <div className="p-6 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
               <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">{packageData.sectionTitles?.dressCode || "Dress Code"}</h2>
-              <div className="grid grid-cols-1 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {packageData.femaleDressCodeImages?.[0] && (
                   <Card className="overflow-hidden">
                     <CardHeader className="p-4 text-center">
@@ -698,8 +715,58 @@ export default async function TirupatiPackageDetailPage({ params }) {
                 )}
               </div>
             </div>
-          )}
-        </section>
+          </section>
+        )}
+
+        {/* Tables Section */}
+        {packageData.tables && packageData.tables.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
+              {packageData.sectionTitles?.tables || "Schedule Tables"}
+            </h2>
+            <div className={`grid gap-8 ${
+              packageData.tables.length === 1 
+                ? 'grid-cols-1 max-w-4xl mx-auto' 
+                : packageData.tables.length === 2 
+                ? 'grid-cols-1 lg:grid-cols-2' 
+                : 'grid-cols-1 lg:grid-cols-2 xl:grid-cols-3'
+            }`}>
+              {packageData.tables.map((table) => (
+                <div key={table.id} className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
+                  {table.title && (
+                    <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4">
+                      <h3 className="text-xl font-bold text-center">{table.title}</h3>
+                    </div>
+                  )}
+                  <div className="overflow-x-auto p-0 m-0">
+                    <table className="w-full border-collapse border border-gray-300 m-0 p-0">
+                      <thead className="bg-blue-50 m-0 p-0">
+                        <tr className="m-0 p-0">
+                          {table.headers.map((header, index) => (
+                            <th key={index} className="px-4 py-2 text-left text-sm font-semibold text-gray-700 border border-gray-300 bg-blue-100 m-0 p-0">
+                              {header}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody className="m-0 p-0">
+                        {table.rows.map((row, rowIndex) => (
+                          <tr key={row.id} className={`${rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-blue-50 transition-colors m-0 p-0`}>
+                            {row.cells.map((cell, cellIndex) => (
+                              <td key={cellIndex} className="px-4 py-2 text-sm text-gray-700 border border-gray-300 m-0 p-0">
+                                {cell}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Dynamic Sections */}
         {packageData.sections && packageData.sections.length > 0 && (
@@ -731,7 +798,12 @@ export default async function TirupatiPackageDetailPage({ params }) {
                   {section.listInfo && section.listInfo.length > 0 && (
                     <ul className="list-disc list-inside space-y-2 text-gray-700">
                       {section.listInfo.map((item) => (
-                        <li key={item.id}>{item.text}</li>
+                        <li key={item.id}>
+                          <div 
+                            className="prose prose-sm max-w-none"
+                            dangerouslySetInnerHTML={{ __html: item.text }}
+                          />
+                        </li>
                       ))}
                     </ul>
                   )}
@@ -785,9 +857,17 @@ export default async function TirupatiPackageDetailPage({ params }) {
               {packageData.faqs.map((faq) => (
                 <AccordionItem key={faq.id} value={faq.id}>
                   <AccordionTrigger className="text-lg font-semibold text-gray-800 hover:no-underline">
-                    {faq.question}
+                    <div 
+                      className="prose prose-sm max-w-none"
+                      dangerouslySetInnerHTML={{ __html: faq.question }}
+                    />
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-700 leading-relaxed">{faq.answer}</AccordionContent>
+                  <AccordionContent className="text-gray-700 leading-relaxed">
+                    <div 
+                      className="prose prose-sm max-w-none"
+                      dangerouslySetInnerHTML={{ __html: faq.answer }}
+                    />
+                  </AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>

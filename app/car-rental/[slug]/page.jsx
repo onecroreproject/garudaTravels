@@ -125,7 +125,10 @@ function CarRentalPage() {
               <p className="text-xl text-gray-700 font-medium">{packageData.subtitle}</p>
             )}
             <div className="text-gray-600 space-y-3">
-              <p>{packageData.content || ""}</p>
+              <div 
+                className="prose prose-sm max-w-none"
+                dangerouslySetInnerHTML={{ __html: packageData.content || "" }}
+              />
             </div>
             <a href="#booking">
               <button className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition-all">
@@ -293,7 +296,10 @@ function CarRentalPage() {
                   <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <BadgeCheck className="w-8 h-8 text-blue-600" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2">{feature.text}</h3>
+                  <div 
+                    className="text-lg font-semibold text-gray-800 mb-2 prose prose-sm max-w-none"
+                    dangerouslySetInnerHTML={{ __html: feature.text }}
+                  />
                 </div>
               ))}
             </div>
@@ -348,7 +354,7 @@ function CarRentalPage() {
                     )}
                     {section.contentDescription && (
                       <div 
-                        className="text-gray-600 space-y-3"
+                        className="text-gray-600 space-y-3 prose prose-sm max-w-none"
                         dangerouslySetInnerHTML={{ __html: section.contentDescription }}
                       />
                     )}
@@ -357,7 +363,10 @@ function CarRentalPage() {
                         {section.listInfo.map((item, itemIndex) => (
                           <li key={item.id || itemIndex} className="flex items-start gap-2 text-gray-700">
                             <span className="text-green-500 mt-1">✓</span>
-                            <span>{item.text}</span>
+                            <div 
+                              className="prose prose-sm max-w-none"
+                              dangerouslySetInnerHTML={{ __html: item.text }}
+                            />
                           </li>
                         ))}
                       </ul>
@@ -392,7 +401,10 @@ function CarRentalPage() {
                   {packageData.termsAndConditions.map((term, index) => (
                     <li key={term.id || index} className="flex items-start gap-2 text-gray-700">
                       <span className="text-blue-500 mt-1">•</span>
-                      <span>{term.text}</span>
+                      <div 
+                        className="prose prose-sm max-w-none"
+                        dangerouslySetInnerHTML={{ __html: term.text }}
+                      />
                     </li>
                   ))}
                 </ul>
@@ -441,9 +453,10 @@ function CarRentalPage() {
                 onClick={() => setOpenIndex(isOpen ? null : index)}
                 className="w-full flex justify-between items-center p-5 text-left focus:outline-none hover:bg-gray-100 transition"
               >
-                <span className="text-lg font-medium text-gray-800">
-                  {faq.question}
-                </span>
+                <div 
+                  className="text-lg font-medium text-gray-800 prose prose-sm max-w-none"
+                  dangerouslySetInnerHTML={{ __html: faq.question }}
+                />
                 <svg
                   className={`w-5 h-5 transform transition-transform ${
                     isOpen ? 'rotate-180' : ''
@@ -470,7 +483,10 @@ function CarRentalPage() {
                     transition={{ duration: 0.3 }}
                   >
                     <div className="px-5 pb-5 text-gray-700 text-sm">
-                      {faq.answer}
+                      <div 
+                        className="prose prose-sm max-w-none"
+                        dangerouslySetInnerHTML={{ __html: faq.answer }}
+                      />
                     </div>
                   </motion.div>
                 )}

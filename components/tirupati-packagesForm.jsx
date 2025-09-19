@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast"
 import { X } from 'lucide-react'
 import { isAuthenticated } from "@/lib/custom-auth" // Import custom auth check
 import EditableTitle from "@/components/editable-title"
+import RichTextEditor from "@/components/ui/rich-text-editor"
 
 // Helper to generate unique IDs for dynamic fields
 const generateUniqueId = () => Math.random().toString(36).substring(2, 15)
@@ -23,43 +24,54 @@ export default function PackageForm({ packageType, packageId }) {
   const [isDirty, setIsDirty] = useState(false)
 
   // Core package fields
-  const [packageUrl, setPackageUrl] = useState("") // New: Used as document ID
+  const [packageUrl, setPackageUrl] = useState("") 
   const [title, setTitle] = useState("")
-  const [packageOrder, setPackageOrder] = useState(1) // New: Package Order
-  const [tripDays, setTripDays] = useState("1") // New: Trip Days
+  const [subtitle, setSubtitle] = useState("")
+  const [packageOrder, setPackageOrder] = useState(1) 
+  const [tripDays, setTripDays] = useState("1")
 
   // Section titles state
   const [sectionTitles, setSectionTitles] = useState({
     packagesAndCars: "Packages and Cars",
     packageIncludes: "Package Includes",
-    packageItinerary: "Package Itinerary",
     passengerNotes: "Passenger Notes",
     sightseeingPlaces: "Sightseeing Places",
     dressCode: "Dress Code",
     carPrices: "Car Prices",
     sections: "Sections",
-    faq: "FAQ"
+    faq: "FAQ",
+    tables: "Schedule Tables",
   })
 
   // Image management
-  const [images, setImages] = useState([]) // Stores URLs of existing images
-  const [newImageFiles, setNewImageFiles] = useState([]) // Stores File objects for new uploads
+  const [images, setImages] = useState([])
+  const [newImageFiles, setNewImageFiles] = useState([]) 
 
   // Dynamic sections
-  const [packagesAndCars, setPackagesAndCars] = useState([]) // Array of { id, packageName, cars: [{ id, carName, seatCapacity, price }] }
+  const [packagesAndCars, setPackagesAndCars] = useState([]) 
   const [includes, setIncludes] = useState([])
-  const [itineraries, setItineraries] = useState([])
-  const [passengerNotes, setPassengerNotes] = useState([]) // Corresponds to 'notes' in HTML
-  const [sightseeingPlaces, setSightseeingPlaces] = useState([]) // Array of { id, text, imageUrl, imageFile }
+  const [passengerNotes, setPassengerNotes] = useState([])
+  const [sightseeingPlaces, setSightseeingPlaces] = useState([]) 
   // Updated structure for carPrices
-  const [carPrices, setCarPrices] = useState([]) // Array of { id, carName, imageUrl, imageFile, prices: [{ id, label, value }] }
-  const [sections, setSections] = useState([]) // Array of { id, hasImage, imageUrl, imageFile, contentTitle, contentDescription, listInfo: [{ id, text }] }
-  const [faqs, setFaqs] = useState([]) // Corresponds to 'faq' in HTML
+  const [carPrices, setCarPrices] = useState([]) 
+  const [sections, setSections] = useState([]) 
+  const [faqs, setFaqs] = useState([]) 
+  const [tables, setTables] = useState([]) 
 
-  const [maleDressCodeImages, setMaleDressCodeImages] = useState([]) // Stores URLs of existing male dress code images
-  const [newMaleDressCodeFiles, setNewMaleDressCodeFiles] = useState([]) // Stores File objects for new male dress code uploads
-  const [femaleDressCodeImages, setFemaleDressCodeImages] = useState([]) // Stores URLs of existing female dress code images
-  const [newFemaleDressCodeFiles, setNewFemaleDressCodeFiles] = useState([]) // Stores File objects for new female dress code uploads
+  // SEO fields
+  const [seoData, setSeoData] = useState({
+    pageTitle: "",
+    metaDescription: "",
+    metaKeywords: "",
+    ogTitle: "",
+    ogDescription: "",
+    ogImage: ""
+  })
+
+  const [maleDressCodeImages, setMaleDressCodeImages] = useState([])
+  const [newMaleDressCodeFiles, setNewMaleDressCodeFiles] = useState([]) 
+  const [femaleDressCodeImages, setFemaleDressCodeImages] = useState([]) 
+  const [newFemaleDressCodeFiles, setNewFemaleDressCodeFiles] = useState([]) 
 
   const [loading, setLoading] = useState(false)
   const [initialLoading, setInitialLoading] = useState(true)
@@ -105,6 +117,7 @@ export default function PackageForm({ packageType, packageId }) {
             const data = docSnap.data()
             setPackageUrl(packageId) // Set URL from the ID
             setTitle(data.title || "")
+            setSubtitle(data.subtitle || "")
             setPackageOrder(data.order || 1)
             setTripDays(data.days || "1")
             setImages(data.images || [])
@@ -113,17 +126,16 @@ export default function PackageForm({ packageType, packageId }) {
             setSectionTitles(data.sectionTitles || {
               packagesAndCars: "Packages and Cars",
               packageIncludes: "Package Includes",
-              packageItinerary: "Package Itinerary",
               passengerNotes: "Passenger Notes",
               sightseeingPlaces: "Sightseeing Places",
               dressCode: "Dress Code",
               carPrices: "Car Prices",
               sections: "Sections",
-              faq: "FAQ"
+              faq: "FAQ",
+              tables: "Schedule Tables"
             })
             setPackagesAndCars(data.packagesAndCars || [])
             setIncludes(data.includes || [])
-            setItineraries(data.itineraries || [])
             setPassengerNotes(data.passengerNotes || [])
             setSightseeingPlaces(
               data.sightseeingPlaces?.map((place) => ({
@@ -151,6 +163,15 @@ export default function PackageForm({ packageType, packageId }) {
               })) || [],
             )
             setFaqs(data.faqs || [])
+            setTables(data.tables || [])
+            setSeoData(data.seoData || {
+              pageTitle: "",
+              metaDescription: "",
+              metaKeywords: "",
+              ogTitle: "",
+              ogDescription: "",
+              ogImage: ""
+            })
             setMaleDressCodeImages(data.maleDressCodeImages || [])
             setNewMaleDressCodeFiles([]) // Clear any pending new files on load
             setFemaleDressCodeImages(data.femaleDressCodeImages || [])
@@ -211,6 +232,116 @@ export default function PackageForm({ packageType, packageId }) {
   }
   const removePoint = (setter, id) => {
     setter((prev) => prev.filter((item) => item.id !== id))
+    setIsDirty(true)
+  }
+
+
+  // Table Handlers
+  const addTable = () => {
+    const newTable = {
+      id: generateUniqueId(),
+      title: "",
+      headers: ["Time", "Activity"],
+      rows: [
+        { id: generateUniqueId(), cells: ["", ""] },
+        { id: generateUniqueId(), cells: ["", ""] }
+      ]
+    }
+    setTables((prev) => [...prev, newTable])
+    setIsDirty(true)
+  }
+
+  const removeTable = (id) => {
+    setTables((prev) => prev.filter((table) => table.id !== id))
+    setIsDirty(true)
+  }
+
+  const updateTableTitle = (id, title) => {
+    setTables((prev) => prev.map((table) => (table.id === id ? { ...table, title } : table)))
+    setIsDirty(true)
+  }
+
+  const updateTableHeader = (tableId, headerIndex, value) => {
+    setTables((prev) => prev.map((table) => {
+      if (table.id === tableId) {
+        const newHeaders = [...table.headers]
+        newHeaders[headerIndex] = value
+        return { ...table, headers: newHeaders }
+      }
+      return table
+    }))
+    setIsDirty(true)
+  }
+
+  const addTableHeader = (tableId) => {
+    setTables((prev) => prev.map((table) => {
+      if (table.id === tableId) {
+        const newHeaders = [...table.headers, ""]
+        const newRows = table.rows.map(row => ({
+          ...row,
+          cells: [...row.cells, ""]
+        }))
+        return { ...table, headers: newHeaders, rows: newRows }
+      }
+      return table
+    }))
+    setIsDirty(true)
+  }
+
+  const removeTableHeader = (tableId, headerIndex) => {
+    setTables((prev) => prev.map((table) => {
+      if (table.id === tableId) {
+        const newHeaders = table.headers.filter((_, index) => index !== headerIndex)
+        const newRows = table.rows.map(row => ({
+          ...row,
+          cells: row.cells.filter((_, index) => index !== headerIndex)
+        }))
+        return { ...table, headers: newHeaders, rows: newRows }
+      }
+      return table
+    }))
+    setIsDirty(true)
+  }
+
+  const addTableRow = (tableId) => {
+    setTables((prev) => prev.map((table) => {
+      if (table.id === tableId) {
+        const newRow = {
+          id: generateUniqueId(),
+          cells: new Array(table.headers.length).fill("")
+        }
+        return { ...table, rows: [...table.rows, newRow] }
+      }
+      return table
+    }))
+    setIsDirty(true)
+  }
+
+  const removeTableRow = (tableId, rowId) => {
+    setTables((prev) => prev.map((table) => {
+      if (table.id === tableId) {
+        return { ...table, rows: table.rows.filter((row) => row.id !== rowId) }
+      }
+      return table
+    }))
+    setIsDirty(true)
+  }
+
+  const updateTableCell = (tableId, rowId, cellIndex, value) => {
+    setTables((prev) => prev.map((table) => {
+      if (table.id === tableId) {
+        const newRows = table.rows.map((row) => {
+          if (row.id === rowId) {
+            const newCells = [...row.cells]
+            newCells[cellIndex] = value
+            return { ...row, cells: newCells }
+          }
+          return row
+        })
+        return { ...table, rows: newRows }
+      }
+      return table
+    }))
     setIsDirty(true)
   }
 
@@ -490,6 +621,7 @@ export default function PackageForm({ packageType, packageId }) {
     setIsDirty(true)
   }
 
+
   useEffect(() => {
     const handleBeforeUnload = (e) => {
       if (isDirty) {
@@ -651,17 +783,19 @@ export default function PackageForm({ packageType, packageId }) {
       const packageData = {
         url: packageUrl,
         title,
+        subtitle,
         order: packageOrder,
         days: tripDays,
         images: allImageUrls,
         packagesAndCars,
         includes,
-        itineraries,
         passengerNotes,
         sightseeingPlaces: processedSightseeingPlaces,
         carPrices: processedCarPrices, // Use the processed car prices
         sections: processedSections, // Use the processed sections
         faqs,
+        tables,
+        seoData,
         maleDressCodeImages: allMaleDressCodeUrls,
         femaleDressCodeImages: allFemaleDressCodeUrls,
         sectionTitles, // Add section titles
@@ -754,6 +888,21 @@ export default function PackageForm({ packageType, packageId }) {
                 placeholder="Eg: Chennai to Tirupati"
               required={true}
               />
+
+            {/* Package Subtitle */}
+            <div>
+              <Label htmlFor="subtitle">Package Subtitle</Label>
+              <Input
+                id="subtitle"
+                type="text"
+                value={subtitle}
+                onChange={(e) => {
+                  setSubtitle(e.target.value)
+                  setIsDirty(true)
+                }}
+                placeholder="Brief description of the package"
+              />
+            </div>
 
             {/* Package Order */}
             <div>
@@ -964,6 +1113,99 @@ export default function PackageForm({ packageType, packageId }) {
               </div>
             </div>
 
+            {/* SEO Settings */}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">SEO Settings</h3>
+              <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="pageTitle">Page Title</Label>
+                    <Input
+                      id="pageTitle"
+                      type="text"
+                      value={seoData.pageTitle}
+                      onChange={(e) => {
+                        setSeoData(prev => ({ ...prev, pageTitle: e.target.value }))
+                        setIsDirty(true)
+                      }}
+                      placeholder="Custom page title for SEO"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">Appears in browser tab and search results</p>
+                  </div>
+                  <div>
+                    <Label htmlFor="metaKeywords">Meta Keywords</Label>
+                    <Input
+                      id="metaKeywords"
+                      type="text"
+                      value={seoData.metaKeywords}
+                      onChange={(e) => {
+                        setSeoData(prev => ({ ...prev, metaKeywords: e.target.value }))
+                        setIsDirty(true)
+                      }}
+                      placeholder="tirupati, balaji, darshan, package"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">Comma-separated keywords</p>
+                  </div>
+                </div>
+                <div>
+                  <Label htmlFor="metaDescription">Meta Description</Label>
+                  <RichTextEditor
+                    value={seoData.metaDescription}
+                    onChange={(content) => {
+                      setSeoData(prev => ({ ...prev, metaDescription: content }))
+                      setIsDirty(true)
+                    }}
+                    placeholder="Brief description of the package for search engines"
+                    rows={3}
+                  />
+                  <p className="text-xs text-gray-500 mt-1">Recommended: 150-160 characters</p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="ogTitle">Open Graph Title</Label>
+                    <Input
+                      id="ogTitle"
+                      type="text"
+                      value={seoData.ogTitle}
+                      onChange={(e) => {
+                        setSeoData(prev => ({ ...prev, ogTitle: e.target.value }))
+                        setIsDirty(true)
+                      }}
+                      placeholder="Title for social media sharing"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">For Facebook, WhatsApp sharing</p>
+                  </div>
+                  <div>
+                    <Label htmlFor="ogImage">Open Graph Image URL</Label>
+                    <Input
+                      id="ogImage"
+                      type="url"
+                      value={seoData.ogImage}
+                      onChange={(e) => {
+                        setSeoData(prev => ({ ...prev, ogImage: e.target.value }))
+                        setIsDirty(true)
+                      }}
+                      placeholder="https://example.com/image.jpg"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">Image for social media sharing</p>
+                  </div>
+                </div>
+                <div>
+                  <Label htmlFor="ogDescription">Open Graph Description</Label>
+                  <RichTextEditor
+                    value={seoData.ogDescription}
+                    onChange={(content) => {
+                      setSeoData(prev => ({ ...prev, ogDescription: content }))
+                      setIsDirty(true)
+                    }}
+                    placeholder=""
+                    rows={2}
+                  />
+                  {/* <p className="text-xs text-gray-500 mt-1">Description for social media sharing</p> */}
+                </div>
+              </div>
+            </div>
+
             {/* Package Includes */}
             <div>
               <EditableTitle
@@ -974,24 +1216,24 @@ export default function PackageForm({ packageType, packageId }) {
                 required={false}
                 className="mb-2"
               />
-              <div className="space-y-2 p-4 bg-gray-50 rounded-md border border-gray-200">
+              <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {includes.map((item) => (
-                  <div key={item.id} className="flex gap-2 items-end">
-                    <Input
-                      type="text"
+                  <div key={item.id} className="space-y-2">
+                    <RichTextEditor
                       value={item.text}
-                      onChange={(e) => {
-                        updatePoint(setIncludes, item.id, e.target.value)
+                      onChange={(content) => {
+                        updatePoint(setIncludes, item.id, content)
                         setIsDirty(true)
                       }}
-                      placeholder="Eg: Driver Allowance"
-                      className="flex-grow"
+                      placeholder="Eg: Driver Allowance - Professional driver included"
+                      rows={2}
                     />
                     <Button
                       type="button"
                       variant="destructive"
                       size="sm"
                       onClick={() => removePoint(setIncludes, item.id)}
+                      className="self-end"
                     >
                       Remove
                     </Button>
@@ -1003,44 +1245,6 @@ export default function PackageForm({ packageType, packageId }) {
               </div>
             </div>
 
-            {/* Package Itinerary */}
-            <div>
-              <EditableTitle
-                title={sectionTitles.packageItinerary}
-                onTitleChange={(newTitle) => updateSectionTitle('packageItinerary', newTitle)}
-                placeholder="Enter section title"
-                showEditIcon={true}
-                required={false}
-                className="mb-2"
-              />
-              <div className="space-y-2 p-4 bg-gray-50 rounded-md border border-gray-200">
-                {itineraries.map((item) => (
-                  <div key={item.id} className="flex gap-2 items-end">
-                    <Input
-                      type="text"
-                      value={item.text}
-                      onChange={(e) => {
-                        updatePoint(setItineraries, item.id, e.target.value)
-                        setIsDirty(true)
-                      }}
-                      placeholder="Eg: Day 1: Chennai to Tirupati"
-                      className="flex-grow"
-                    />
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      size="sm"
-                      onClick={() => removePoint(setItineraries, item.id)}
-                    >
-                      Remove
-                    </Button>
-                  </div>
-                ))}
-                <Button type="button" onClick={() => addPoint(setItineraries)} className="mt-3">
-                  Add Itinerary
-                </Button>
-              </div>
-            </div>
 
             {/* Passenger Notes */}
             <div>
@@ -1052,24 +1256,24 @@ export default function PackageForm({ packageType, packageId }) {
                 required={false}
                 className="mb-2"
               />
-              <div className="space-y-2 p-4 bg-gray-50 rounded-md border border-gray-200">
+              <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {passengerNotes.map((item) => (
-                  <div key={item.id} className="flex gap-2 items-end">
-                    <Input
-                      type="text"
+                  <div key={item.id} className="space-y-2">
+                    <RichTextEditor
                       value={item.text}
-                      onChange={(e) => {
-                        updatePoint(setPassengerNotes, item.id, e.target.value)
+                      onChange={(content) => {
+                        updatePoint(setPassengerNotes, item.id, content)
                         setIsDirty(true)
                       }}
-                      placeholder="Eg: Carry valid ID proof"
-                      className="flex-grow"
+                      placeholder="Eg: Important: Carry valid ID proof (Aadhaar/Passport)"
+                      rows={2}
                     />
                     <Button
                       type="button"
                       variant="destructive"
                       size="sm"
                       onClick={() => removePoint(setPassengerNotes, item.id)}
+                      className="self-end"
                     >
                       Remove
                     </Button>
@@ -1109,16 +1313,14 @@ export default function PackageForm({ packageType, packageId }) {
                     <div className="flex flex-col sm:flex-row gap-4 mb-4">
                       <div className="flex-1">
                         <Label htmlFor={`place-name-${place.id}`}>Place Name</Label>
-                        <Input
-                          id={`place-name-${place.id}`}
-                          type="text"
+                        <RichTextEditor
                           value={place.text}
-                          onChange={(e) => {
-                            updateSightseeingPlaceField(place.id, "text", e.target.value)
+                          onChange={(content) => {
+                            updateSightseeingPlaceField(place.id, "text", content)
                             setIsDirty(true)
                           }}
-                          placeholder="Enter Name"
-                          className="w-full"
+                          placeholder="Eg: Tirumala Temple - Sacred hill shrine"
+                          rows={2}
                         />
                       </div>
                       <div className="flex-1">
@@ -1382,15 +1584,13 @@ export default function PackageForm({ packageType, packageId }) {
                     {/* Includes Field */}
                     <div className="mb-4">
                       <Label htmlFor={`car-includes-${car.id}`}>Includes</Label>
-                      <textarea
-                        id={`car-includes-${car.id}`}
+                      <RichTextEditor
                         value={car.includes}
-                        onChange={(e) => {
-                          updateCarPriceField(car.id, "includes", e.target.value)
+                        onChange={(content) => {
+                          updateCarPriceField(car.id, "includes", content)
                           setIsDirty(true)
                         }}
                         rows={3}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-y"
                         placeholder="Enter what's included (e.g., Toll, Parking, Driver Allowance)"
                       />
                     </div>
@@ -1398,15 +1598,13 @@ export default function PackageForm({ packageType, packageId }) {
                     {/* Excludes Field */}
                     <div className="mb-4">
                       <Label htmlFor={`car-excludes-${car.id}`}>Excludes</Label>
-                      <textarea
-                        id={`car-excludes-${car.id}`}
+                      <RichTextEditor
                         value={car.excludes}
-                        onChange={(e) => {
-                          updateCarPriceField(car.id, "excludes", e.target.value)
+                        onChange={(content) => {
+                          updateCarPriceField(car.id, "excludes", content)
                           setIsDirty(true)
                         }}
                         rows={3}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-y"
                         placeholder="Enter what's excluded (e.g., Food, Accommodation)"
                       />
                     </div>
@@ -1504,17 +1702,15 @@ export default function PackageForm({ packageType, packageId }) {
 
                     {/* Content Description */}
                     <div className="mb-4">
-                      <Label htmlFor={`section-description-${section.id}`}>Content Description (HTML)</Label>
-                      <textarea
-                        id={`section-description-${section.id}`}
+                      <Label htmlFor={`section-description-${section.id}`}>Content Description</Label>
+                      <RichTextEditor
                         value={section.contentDescription}
-                        onChange={(e) => {
-                          updateSectionField(section.id, "contentDescription", e.target.value)
+                        onChange={(content) => {
+                          updateSectionField(section.id, "contentDescription", content)
                           setIsDirty(true)
                         }}
                         rows={4}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-y"
-                        placeholder="Enter section content (HTML allowed)"
+                        placeholder="Enter section content with rich formatting..."
                       />
                     </div>
 
@@ -1574,24 +1770,24 @@ export default function PackageForm({ packageType, packageId }) {
 
                     {/* List Information */}
                     <h5 className="text-md font-semibold mb-2">List Information</h5>
-                    <div className="space-y-2 mb-4 p-3 bg-gray-100 rounded-md border border-gray-200">
+                    <div className="space-y-3 mb-4 p-3 bg-gray-100 rounded-md border border-gray-200">
                       {section.listInfo.map((item) => (
-                        <div key={item.id} className="flex gap-2 items-end">
-                          <Input
-                            type="text"
+                        <div key={item.id} className="space-y-2">
+                          <RichTextEditor
                             value={item.text}
-                            onChange={(e) => {
-                              updateListInfoInSection(section.id, item.id, e.target.value)
+                            onChange={(content) => {
+                              updateListInfoInSection(section.id, item.id, content)
                               setIsDirty(true)
                             }}
                             placeholder="Add info point"
-                            className="flex-grow"
+                            rows={2}
                           />
                           <Button
                             type="button"
                             variant="destructive"
                             size="sm"
                             onClick={() => removeListInfoFromSection(section.id, item.id)}
+                            className="self-end"
                           >
                             Remove
                           </Button>
@@ -1621,31 +1817,28 @@ export default function PackageForm({ packageType, packageId }) {
               />
               <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {faqs.map((item) => (
-                  <div key={item.id} className="flex flex-col gap-2">
+                  <div key={item.id} className="space-y-3">
                     <div>
                       <Label htmlFor={`faq-question-${item.id}`}>Question</Label>
-                      <Input
-                        id={`faq-question-${item.id}`}
-                        type="text"
+                      <RichTextEditor
                         value={item.question}
-                        onChange={(e) => {
-                          updateFaq(item.id, "question", e.target.value)
+                        onChange={(content) => {
+                          updateFaq(item.id, "question", content)
                           setIsDirty(true)
                         }}
                         placeholder="Eg: What is included in the package?"
+                        rows={2}
                       />
                     </div>
                     <div>
                       <Label htmlFor={`faq-answer-${item.id}`}>Answer</Label>
-                      <textarea
-                        id={`faq-answer-${item.id}`}
+                      <RichTextEditor
                         value={item.answer}
-                        onChange={(e) => {
-                          updateFaq(item.id, "answer", e.target.value)
+                        onChange={(content) => {
+                          updateFaq(item.id, "answer", content)
                           setIsDirty(true)
                         }}
                         rows={3}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-y"
                         placeholder="Enter the answer to the FAQ"
                       />
                     </div>
@@ -1666,6 +1859,123 @@ export default function PackageForm({ packageType, packageId }) {
               </div>
             </div>
 
+            {/* Tables Section */}
+            <div>
+              <EditableTitle
+                title={sectionTitles.tables}
+                onTitleChange={(newTitle) => updateSectionTitle('tables', newTitle)}
+                placeholder="Enter section title"
+                showEditIcon={true}
+                required={false}
+                className="mb-2"
+              />
+              <div className="space-y-6 p-4 bg-gray-50 rounded-md border border-gray-200">
+                {tables.map((table) => (
+                  <div key={table.id} className="bg-white p-4 rounded-lg border border-gray-300">
+                    <div className="flex justify-between items-center mb-4">
+                      <Input
+                        type="text"
+                        value={table.title}
+                        onChange={(e) => updateTableTitle(table.id, e.target.value)}
+                        placeholder="Table Title (e.g., Morning Schedule, Afternoon Schedule)"
+                        className="text-lg font-semibold"
+                      />
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        size="sm"
+                        onClick={() => removeTable(table.id)}
+                      >
+                        <X className="h-4 w-4 mr-1" />
+                        Remove Table
+                      </Button>
+                    </div>
+
+                    {/* Table Headers */}
+                    <div className="mb-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Label className="font-medium">Headers:</Label>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => addTableHeader(table.id)}
+                        >
+                          Add Header
+                        </Button>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                        {table.headers.map((header, headerIndex) => (
+                          <div key={headerIndex} className="flex gap-1">
+                            <Input
+                              type="text"
+                              value={header}
+                              onChange={(e) => updateTableHeader(table.id, headerIndex, e.target.value)}
+                              placeholder={`Header ${headerIndex + 1}`}
+                              className="flex-1"
+                            />
+                            {table.headers.length > 1 && (
+                              <Button
+                                type="button"
+                                variant="destructive"
+                                size="sm"
+                                onClick={() => removeTableHeader(table.id, headerIndex)}
+                              >
+                                <X className="h-3 w-3" />
+                              </Button>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Table Rows */}
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Label className="font-medium">Rows:</Label>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => addTableRow(table.id)}
+                        >
+                          Add Row
+                        </Button>
+                      </div>
+                      <div className="space-y-2">
+                        {table.rows.map((row, rowIndex) => (
+                          <div key={row.id} className="flex items-center gap-2">
+                            <span className="text-sm text-gray-500 w-8">{rowIndex + 1}.</span>
+                            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                              {row.cells.map((cell, cellIndex) => (
+                                <Input
+                                  key={cellIndex}
+                                  type="text"
+                                  value={cell}
+                                  onChange={(e) => updateTableCell(table.id, row.id, cellIndex, e.target.value)}
+                                  placeholder={table.headers[cellIndex] || `Column ${cellIndex + 1}`}
+                                />
+                              ))}
+                            </div>
+                            <Button
+                              type="button"
+                              variant="destructive"
+                              size="sm"
+                              onClick={() => removeTableRow(table.id, row.id)}
+                            >
+                              <X className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                <Button type="button" onClick={addTable} className="mt-3">
+                  Add Table
+                </Button>
+              </div>
+            </div>
 
             {/* Submit and Cancel Buttons */}
             <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white" disabled={loading}>

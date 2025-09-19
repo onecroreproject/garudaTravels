@@ -14,6 +14,7 @@ import { X } from 'lucide-react'
 import { isAuthenticated } from "@/lib/custom-auth"
 import { Switch } from "@/components/ui/switch"
 import EditableTitle from "@/components/editable-title"
+import RichTextEditor from "@/components/ui/rich-text-editor"
 
 // Helper to generate unique IDs for dynamic fields
 const generateUniqueId = () => Math.random().toString(36).substring(2, 15)
@@ -651,16 +652,14 @@ export default function CarRentalPackageForm({ packageId }) {
             {/* Content */}
             <div>
               <Label htmlFor="content">Package Description</Label>
-              <textarea
-                id="content"
-                rows="4"
+              <RichTextEditor
                 value={content}
-                onChange={(e) => {
-                  setContent(e.target.value)
+                onChange={(content) => {
+                  setContent(content)
                   setIsDirty(true)
                 }}
                 placeholder="Detailed description of the car rental service..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-700"
+                rows={4}
               />
             </div>
 
@@ -892,13 +891,14 @@ export default function CarRentalPackageForm({ packageId }) {
                     {/* Car Features */}
                     <div>
                       <Label htmlFor={`car-features-${car.id}`}>Features</Label>
-                      <textarea
-                        id={`car-features-${car.id}`}
-                        rows="3"
+                      <RichTextEditor
                         value={car.features}
-                        onChange={(e) => updateCarTypeField(car.id, "features", e.target.value)}
-                        placeholder="List car features (AC, GPS, etc.)"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        onChange={(content) => {
+                          updateCarTypeField(car.id, "features", content)
+                          setIsDirty(true)
+                        }}
+                        rows={3}
+                        placeholder=""
                       />
                     </div>
                   </div>
@@ -919,21 +919,24 @@ export default function CarRentalPackageForm({ packageId }) {
                 required={false}
                 className="mb-2"
               />
-              <div className="space-y-2 p-4 bg-gray-50 rounded-md border border-gray-200">
+              <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {serviceFeatures.map((item) => (
-                  <div key={item.id} className="flex gap-2 items-end">
-                    <Input
-                      type="text"
+                  <div key={item.id} className="space-y-2">
+                    <RichTextEditor
                       value={item.text}
-                      onChange={(e) => updatePoint(setServiceFeatures, item.id, e.target.value)}
-                      placeholder="Eg: 24/7 Customer Support"
-                      className="flex-grow"
+                      onChange={(content) => {
+                        updatePoint(setServiceFeatures, item.id, content)
+                        setIsDirty(true)
+                      }}
+                      placeholder="Eg: 24/7 Customer Support - Round the clock assistance"
+                      rows={2}
                     />
                     <Button
                       type="button"
                       variant="destructive"
                       size="sm"
                       onClick={() => removePoint(setServiceFeatures, item.id)}
+                      className="self-end"
                     >
                       Remove
                     </Button>
@@ -1037,21 +1040,24 @@ export default function CarRentalPackageForm({ packageId }) {
                 required={false}
                 className="mb-2"
               />
-              <div className="space-y-2 p-4 bg-gray-50 rounded-md border border-gray-200">
+              <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {termsAndConditions.map((item) => (
-                  <div key={item.id} className="flex gap-2 items-end">
-                    <Input
-                      type="text"
+                  <div key={item.id} className="space-y-2">
+                    <RichTextEditor
                       value={item.text}
-                      onChange={(e) => updatePoint(setTermsAndConditions, item.id, e.target.value)}
-                      placeholder="Eg: Valid driving license required"
-                      className="flex-grow"
+                      onChange={(content) => {
+                        updatePoint(setTermsAndConditions, item.id, content)
+                        setIsDirty(true)
+                      }}
+                      placeholder="Eg: Valid driving license required - Must be at least 1 year old"
+                      rows={2}
                     />
                     <Button
                       type="button"
                       variant="destructive"
                       size="sm"
                       onClick={() => removePoint(setTermsAndConditions, item.id)}
+                      className="self-end"
                     >
                       Remove
                     </Button>
@@ -1103,17 +1109,15 @@ export default function CarRentalPackageForm({ packageId }) {
 
                     {/* Content Description */}
                     <div className="mb-4">
-                      <Label htmlFor={`section-description-${section.id}`}>Content Description (HTML)</Label>
-                      <textarea
-                        id={`section-description-${section.id}`}
+                      <Label htmlFor={`section-description-${section.id}`}>Content Description</Label>
+                      <RichTextEditor
                         value={section.contentDescription}
-                        onChange={(e) => {
-                          updateSectionField(section.id, "contentDescription", e.target.value)
+                        onChange={(content) => {
+                          updateSectionField(section.id, "contentDescription", content)
                           setIsDirty(true)
                         }}
                         rows={4}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-y"
-                        placeholder="Enter section content (HTML allowed)"
+                        placeholder="Enter section content"
                       />
                     </div>
 
@@ -1173,24 +1177,24 @@ export default function CarRentalPackageForm({ packageId }) {
 
                     {/* List Information */}
                     <h5 className="text-md font-semibold mb-2">List Information</h5>
-                    <div className="space-y-2 mb-4 p-3 bg-gray-100 rounded-md border border-gray-200">
+                    <div className="space-y-3 mb-4 p-3 bg-gray-100 rounded-md border border-gray-200">
                       {section.listInfo.map((item) => (
-                        <div key={item.id} className="flex gap-2 items-end">
-                          <Input
-                            type="text"
+                        <div key={item.id} className="space-y-2">
+                          <RichTextEditor
                             value={item.text}
-                            onChange={(e) => {
-                              updateListInfoInSection(section.id, item.id, e.target.value)
+                            onChange={(content) => {
+                              updateListInfoInSection(section.id, item.id, content)
                               setIsDirty(true)
                             }}
                             placeholder="Add info point"
-                            className="flex-grow"
+                            rows={2}
                           />
                           <Button
                             type="button"
                             variant="destructive"
                             size="sm"
                             onClick={() => removeListInfoFromSection(section.id, item.id)}
+                            className="self-end"
                           >
                             Remove
                           </Button>
@@ -1234,23 +1238,26 @@ export default function CarRentalPackageForm({ packageId }) {
                     <div className="space-y-3">
                       <div>
                         <Label htmlFor={`faq-question-${faq.id}`}>Question</Label>
-                        <Input
-                          id={`faq-question-${faq.id}`}
-                          type="text"
+                        <RichTextEditor
                           value={faq.question}
-                          onChange={(e) => updateFaq(faq.id, "question", e.target.value)}
+                          onChange={(content) => {
+                            updateFaq(faq.id, "question", content)
+                            setIsDirty(true)
+                          }}
                           placeholder="Eg: What documents are required?"
+                          rows={2}
                         />
                       </div>
                       <div>
                         <Label htmlFor={`faq-answer-${faq.id}`}>Answer</Label>
-                        <textarea
-                          id={`faq-answer-${faq.id}`}
-                          rows="3"
+                        <RichTextEditor
                           value={faq.answer}
-                          onChange={(e) => updateFaq(faq.id, "answer", e.target.value)}
-                          placeholder="Provide a detailed answer..."
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          onChange={(content) => {
+                            updateFaq(faq.id, "answer", content)
+                            setIsDirty(true)
+                          }}
+                          rows={3}
+                          placeholder="Provide a detailed answer"
                         />
                       </div>
                     </div>

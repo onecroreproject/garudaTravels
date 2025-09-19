@@ -15,6 +15,7 @@ import { isAuthenticated } from "@/lib/custom-auth"
 import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
 import EditableTitle from "@/components/editable-title"
+import RichTextEditor from "@/components/ui/rich-text-editor"
 
 // Helper to generate unique IDs for dynamic fields
 const generateUniqueId = () => Math.random().toString(36).substring(2, 15)
@@ -779,16 +780,14 @@ export default function TemplePackageForm({ packageId }) {
             {/* Content */}
             <div>
               <Label htmlFor="content">Package Description</Label>
-              <textarea
-                id="content"
-                rows="4"
+              <RichTextEditor
                 value={content}
-                onChange={(e) => {
-                  setContent(e.target.value)
+                onChange={(content) => {
+                  setContent(content)
                   setIsDirty(true)
                 }}
                 placeholder="Detailed description of the temple tour package..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-700"
+                rows={4}
               />
             </div>
 
@@ -934,13 +933,14 @@ export default function TemplePackageForm({ packageId }) {
                     {/* Temple Description */}
                     <div>
                       <Label htmlFor={`temple-description-${temple.id}`}>Temple Description</Label>
-                      <textarea
-                        id={`temple-description-${temple.id}`}
-                        rows="3"
+                      <RichTextEditor
                         value={temple.description}
-                        onChange={(e) => updateTempleField(temple.id, "description", e.target.value)}
-                        placeholder="Brief description of the temple..."
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        onChange={(content) => {
+                          updateTempleField(temple.id, "description", content)
+                          setIsDirty(true)
+                        }}
+                        rows={3}
+                        placeholder="Brief description of the temple"
                       />
                     </div>
                   </div>
@@ -961,21 +961,24 @@ export default function TemplePackageForm({ packageId }) {
                 required={false}
                 className="mb-2"
               />
-              <div className="space-y-2 p-4 bg-gray-50 rounded-md border border-gray-200">
+              <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {tourHighlights.map((item) => (
-                  <div key={item.id} className="flex gap-2 items-end">
-                    <Input
-                      type="text"
+                  <div key={item.id} className="space-y-2">
+                    <RichTextEditor
                       value={item.text}
-                      onChange={(e) => updatePoint(setTourHighlights, item.id, e.target.value)}
-                      placeholder="Eg: Visit ancient Dravidian architecture"
-                      className="flex-grow"
+                      onChange={(content) => {
+                        updatePoint(setTourHighlights, item.id, content)
+                        setIsDirty(true)
+                      }}
+                      placeholder="Eg: Visit ancient Dravidian architecture - Marvel at intricate carvings"
+                      rows={2}
                     />
                     <Button
                       type="button"
                       variant="destructive"
                       size="sm"
                       onClick={() => removePoint(setTourHighlights, item.id)}
+                      className="self-end"
                     >
                       Remove
                     </Button>
@@ -997,21 +1000,24 @@ export default function TemplePackageForm({ packageId }) {
                 required={false}
                 className="mb-2"
               />
-              <div className="space-y-2 p-4 bg-gray-50 rounded-md border border-gray-200">
+              <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {includes.map((item) => (
-                  <div key={item.id} className="flex gap-2 items-end">
-                    <Input
-                      type="text"
+                  <div key={item.id} className="space-y-2">
+                    <RichTextEditor
                       value={item.text}
-                      onChange={(e) => updatePoint(setIncludes, item.id, e.target.value)}
-                      placeholder="Eg: Temple entry fees"
-                      className="flex-grow"
+                      onChange={(content) => {
+                        updatePoint(setIncludes, item.id, content)
+                        setIsDirty(true)
+                      }}
+                      placeholder="Eg: Temple entry fees - All temple entrance charges included"
+                      rows={2}
                     />
                     <Button
                       type="button"
                       variant="destructive"
                       size="sm"
                       onClick={() => removePoint(setIncludes, item.id)}
+                      className="self-end"
                     >
                       Remove
                     </Button>
@@ -1033,21 +1039,24 @@ export default function TemplePackageForm({ packageId }) {
                 required={false}
                 className="mb-2"
               />
-              <div className="space-y-2 p-4 bg-gray-50 rounded-md border border-gray-200">
+              <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {excludes.map((item) => (
-                  <div key={item.id} className="flex gap-2 items-end">
-                    <Input
-                      type="text"
+                  <div key={item.id} className="space-y-2">
+                    <RichTextEditor
                       value={item.text}
-                      onChange={(e) => updatePoint(setExcludes, item.id, e.target.value)}
-                      placeholder="Eg: Personal expenses"
-                      className="flex-grow"
+                      onChange={(content) => {
+                        updatePoint(setExcludes, item.id, content)
+                        setIsDirty(true)
+                      }}
+                      placeholder="Eg: Personal expenses - Shopping, tips, and personal items"
+                      rows={2}
                     />
                     <Button
                       type="button"
                       variant="destructive"
                       size="sm"
                       onClick={() => removePoint(setExcludes, item.id)}
+                      className="self-end"
                     >
                       Remove
                     </Button>
@@ -1069,21 +1078,24 @@ export default function TemplePackageForm({ packageId }) {
                 required={false}
                 className="mb-2"
               />
-              <div className="space-y-2 p-4 bg-gray-50 rounded-md border border-gray-200">
+              <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {itineraries.map((item) => (
-                  <div key={item.id} className="flex gap-2 items-end">
-                    <Input
-                      type="text"
+                  <div key={item.id} className="space-y-2">
+                    <RichTextEditor
                       value={item.text}
-                      onChange={(e) => updatePoint(setItineraries, item.id, e.target.value)}
-                      placeholder="Eg: Day 1: Visit Meenakshi Temple"
-                      className="flex-grow"
+                      onChange={(content) => {
+                        updatePoint(setItineraries, item.id, content)
+                        setIsDirty(true)
+                      }}
+                      placeholder="Eg: Day 1: Visit Meenakshi Temple - Explore the magnificent architecture"
+                      rows={2}
                     />
                     <Button
                       type="button"
                       variant="destructive"
                       size="sm"
                       onClick={() => removePoint(setItineraries, item.id)}
+                      className="self-end"
                     >
                       Remove
                     </Button>
@@ -1105,21 +1117,24 @@ export default function TemplePackageForm({ packageId }) {
                 required={false}
                 className="mb-2"
               />
-              <div className="space-y-2 p-4 bg-gray-50 rounded-md border border-gray-200">
+              <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
                 {importantNotes.map((item) => (
-                  <div key={item.id} className="flex gap-2 items-end">
-                    <Input
-                      type="text"
+                  <div key={item.id} className="space-y-2">
+                    <RichTextEditor
                       value={item.text}
-                      onChange={(e) => updatePoint(setImportantNotes, item.id, e.target.value)}
-                      placeholder="Eg: Dress code must be followed"
-                      className="flex-grow"
+                      onChange={(content) => {
+                        updatePoint(setImportantNotes, item.id, content)
+                        setIsDirty(true)
+                      }}
+                      placeholder="Eg: Dress code must be followed - Traditional attire required"
+                      rows={2}
                     />
                     <Button
                       type="button"
                       variant="destructive"
                       size="sm"
                       onClick={() => removePoint(setImportantNotes, item.id)}
+                      className="self-end"
                     >
                       Remove
                     </Button>
@@ -1157,23 +1172,26 @@ export default function TemplePackageForm({ packageId }) {
                     <div className="space-y-3">
                       <div>
                         <Label htmlFor={`faq-question-${faq.id}`}>Question</Label>
-                        <Input
-                          id={`faq-question-${faq.id}`}
-                          type="text"
+                        <RichTextEditor
                           value={faq.question}
-                          onChange={(e) => updateFaq(faq.id, "question", e.target.value)}
+                          onChange={(content) => {
+                            updateFaq(faq.id, "question", content)
+                            setIsDirty(true)
+                          }}
                           placeholder="Eg: What is the temple dress code?"
+                          rows={2}
                         />
                       </div>
                       <div>
                         <Label htmlFor={`faq-answer-${faq.id}`}>Answer</Label>
-                        <textarea
-                          id={`faq-answer-${faq.id}`}
-                          rows="3"
+                        <RichTextEditor
                           value={faq.answer}
-                          onChange={(e) => updateFaq(faq.id, "answer", e.target.value)}
-                          placeholder="Provide a detailed answer..."
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          onChange={(content) => {
+                            updateFaq(faq.id, "answer", content)
+                            setIsDirty(true)
+                          }}
+                          rows={3}
+                          placeholder="Provide a detailed answer"
                         />
                       </div>
                     </div>
@@ -1276,13 +1294,14 @@ export default function TemplePackageForm({ packageId }) {
                       </div>
                       <div>
                         <Label htmlFor={`section-content-${section.id}`}>Content</Label>
-                        <textarea
-                          id={`section-content-${section.id}`}
-                          rows="3"
+                        <RichTextEditor
                           value={section.content}
-                          onChange={(e) => updateSection(section.id, "content", e.target.value)}
-                          placeholder="Enter content..."
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          onChange={(content) => {
+                            updateSection(section.id, "content", content)
+                            setIsDirty(true)
+                          }}
+                          rows={3}
+                          placeholder="Enter content"
                         />
                       </div>
                     </div>
@@ -1330,13 +1349,14 @@ export default function TemplePackageForm({ packageId }) {
                       </div>
                       <div>
                         <Label htmlFor={`place-description-${place.id}`}>Description</Label>
-                        <textarea
-                          id={`place-description-${place.id}`}
-                          rows="3"
+                        <RichTextEditor
                           value={place.description}
-                          onChange={(e) => updateSightseeingPlace(place.id, "description", e.target.value)}
-                          placeholder="Enter description..."
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          onChange={(content) => {
+                            updateSightseeingPlace(place.id, "description", content)
+                            setIsDirty(true)
+                          }}
+                          rows={3}
+                          placeholder="Enter description"
                         />
                       </div>
                     </div>
@@ -1413,11 +1433,10 @@ export default function TemplePackageForm({ packageId }) {
                     </div>
                     <div>
                       <Label htmlFor={`why-us-description-${item.id}`}>Description</Label>
-                      <Textarea
-                        id={`why-us-description-${item.id}`}
+                      <RichTextEditor
                         value={item.description}
-                        onChange={(e) => {
-                          updateWhyChooseUsItem(item.id, "description", e.target.value)
+                        onChange={(content) => {
+                          updateWhyChooseUsItem(item.id, "description", content)
                           setIsDirty(true)
                         }}
                         placeholder="Eg: Our experienced team ensures top-quality service with 24/7 customer support"
