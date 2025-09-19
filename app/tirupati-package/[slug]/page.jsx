@@ -825,7 +825,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
                     {/* Image Section */}
                     {section.imageUrl && (
                       <div className={`relative ${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
-                        <div className="relative w-full h-80 rounded-2xl overflow-hidden shadow-2xl group">
+                        <div className="relative w-full h-96 rounded-2xl overflow-hidden shadow-2xl group">
                           <Image
                             src={section.imageUrl || "/placeholder.svg?height=300&width=500&query=section image"}
                             alt={section.contentTitle || "Section image"}

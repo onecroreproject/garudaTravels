@@ -23,17 +23,17 @@ const stats = [
   {
     id: 3,
     icon: CheckCircle,
-    value: "5K",
+    value: "100K",
     label: "Happy Customers",
-    endValue: 5, // Changed to 5 for '5K' to work with multiplication
+    endValue: 100, // Changed to 5 for '5K' to work with multiplication
     suffix: "K",
   },
   {
     id: 4,
     icon: Handshake,
-    value: "98%",
+    value: "99%",
     label: "Success Rates",
-    endValue: 98,
+    endValue: 99,
     suffix: "%",
   },
 ]
