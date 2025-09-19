@@ -1,8 +1,4 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { useParams } from "next/navigation"
-import { collection, getDocs } from "firebase/firestore"
+import { doc, getDoc, getDocs, collection, query, where } from "firebase/firestore"
 import { db } from "@/lib/firebase"
 import BookingForm from "@/components/booking-form"
 import PermitFeeSection from "@/components/permit-fee"
@@ -13,50 +9,91 @@ import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { AnimatePresence, motion } from 'framer-motion';
+import FAQAccordion from "@/components/faq-accordion"
+import BookNowButton from "@/components/book-now-button"
 
-function CarRentalPage() {
-  const params = useParams()
-  const [packageData, setPackageData] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [openIndex, setOpenIndex] = useState(null);
-
-
-  useEffect(() => {
-    async function fetchPackageData() {
-      try {
-        setLoading(true)
-        const querySnapshot = await getDocs(collection(db, "carRentalPackages"))
-        const packages = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-        const foundPackage = packages.find((pkg) => pkg.url === params.slug)
-        
-        if (foundPackage) {
-          setPackageData(foundPackage)
-        } else {
-          setError("Car rental package not found")
-        }
-      } catch (err) {
-        console.error("Error fetching car rental package:", err)
-        setError("Failed to load car rental package")
-      } finally {
-        setLoading(false)
+// Generate dynamic metadata
+export async function generateMetadata({ params }) {
+  const { slug } = params
+  
+  try {
+    const docRef = doc(db, "carRentalPackages", slug)
+    const docSnap = await getDoc(docRef)
+    
+    if (docSnap.exists()) {
+      const data = docSnap.data()
+      const seoData = data.seoData || {}
+      
+      return {
+        title: seoData.pageTitle || data.title || "Car Rental Service | Garuda Tours and Travels",
+        description: seoData.metaDescription || data.subtitle || "Book your car rental service with Garuda Tours and Travels. Professional drivers, well-maintained vehicles, and reliable service.",
+        keywords: seoData.metaKeywords || "car rental, vehicle hire, transport service, garuda tours, travel",
+        openGraph: {
+          title: seoData.ogTitle || seoData.pageTitle || data.title || "Car Rental Service | Garuda Tours and Travels",
+          description: seoData.ogDescription || seoData.metaDescription || data.subtitle || "Book your car rental service with Garuda Tours and Travels",
+          images: seoData.ogImage ? [seoData.ogImage] : (data.images?.[0] ? [data.images[0]] : []),
+          type: 'website',
+        },
+        twitter: {
+          card: 'summary_large_image',
+          title: seoData.ogTitle || seoData.pageTitle || data.title || "Car Rental Service | Garuda Tours and Travels",
+          description: seoData.ogDescription || seoData.metaDescription || data.subtitle || "Book your car rental service with Garuda Tours and Travels",
+          images: seoData.ogImage ? [seoData.ogImage] : (data.images?.[0] ? [data.images[0]] : []),
+        },
       }
     }
+  } catch (error) {
+    console.error("Error generating metadata:", error)
+  }
+  
+  // Fallback metadata
+  return {
+    title: "Car Rental Service | Garuda Tours and Travels",
+    description: "Book your car rental service with Garuda Tours and Travels. Professional drivers, well-maintained vehicles, and reliable service.",
+    keywords: "car rental, vehicle hire, transport service, garuda tours, travel",
+  }
+}
 
-    if (params.slug) {
-      fetchPackageData()
+// This is a Server Component, so it can directly fetch data
+export default async function CarRentalPage({ params }) {
+  const { slug } = params
+
+  let packageData = null
+  let error = null
+
+  try {
+    // Fetch current package data
+    const docRef = doc(db, "carRentalPackages", slug)
+    const docSnap = await getDoc(docRef)
+
+    if (docSnap.exists()) {
+      const rawData = docSnap.data()
+      // Convert Firebase timestamps and other complex objects to plain objects
+      packageData = {
+        id: docSnap.id,
+        ...rawData,
+        createdAt: rawData.createdAt ? rawData.createdAt.toDate().toISOString() : null,
+        updatedAt: rawData.updatedAt ? rawData.updatedAt.toDate().toISOString() : null,
+      }
+    } else {
+      error = "Car rental package not found."
     }
-  }, [params.slug])
+  } catch (err) {
+    console.error("Error fetching car rental package:", err)
+    error = "Failed to load car rental package details. Please try again later."
+  }
 
-  if (loading) {
+  if (error) {
     return (
       <div className="min-h-screen bg-white">
         <Header />
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading car rental package...</p>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Package Not Found</h2>
+            <p className="text-gray-600 mb-6">{error}</p>
+            <Link href="/" className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition-all">
+              Back to Home
+            </Link>
           </div>
         </div>
         <Footer />
@@ -64,18 +101,12 @@ function CarRentalPage() {
     )
   }
 
-  if (error || !packageData) {
+  if (!packageData) {
     return (
       <div className="min-h-screen bg-white">
         <Header />
         <div className="flex items-center justify-center min-h-[400px]">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Package Not Found</h2>
-            <p className="text-gray-600 mb-6">{error || "The requested car rental package could not be found."}</p>
-            <Link href="/" className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition-all">
-              Back to Home
-            </Link>
-          </div>
+          <p className="text-lg text-gray-700">Loading car rental package details...</p>
         </div>
         <Footer />
       </div>
@@ -270,13 +301,7 @@ function CarRentalPage() {
                     )}
 
                     {/* Book Now Button - Always at bottom */}
-                    <button 
-                      className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 mt-auto"
-                      onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
-                    >
-                      <Car className="w-5 h-5" />
-                      Book Now
-                    </button>
+                    <BookNowButton />
                   </CardContent>
                 </Card>
               ))}
@@ -433,71 +458,10 @@ function CarRentalPage() {
         </section>
       )} */}
 
-      {packageData.faqs && packageData.faqs.length > 0 && (
-  <section className="py-12 px-4 bg-gray-50">
-    <div className="container mx-auto">
-      <h2 className="text-3xl font-bold text-center text-gray-800 mb-10">
-        {packageData.sectionTitles?.frequentlyAskedQuestions || "Frequently Asked Questions"}
-      </h2>
-
-      <div className="max-w-3xl mx-auto space-y-4">
-        {packageData.faqs.map((faq, index) => {
-          const isOpen = openIndex === index;
-
-          return (
-            <div
-              key={faq.id || index}
-              className="border border-gray-200 rounded-lg overflow-hidden shadow-sm bg-white"
-            >
-              <button
-                onClick={() => setOpenIndex(isOpen ? null : index)}
-                className="w-full flex justify-between items-center p-5 text-left focus:outline-none hover:bg-gray-100 transition"
-              >
-                <div 
-                  className="text-lg font-medium text-gray-800 prose prose-sm max-w-none"
-                  dangerouslySetInnerHTML={{ __html: faq.question }}
-                />
-                <svg
-                  className={`w-5 h-5 transform transition-transform ${
-                    isOpen ? 'rotate-180' : ''
-                  }`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-
-              <AnimatePresence>
-                {isOpen && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className="px-5 pb-5 text-gray-700 text-sm">
-                      <div 
-                        className="prose prose-sm max-w-none"
-                        dangerouslySetInnerHTML={{ __html: faq.answer }}
-                      />
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  </section>
-)}
+      <FAQAccordion 
+        faqs={packageData.faqs} 
+        sectionTitle={packageData.sectionTitles?.frequentlyAskedQuestions}
+      />
 
 
       {/* Vehicle Features Component */}
@@ -514,4 +478,3 @@ function CarRentalPage() {
   )
 }
 
-export default CarRentalPage
