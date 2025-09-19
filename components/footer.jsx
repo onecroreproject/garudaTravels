@@ -13,21 +13,21 @@ export default function Footer() {
           </p>
           <div className="flex space-x-4">
             <a
-              href="#"
+              href="https://www.facebook.com/garudatoursandtravelschennai/"
               aria-label="Facebook"
               className="border border-gray-600 p-2 rounded-md hover:bg-gray-700 transition-colors"
             >
               <Facebook className="h-5 w-5 text-white" />
             </a>
             <a
-              href="#"
+              href="https://www.instagram.com/garudatoursandtravels/"
               aria-label="Instagram"
               className="border border-gray-600 p-2 rounded-md hover:bg-gray-700 transition-colors"
             >
               <Instagram className="h-5 w-5 text-white" />
             </a>
             <a
-              href="#"
+              href="https://wa.me/919840789844"
               aria-label="WhatsApp"
               className="border border-gray-600 p-2 rounded-md hover:bg-gray-700 transition-colors"
             >
@@ -75,7 +75,12 @@ export default function Footer() {
           <ul className="space-y-3">
             <li>
               <a href="tel:9840789844" className="flex items-center hover:text-blue-400 transition-colors">
-                <Phone className="h-4 w-4 mr-2 text-blue-400" /> 9840789844, 9840789857
+                <Phone className="h-4 w-4 mr-2 text-blue-400" /> 9840789844
+              </a>
+            </li>
+            <li>
+              <a href="tel:9840789857" className="flex items-center hover:text-blue-400 transition-colors">
+                <Phone className="h-4 w-4 mr-2 text-blue-400" /> 9840789857
               </a>
             </li>
             <li>
