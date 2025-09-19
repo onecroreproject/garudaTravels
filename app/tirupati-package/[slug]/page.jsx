@@ -251,7 +251,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
             <h2 className="text-3xl font-bold text-gray-800 mb-4">{packageData.sectionTitles?.overview || "Overview"}</h2>
             <div
               className="prose max-w-none text-gray-700 mx-auto mb-6"
-              dangerouslySetInnerHTML={{ __html: packageData.content }}
+              dangerouslySetInnerHTML={{ __html: packageData.content || "" }}
             />
             <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
               Call to Book Now
@@ -304,7 +304,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
                             <p className="font-semibold text-gray-700">Includes:</p>
                             <div 
                               className="text-sm text-gray-600 prose prose-sm max-w-none"
-                              dangerouslySetInnerHTML={{ __html: car.includes }}
+                              dangerouslySetInnerHTML={{ __html: car.includes || "" }}
                             />
                           </div>
                         )}
@@ -313,7 +313,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
                             <h4 className="font-semibold text-gray-700">Excludes:</h4>
                             <div 
                               className="text-sm text-gray-600 prose prose-sm max-w-none"
-                              dangerouslySetInnerHTML={{ __html: car.excludes }}
+                              dangerouslySetInnerHTML={{ __html: car.excludes || "" }}
                             />
                           </div>
                         )}
@@ -458,7 +458,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
                         {pkg.description && (
                           <div 
                             className="text-gray-600 mb-3"
-                            dangerouslySetInnerHTML={{ __html: pkg.description }}
+                            dangerouslySetInnerHTML={{ __html: pkg.description || "" }}
                           />
                         )}
                         {pkg.features && pkg.features.length > 0 && (
@@ -595,7 +595,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
                           </div>
                           <div 
                             className="text-gray-700 font-medium leading-relaxed prose prose-sm max-w-none"
-                            dangerouslySetInnerHTML={{ __html: item.text }}
+                            dangerouslySetInnerHTML={{ __html: item.text || "" }}
                           />
                 </li>
               ))}
@@ -625,7 +625,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
                           </div>
                           <div 
                             className="text-gray-700 font-medium leading-relaxed prose prose-sm max-w-none"
-                            dangerouslySetInnerHTML={{ __html: item.text }}
+                            dangerouslySetInnerHTML={{ __html: item.text || "" }}
                           />
                         </li>
               ))}
@@ -656,7 +656,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
                   <div className="p-4 text-center">
                     <div 
                       className="text-xl font-semibold text-gray-800 prose prose-sm max-w-none"
-                      dangerouslySetInnerHTML={{ __html: item.text }}
+                      dangerouslySetInnerHTML={{ __html: item.text || "" }}
                     />
                   </div>
                 </div>
@@ -792,7 +792,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
                   {section.contentDescription && (
                     <div
                       className="prose max-w-none text-gray-700 mb-4"
-                      dangerouslySetInnerHTML={{ __html: section.contentDescription }}
+                      dangerouslySetInnerHTML={{ __html: section.contentDescription || "" }}
                     />
                   )}
                   {section.listInfo && section.listInfo.length > 0 && (
@@ -801,7 +801,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
                         <li key={item.id}>
                           <div 
                             className="prose prose-sm max-w-none"
-                            dangerouslySetInnerHTML={{ __html: item.text }}
+                            dangerouslySetInnerHTML={{ __html: item.text || "" }}
                           />
                         </li>
                       ))}
@@ -859,13 +859,13 @@ export default async function TirupatiPackageDetailPage({ params }) {
                   <AccordionTrigger className="text-lg font-semibold text-gray-800 hover:no-underline">
                     <div 
                       className="prose prose-sm max-w-none"
-                      dangerouslySetInnerHTML={{ __html: faq.question }}
+                      dangerouslySetInnerHTML={{ __html: faq.question || "" }}
                     />
                   </AccordionTrigger>
                   <AccordionContent className="text-gray-700 leading-relaxed">
                     <div 
                       className="prose prose-sm max-w-none"
-                      dangerouslySetInnerHTML={{ __html: faq.answer }}
+                      dangerouslySetInnerHTML={{ __html: faq.answer || "" }}
                     />
                   </AccordionContent>
                 </AccordionItem>
