@@ -313,7 +313,7 @@ export default async function TemplePackagePage({ params }) {
                   </h2>
                   <div className="space-y-4">
                       <div 
-                        className="prose prose-sm max-w-none"
+                        className="text-gray-700 leading-relaxed whitespace-pre-line"
                         dangerouslySetInnerHTML={{ __html: packageData.content || "" }}
                       />
                   </div>
@@ -332,7 +332,7 @@ export default async function TemplePackagePage({ params }) {
                       <div key={highlight.id || index} className="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
                         <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
                         <div 
-                          className="text-gray-700 prose prose-sm max-w-none"
+                          className="text-gray-700 leading-relaxed whitespace-pre-line"
                           dangerouslySetInnerHTML={{ __html: highlight.text || "" }}
                         />
                       </div>
@@ -364,7 +364,7 @@ export default async function TemplePackagePage({ params }) {
                         <h4 className="font-semibold text-gray-800 mb-2">{temple.name}</h4>
                         {temple.description && (
                           <div 
-                            className="text-sm text-gray-600 leading-relaxed prose prose-sm max-w-none"
+                            className="text-sm text-gray-600 leading-relaxed whitespace-pre-line"
                             dangerouslySetInnerHTML={{ __html: temple.description || "" }}
                           />
                         )}
@@ -391,7 +391,7 @@ export default async function TemplePackagePage({ params }) {
                         </div>
                         <div className="flex-1">
                           <div 
-                            className="text-gray-700 leading-relaxed prose prose-sm max-w-none"
+                            className="text-gray-700 leading-relaxed whitespace-pre-line"
                             dangerouslySetInnerHTML={{ __html: item.text || "" }}
                           />
                         </div>
@@ -417,7 +417,7 @@ export default async function TemplePackagePage({ params }) {
                         <h4 className="font-semibold text-gray-800 mb-2">{place.name}</h4>
                         {place.description && (
                           <div 
-                            className="text-sm text-gray-600 leading-relaxed prose prose-sm max-w-none"
+                            className="text-sm text-gray-600 leading-relaxed whitespace-pre-line"
                             dangerouslySetInnerHTML={{ __html: place.description || "" }}
                           />
                         )}
@@ -435,7 +435,7 @@ export default async function TemplePackagePage({ params }) {
                       <h2 className="text-2xl font-bold text-gray-800 mb-4">{section.title}</h2>
                       <div className="text-gray-700 leading-relaxed">
                         <div 
-                          className="prose prose-sm max-w-none"
+                          className="whitespace-pre-line"
                           dangerouslySetInnerHTML={{ __html: section.content || "" }}
                         />
                       </div>
@@ -458,7 +458,7 @@ export default async function TemplePackagePage({ params }) {
                         <li key={item.id || index} className="flex items-start gap-3">
                           <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
                           <div 
-                            className="text-sm text-gray-700 prose prose-sm max-w-none"
+                            className="text-sm text-gray-700 whitespace-pre-line"
                             dangerouslySetInnerHTML={{ __html: item.text || "" }}
                           />
                         </li>
@@ -479,7 +479,7 @@ export default async function TemplePackagePage({ params }) {
                         <li key={item.id || index} className="flex items-start gap-3">
                           <XCircle className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
                           <div 
-                            className="text-sm text-gray-700 prose prose-sm max-w-none"
+                            className="text-sm text-gray-700 whitespace-pre-line"
                             dangerouslySetInnerHTML={{ __html: item.text || "" }}
                           />
                         </li>
@@ -501,7 +501,7 @@ export default async function TemplePackagePage({ params }) {
                       <li key={note.id || index} className="flex items-start gap-3">
                         <span className="text-yellow-600 mt-1 font-bold">•</span>
                         <div 
-                          className="text-sm text-gray-700 prose prose-sm max-w-none"
+                          className="text-sm text-gray-700 whitespace-pre-line"
                           dangerouslySetInnerHTML={{ __html: note.text || "" }}
                         />
                       </li>
@@ -522,13 +522,13 @@ export default async function TemplePackagePage({ params }) {
                       <AccordionItem key={faq.id || index} value={`item-${index}`} className="border-b border-gray-200">
                         <AccordionTrigger className="text-left hover:no-underline py-4">
                           <div 
-                            className="text-base font-bold text-gray-800 prose prose-sm max-w-none"
+                            className="text-base font-bold text-gray-800 whitespace-pre-line"
                             dangerouslySetInnerHTML={{ __html: faq.question || "" }}
                           />
                         </AccordionTrigger>
                         <AccordionContent className="pb-4">
                           <div
-                            className="text-gray-600 leading-relaxed prose prose-sm max-w-none"
+                            className="text-gray-600 leading-relaxed whitespace-pre-line"
                             dangerouslySetInnerHTML={{ __html: faq.answer || "" }}
                           />
                         </AccordionContent>
@@ -719,7 +719,7 @@ export default async function TemplePackagePage({ params }) {
                     <h3 className="text-lg font-semibold text-gray-800 mb-2">{item.title}</h3>
                     {item.description && (
                       <div 
-                        className="text-sm text-gray-600 leading-relaxed prose prose-sm max-w-none"
+                        className="text-sm text-gray-600 leading-relaxed whitespace-pre-line"
                         dangerouslySetInnerHTML={{ __html: item.description || "" }}
                       />
                     )}
