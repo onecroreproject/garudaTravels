@@ -312,10 +312,10 @@ export default async function TemplePackagePage({ params }) {
                     Package Overview
                   </h2>
                   <div className="space-y-4">
-                    <div 
-                      className="prose prose-sm max-w-none"
-                      dangerouslySetInnerHTML={{ __html: packageData.content }}
-                    />
+                      <div 
+                        className="prose prose-sm max-w-none"
+                        dangerouslySetInnerHTML={{ __html: packageData.content || "" }}
+                      />
                   </div>
                 </div>
               )}
@@ -333,7 +333,7 @@ export default async function TemplePackagePage({ params }) {
                         <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
                         <div 
                           className="text-gray-700 prose prose-sm max-w-none"
-                          dangerouslySetInnerHTML={{ __html: highlight.text }}
+                          dangerouslySetInnerHTML={{ __html: highlight.text || "" }}
                         />
                       </div>
                     ))}
@@ -365,7 +365,7 @@ export default async function TemplePackagePage({ params }) {
                         {temple.description && (
                           <div 
                             className="text-sm text-gray-600 leading-relaxed prose prose-sm max-w-none"
-                            dangerouslySetInnerHTML={{ __html: temple.description }}
+                            dangerouslySetInnerHTML={{ __html: temple.description || "" }}
                           />
                         )}
                       </div>
@@ -392,7 +392,7 @@ export default async function TemplePackagePage({ params }) {
                         <div className="flex-1">
                           <div 
                             className="text-gray-700 leading-relaxed prose prose-sm max-w-none"
-                            dangerouslySetInnerHTML={{ __html: item.text }}
+                            dangerouslySetInnerHTML={{ __html: item.text || "" }}
                           />
                         </div>
                       </div>
@@ -418,7 +418,7 @@ export default async function TemplePackagePage({ params }) {
                         {place.description && (
                           <div 
                             className="text-sm text-gray-600 leading-relaxed prose prose-sm max-w-none"
-                            dangerouslySetInnerHTML={{ __html: place.description }}
+                            dangerouslySetInnerHTML={{ __html: place.description || "" }}
                           />
                         )}
                       </div>
@@ -436,7 +436,7 @@ export default async function TemplePackagePage({ params }) {
                       <div className="text-gray-700 leading-relaxed">
                         <div 
                           className="prose prose-sm max-w-none"
-                          dangerouslySetInnerHTML={{ __html: section.content }}
+                          dangerouslySetInnerHTML={{ __html: section.content || "" }}
                         />
                       </div>
                     </div>
@@ -459,7 +459,7 @@ export default async function TemplePackagePage({ params }) {
                           <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
                           <div 
                             className="text-sm text-gray-700 prose prose-sm max-w-none"
-                            dangerouslySetInnerHTML={{ __html: item.text }}
+                            dangerouslySetInnerHTML={{ __html: item.text || "" }}
                           />
                         </li>
                       ))}
@@ -480,7 +480,7 @@ export default async function TemplePackagePage({ params }) {
                           <XCircle className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
                           <div 
                             className="text-sm text-gray-700 prose prose-sm max-w-none"
-                            dangerouslySetInnerHTML={{ __html: item.text }}
+                            dangerouslySetInnerHTML={{ __html: item.text || "" }}
                           />
                         </li>
                       ))}
@@ -502,7 +502,7 @@ export default async function TemplePackagePage({ params }) {
                         <span className="text-yellow-600 mt-1 font-bold">•</span>
                         <div 
                           className="text-sm text-gray-700 prose prose-sm max-w-none"
-                          dangerouslySetInnerHTML={{ __html: note.text }}
+                          dangerouslySetInnerHTML={{ __html: note.text || "" }}
                         />
                       </li>
                     ))}
@@ -523,13 +523,13 @@ export default async function TemplePackagePage({ params }) {
                         <AccordionTrigger className="text-left hover:no-underline py-4">
                           <div 
                             className="text-base font-bold text-gray-800 prose prose-sm max-w-none"
-                            dangerouslySetInnerHTML={{ __html: faq.question }}
+                            dangerouslySetInnerHTML={{ __html: faq.question || "" }}
                           />
                         </AccordionTrigger>
                         <AccordionContent className="pb-4">
                           <div
                             className="text-gray-600 leading-relaxed prose prose-sm max-w-none"
-                            dangerouslySetInnerHTML={{ __html: faq.answer }}
+                            dangerouslySetInnerHTML={{ __html: faq.answer || "" }}
                           />
                         </AccordionContent>
                       </AccordionItem>
@@ -720,7 +720,7 @@ export default async function TemplePackagePage({ params }) {
                     {item.description && (
                       <div 
                         className="text-sm text-gray-600 leading-relaxed prose prose-sm max-w-none"
-                        dangerouslySetInnerHTML={{ __html: item.description }}
+                        dangerouslySetInnerHTML={{ __html: item.description || "" }}
                       />
                     )}
                   </div>

@@ -323,7 +323,7 @@ export default async function CarRentalPage({ params }) {
                   </div>
                   <div 
                     className="text-lg font-semibold text-gray-800 mb-2 prose prose-sm max-w-none"
-                    dangerouslySetInnerHTML={{ __html: feature.text }}
+                    dangerouslySetInnerHTML={{ __html: feature.text || "" }}
                   />
                 </div>
               ))}
@@ -380,7 +380,7 @@ export default async function CarRentalPage({ params }) {
                     {section.contentDescription && (
                       <div 
                         className="text-gray-600 space-y-3 prose prose-sm max-w-none"
-                        dangerouslySetInnerHTML={{ __html: section.contentDescription }}
+                        dangerouslySetInnerHTML={{ __html: section.contentDescription || "" }}
                       />
                     )}
                     {section.listInfo && section.listInfo.length > 0 && (
@@ -390,7 +390,7 @@ export default async function CarRentalPage({ params }) {
                             <span className="text-green-500 mt-1">✓</span>
                             <div 
                               className="prose prose-sm max-w-none"
-                              dangerouslySetInnerHTML={{ __html: item.text }}
+                              dangerouslySetInnerHTML={{ __html: item.text || "" }}
                             />
                           </li>
                         ))}
@@ -428,7 +428,7 @@ export default async function CarRentalPage({ params }) {
                       <span className="text-blue-500 mt-1">•</span>
                       <div 
                         className="prose prose-sm max-w-none"
-                        dangerouslySetInnerHTML={{ __html: term.text }}
+                        dangerouslySetInnerHTML={{ __html: term.text || "" }}
                       />
                     </li>
                   ))}
