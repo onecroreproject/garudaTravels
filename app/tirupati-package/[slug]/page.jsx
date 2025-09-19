@@ -724,22 +724,16 @@ export default async function TirupatiPackageDetailPage({ params }) {
             <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
               {packageData.sectionTitles?.tables || "Schedule Tables"}
             </h2>
-            <div className={`grid gap-8 ${
-              packageData.tables.length === 1 
-                ? 'grid-cols-1 max-w-4xl mx-auto' 
-                : packageData.tables.length === 2 
-                ? 'grid-cols-1 lg:grid-cols-2' 
-                : 'grid-cols-1 lg:grid-cols-2 xl:grid-cols-3'
-            }`}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {packageData.tables.map((table) => (
-                <div key={table.id} className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
+                <div key={table.id} className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden flex flex-col h-96">
                   {table.title && (
-                    <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4">
+                    <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 flex-shrink-0">
                       <h3 className="text-xl font-bold text-center">{table.title}</h3>
                     </div>
                   )}
-                  <div className="overflow-x-auto p-0 m-0">
-                    <table className="w-full border-collapse border border-gray-300 m-0 p-0">
+                  <div className="overflow-x-auto p-0 m-0 flex-1 flex flex-col">
+                    <table className="w-full border-collapse border border-gray-300 m-0 p-0 flex-1">
                       <thead className="bg-blue-50 m-0 p-0">
                         <tr className="m-0 p-0">
                           {table.headers.map((header, index) => (
@@ -770,46 +764,86 @@ export default async function TirupatiPackageDetailPage({ params }) {
 
         {/* Dynamic Sections */}
         {packageData.sections && packageData.sections.length > 0 && (
-          <section className="mb-12 space-y-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">{packageData.sectionTitles?.sections || "More Details"}</h2>
-            {packageData.sections.map((section) => (
-              <div key={section.id} className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                {section.imageUrl && (
-                  <div className="relative w-full h-72 rounded-lg overflow-hidden shadow-md">
-                    <Image
-                      src={section.imageUrl || "/placeholder.svg?height=300&width=500&query=section image"}
-                      alt={section.contentTitle || "Section image"}
-                      fill
-                      style={{ objectFit: "cover" }}
-                      className="transition-transform duration-300 hover:scale-105"
-                    />
-                  </div>
-                )}
-                <div>
-                  {section.contentTitle && (
-                    <h3 className="text-2xl font-bold text-gray-800 mb-4">{section.contentTitle}</h3>
+          <section className="mb-16">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-gray-800 mb-4">{packageData.sectionTitles?.sections || "More Details"}</h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-700 mx-auto rounded-full"></div>
+            </div>
+            
+            <div className="space-y-20">
+              {packageData.sections.map((section, index) => (
+                <div key={section.id} className="relative">
+                  {/* Section Separator */}
+                  {index > 0 && (
+                    <div className="flex items-center justify-center mb-16">
+                      <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                      <div className="mx-6 p-3 bg-white rounded-full shadow-lg border border-gray-200">
+                        <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full"></div>
+                      </div>
+                      <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                    </div>
                   )}
-                  {section.contentDescription && (
-                    <div
-                      className="prose max-w-none text-gray-700 mb-4"
-                      dangerouslySetInnerHTML={{ __html: section.contentDescription || "" }}
-                    />
-                  )}
-                  {section.listInfo && section.listInfo.length > 0 && (
-                    <ul className="list-disc list-inside space-y-2 text-gray-700">
-                      {section.listInfo.map((item) => (
-                        <li key={item.id}>
-                          <div 
-                            className="prose prose-sm max-w-none"
-                            dangerouslySetInnerHTML={{ __html: item.text || "" }}
+                  
+                  <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
+                    {/* Content Section */}
+                    <div className={`${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
+                      <div className="relative">
+                        {/* Content Background */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-white rounded-2xl -m-4"></div>
+                        <div className="relative p-8">
+                          {section.contentTitle && (
+                            <div className="mb-6">
+                              <h3 className="text-3xl font-bold text-gray-800 mb-3">{section.contentTitle}</h3>
+                              <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full"></div>
+                            </div>
+                          )}
+                          {section.contentDescription && (
+                            <div
+                              className="prose prose-lg max-w-none text-gray-700 mb-6 leading-relaxed"
+                              dangerouslySetInnerHTML={{ __html: section.contentDescription || "" }}
+                            />
+                          )}
+                          {section.listInfo && section.listInfo.length > 0 && (
+                            <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-blue-100">
+                              <ul className="space-y-4 text-gray-700">
+                                {section.listInfo.map((item) => (
+                                  <li key={item.id} className="flex items-start group">
+                                    <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full mt-2 mr-4 flex-shrink-0 shadow-sm group-hover:shadow-md transition-shadow duration-300"></div>
+                                    <div 
+                                      className="prose prose-sm max-w-none leading-relaxed"
+                                      dangerouslySetInnerHTML={{ __html: item.text || "" }}
+                                    />
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Image Section */}
+                    {section.imageUrl && (
+                      <div className={`relative ${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
+                        <div className="relative w-full h-80 rounded-2xl overflow-hidden shadow-2xl group">
+                          <Image
+                            src={section.imageUrl || "/placeholder.svg?height=300&width=500&query=section image"}
+                            alt={section.contentTitle || "Section image"}
+                            fill
+                            style={{ objectFit: "cover" }}
+                            className="transition-transform duration-500 group-hover:scale-110"
                           />
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                          {/* Image Overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                          {/* Decorative Border */}
+                          <div className="absolute inset-0 rounded-2xl border-2 border-white/20 group-hover:border-white/40 transition-colors duration-300"></div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </section>
         )}
 
@@ -819,8 +853,8 @@ export default async function TirupatiPackageDetailPage({ params }) {
             <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Other Packages You Might Like</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {otherPackages.map((pkg) => (
-                <Card key={pkg.id} className="overflow-hidden">
-                  <CardHeader className="p-0">
+                <Card key={pkg.id} className="overflow-hidden flex flex-col h-96">
+                  <CardHeader className="p-0 flex-shrink-0">
                     <div className="relative w-full h-48">
                       <Image
                         src={pkg.images?.[0] || "/images/city/free.png?height=200&width=300&query=other package image"}
@@ -831,17 +865,21 @@ export default async function TirupatiPackageDetailPage({ params }) {
                       />
                     </div>
                   </CardHeader>
-                  <CardContent className="p-4">
-                    <CardTitle className="text-xl font-semibold text-gray-800 mb-2">{pkg.title}</CardTitle>
-                    {pkg.subtitle && <p className="text-sm text-gray-600 mb-3 line-clamp-2">{pkg.subtitle}</p>}
-                    {pkg.carPrices?.[0]?.prices?.[0]?.value && (
-                      <p className="text-lg font-bold text-blue-600 mb-4">
-                        Starting from {pkg.carPrices[0].prices[0].value}
-                      </p>
-                    )}
-                    <Button asChild className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-                      <Link href={`/tirupati-package/${pkg.url}`}>View Details</Link>
-                    </Button>
+                  <CardContent className="p-4 flex flex-col flex-1">
+                    <div className="flex-1">
+                      <CardTitle className="text-xl font-semibold text-gray-800 mb-2 line-clamp-2">{pkg.title}</CardTitle>
+                      {/* {pkg.subtitle && <p className="text-sm text-gray-600 mb-3 line-clamp-2">{pkg.subtitle}</p>}
+                       {pkg.carPrices?.[0]?.prices?.[0]?.value && (
+                          <p className="text-lg font-bold text-blue-600 mb-4">
+                            Starting from {pkg.carPrices[0].prices[0].value}
+                          </p>
+                       )}  */}
+                    </div>
+                    <div className="mt-auto pt-4">
+                      <Button asChild className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                        <Link href={`/tirupati-package/${pkg.url}`}>View Details</Link>
+                      </Button>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
