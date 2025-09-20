@@ -106,8 +106,8 @@ export default function BookingForm() {
         )}
 
         {/* Main Booking Form */}
-        <div className="form w-full">
-          <div className="w-full max-w-4xl mb-0 ms-0">
+        <div className="form w-full max-w-4xl mx-auto">
+          <div className="w-full mb-0">
             {/* Package Selection - Mobile Responsive */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-2 mb-8">
               {/* Tirupati Package */}
@@ -171,7 +171,7 @@ export default function BookingForm() {
               </label>
             </div>
           </div>
-          <div className="bg-transparent p-0 border-t-0 shadow-none max-w-4xl mt-0 w-full">
+          <div className="bg-transparent p-0 border-t-0 shadow-none mt-0 w-full">
             <form onSubmit={handleSubmit} className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {/* Row 1 */}
               <div className="relative group w-full">
