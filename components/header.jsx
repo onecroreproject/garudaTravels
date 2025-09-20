@@ -68,7 +68,7 @@ export function Header() {
 
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
-      <div className="max-w-[1470px] mx-auto ">
+      <div className="max-w-[1470px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-2">
@@ -110,8 +110,8 @@ export function Header() {
                 Tirupati Packages
                 <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
               </button>
-              <div className="absolute top-full left-0 mt-2 w-[600px] bg-[#f5ece1] rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
-                <div className="p-6 grid grid-cols-2 gap-8">
+              <div className="absolute top-full left-0 mt-2 w-[600px] max-w-[90vw] sm:w-[600px] bg-[#f5ece1] rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
+                <div className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-8">
                   {/* Left Column */}
                   <div className="space-y-6">
                     {/* Chennai to Tirupati */}
@@ -236,7 +236,7 @@ export function Header() {
                 Car Rental Packages
                 <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
               </button>
-              <div className="absolute top-full left-0 mt-2 w-80 bg-[#f5ece1] rounded-lg shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
+              <div className="absolute top-full left-0 mt-2 w-80 max-w-[90vw] sm:w-80 bg-[#f5ece1] rounded-lg shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
                 <div className="py-2">
                   {loading ? (
                     <div className="px-4 py-3 text-gray-500">Loading...</div>
@@ -270,7 +270,7 @@ export function Header() {
                 Temple Tour Packages
                 <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
               </button>
-              <div className="absolute top-full left-0 mt-2 w-[600px] bg-[#f5ece1] rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
+              <div className="absolute top-full left-0 mt-2 w-[600px] max-w-[90vw] sm:w-[600px] bg-[#f5ece1] rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
                 <div className="p-6">
                   {loading ? (
                     <div className="text-center py-8 text-gray-500">Loading temple packages...</div>
@@ -372,7 +372,7 @@ export function Header() {
 
           {/* Panel */}
           <div
-            className={`absolute right-0 top-0 h-full w-80 max-w-[85vw] bg-white shadow-xl transition-transform duration-300 ease-in-out ${
+            className={`absolute right-0 top-0 h-full w-80 max-w-[85vw] sm:w-80 bg-white shadow-xl transition-transform duration-300 ease-in-out ${
               isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
             }`}
             role="dialog"
@@ -391,7 +391,7 @@ export function Header() {
                 Home
               </a>
               <a
-                href="/under-construction"
+                href="/about"
                 className={`block px-4 py-3 rounded-md transition-colors duration-200 ${
                   isActive('/about') 
                     ? 'text-blue-600 bg-blue-50 font-semibold' 
@@ -579,12 +579,12 @@ export function Header() {
                 </div>
               </div>
 
-              <a
-                href="/under-construction"
+              {/* <a
+                href="/about"
                 className="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors duration-200"
               >
                 Gallery
-              </a>
+              </a> */}
               <a
                 href="/contact"
                 className={`block px-4 py-3 rounded-md transition-colors duration-200 ${
