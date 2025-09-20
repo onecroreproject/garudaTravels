@@ -44,7 +44,7 @@ export default function HomePage() {
               </div>
               
               {/* Form Section */}
-              <div className="p-8 flex justify-center">
+              <div className="p-4 sm:p-6 lg:p-8 flex justify-center">
          <BookingForm />
       </div>
             </div>

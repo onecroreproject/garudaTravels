@@ -81,18 +81,18 @@ export default function BookingForm() {
 
   return (
     <>
-      <section className="py-6 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center" id="booking">
-        {/* <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold text-center text-gray-800 mb-8">
-            {" "}
-            Book Your Chennai to Tirupati Package with Garuda
-          </h2>
-          <p className="text-lg text-center text-gray-600 mb-12">
-            Experience peace & devotion with our Chennai to Tirupati travel package, VIP darshan and flexible one‑day &
-            two‑day packages.
-          </p>
-        </div> */}
-
+      <style jsx>{`
+        .form input, .form select, .form textarea {
+          box-sizing: border-box !important;
+          width: 100% !important;
+        }
+        .form .relative.group {
+          width: 100% !important;
+          padding: 0 !important;
+          margin: 0 !important;
+        }
+      `}</style>
+      <section className="py-4 px-2 sm:py-6 sm:px-6 lg:px-8 flex flex-col items-center justify-center" id="booking">
         {/* Status Messages */}
         {submitStatus && (
           <div
@@ -106,10 +106,10 @@ export default function BookingForm() {
         )}
 
         {/* Main Booking Form */}
-        <div className="form w-full max-w-4xl mx-auto">
-          <div className="w-full mb-0">
+        <div className="form w-full max-w-4xl mx-auto p-0 m-0">
+          <div className="w-full mb-0 p-0 m-0">
             {/* Package Selection - Mobile Responsive */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-2 mb-8">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-2 mb-6 sm:mb-8">
               {/* Tirupati Package */}
               <label
                 className={`flex-1 bg-white/80 backdrop-blur-sm font-semibold px-4 sm:px-6 py-3 sm:py-4 text-center cursor-pointer transition-all duration-300 ease-in-out rounded-xl shadow-lg border-2 ${selectedPackage === "Tirupati Package"
@@ -172,168 +172,194 @@ export default function BookingForm() {
             </div>
           </div>
           <div className="bg-transparent p-0 border-t-0 shadow-none mt-0 w-full">
-            <form onSubmit={handleSubmit} className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <form onSubmit={handleSubmit} className="w-full space-y-4 sm:space-y-6 p-0 m-0">
               {/* Row 1 */}
-              <div className="relative group w-full">
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  placeholder="Your Name"
-                  required
-                  className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-              </div>
-              <div className="relative group w-full">
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="Email"
-                  required
-                  className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-              </div>
-              <div className="relative group w-full">
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  placeholder="Phone Number"
-                  required
-                  className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 w-full p-0 m-0">
+                <div className="relative group w-full p-0 m-0">
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    placeholder="Your Name"
+                    required
+                    className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
+                    style={{ boxSizing: 'border-box' }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                </div>
+                <div className="relative group w-full p-0 m-0">
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="Email"
+                    required
+                    className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
+                    style={{ boxSizing: 'border-box' }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                </div>
+                <div className="relative group w-full p-0 m-0">
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    placeholder="Phone Number"
+                    required
+                    className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
+                    style={{ boxSizing: 'border-box' }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                </div>
               </div>
 
               {/* Row 2 */}
-              <div className="relative group w-full">
-                <input
-                  type="number"
-                  name="persons"
-                  value={formData.persons}
-                  onChange={handleInputChange}
-                  placeholder="No. of Persons"
-                  required
-                  min="1"
-                  className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-              </div>
-              <div className="relative group w-full">
-                <input
-                  type="date"
-                  name="date"
-                  value={formData.date}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-              </div>
-              <div className="relative group w-full">
-                <input
-                  type="time"
-                  name="time"
-                  value={formData.time}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-              </div>
-
-              {/* Package Selection Dropdown - Always Present */}
-              <div className="col-span-full relative group">
-                <select
-                  name="selectedOption"
-                  value={formData.selectedOption}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-gray-700 text-sm sm:text-base"
-                >
-                  {selectedPackage === "Car Rental Package" ? (
-                    <>
-                      <option value="">Km Based Rental</option>
-                      {/* <option value="Swift/Etios">Swift/Etios</option>
-                      <option value="Sedan">Sedan</option>
-                      <option value="SUV">SUV</option>
-                      <option value="Van">Van</option> */}
-                    </>
-                  ) : selectedPackage === "Tirupati Package" ? (
-                    <>
-                      <option value="">-- Select a Package --</option>
-                      <option value="Tirumala Tirupati Darshan Package">Tirumala Tirupati Darshan Package </option>
-                      <option value="Chennai to Tirupati One Day Tour">Chennai to Tirupati One Day Tour</option>
-                      <option value="Chennai to Tirupati Two Days Tour">Chennai to Tirupati Two Days Tour</option>
-                      <option value="VIP Break Darshan">VIP Break Darshan </option>
-                      <option value="Bangalore to Tirupati Dharshan Tour">Bangalore to Tirupati Dharshan Tour</option>
-                      <option value="Kanchipuram to Tirupati One Day Tour">Kanchipuram to Tirupati One Day Tour</option>
-                      <option value="Kanchipuram to Tirupati Two Days Tour">Kanchipuram to Tirupati Two Days Tour</option>
-                      <option value="Vellore to Tirupati One Day Tour">Vellore to Tirupati One Day Tour</option>
-                      <option value="Vellore to Tirupati Two Days Tour">Vellore to Tirupati Two Days Tour</option>
-                    </>
-                  ) : selectedPackage === "Temple Tour Package" ? (
-                    <>
-                      <option value="">-- Select a Package --</option>
-                      <option value="Chennai-Kanchipuram Elruvanamalai Temple Package">
-                        Chennai-Kanchipuram Elruvanamalai Temple Package
-                      </option>
-                      <option value="Chennai-Navagraha Temple Package">
-                        Chennai-Navagraha Temple Package
-                      </option>
-                      <option value="Chennai-Trichy, Rameswaram, Madurai Temple Package">
-                        Chennai-Trichy, Rameswaram, Madurai Temple Package
-                      </option>
-                      <option value="Chennai-Trichy, Madurai, Tiruchendur, Kanyakumari Temple Package">
-                        Chennai-Trichy, Madurai, Tiruchendur, Kanyakumari Temple Package
-                      </option>
-                      <option value="Chennai-Srisolltom Mollis Arjuna Temple Package">
-                        Chennai-Srisolltom Mollis Arjuna Temple Package
-                      </option>
-                      <option value="Chennai To Kodaikanal-Palani Temple Package">
-                        Chennai To Kodaikanal-Palani Temple Package
-                      </option>
-                      <option value="Chennai-Kanchipuram, Mahabalipuram & Pondicherry Temple Package">
-                        Chennai-Kanchipuram, Mahabalipuram & Pondicherry Temple Package
-                      </option>
-                      <option value="Chennai To Kalahasti Tour Package">
-                        Chennai To Kalahasti Tour Package
-                      </option>
-                      <option value="Chennai-Vellore Temple Package">
-                        Chennai-Vellore Temple Package
-                      </option>
-                      <option value="Chennai - Tiruvannamalai Temple Package">
-                        Chennai - Tiruvannamalai Temple Package
-                      </option>
-                    </>
-                  ) : (
-                    <option value="">-- Select a Package --</option>
-                  )}
-                </select>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 w-full p-0 m-0">
+                <div className="relative group w-full p-0 m-0">
+                  <input
+                    type="number"
+                    name="persons"
+                    value={formData.persons}
+                    onChange={handleInputChange}
+                    placeholder="No. of Persons"
+                    required
+                    min="1"
+                    className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
+                    style={{ boxSizing: 'border-box' }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                </div>
+                <div className="relative group w-full p-0 m-0">
+                  <input
+                    type="date"
+                    name="date"
+                    value={formData.date}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
+                    style={{ boxSizing: 'border-box' }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                </div>
+                <div className="relative group w-full p-0 m-0">
+                  <input
+                    type="time"
+                    name="time"
+                    value={formData.time}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
+                    style={{ boxSizing: 'border-box' }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                </div>
               </div>
 
-              {/* Your Message */}
-              <div className="col-span-full relative group">
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  placeholder="Your Message"
-                  rows={4}
-                  className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl resize-y text-sm sm:text-base"
-                ></textarea>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+              {/* Row 3 - Package Selection Dropdown */}
+              <div className="grid grid-cols-1 gap-3 sm:gap-6 w-full">
+                <div className="relative group w-full">
+                  <select
+                    name="selectedOption"
+                    value={formData.selectedOption}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 sm:px-6 py-3 sm:py-4 pr-10 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-gray-700 text-sm sm:text-base appearance-none cursor-pointer"
+                    style={{ width: '100%', minWidth: '100%', maxWidth: '100%', boxSizing: 'border-box' }}
+                  >
+                    {selectedPackage === "Car Rental Package" ? (
+                      <>
+                        <option value="">-- Select Vehicle Type --</option>
+                        <option disabled style={{ display: 'none' }} value="">{'\u00A0'.repeat(60)}</option>
+                        <option value="Swift/Etios">Swift/Etios</option>
+                        <option value="Innova">Innova</option>
+                        <option value="Crysta">Crysta</option>
+                        <option value="Tempo Traveller">Tempo Traveller</option>
+                        <option value="Sedan">Sedan</option>
+                        <option value="SUV">SUV</option>
+                        <option value="Van">Van</option>
+                      </>
+                    ) : selectedPackage === "Tirupati Package" ? (
+                      <>
+                        <option value="">-- Select a Package --</option>
+                        <option value="Tirumala Tirupati Darshan Package">Tirumala Tirupati Darshan Package </option>
+                        <option value="Chennai to Tirupati One Day Tour">Chennai to Tirupati One Day Tour</option>
+                        <option value="Chennai to Tirupati Two Days Tour">Chennai to Tirupati Two Days Tour</option>
+                        <option value="VIP Break Darshan">VIP Break Darshan </option>
+                        <option value="Bangalore to Tirupati Dharshan Tour">Bangalore to Tirupati Dharshan Tour</option>
+                        <option value="Kanchipuram to Tirupati One Day Tour">Kanchipuram to Tirupati One Day Tour</option>
+                        <option value="Kanchipuram to Tirupati Two Days Tour">Kanchipuram to Tirupati Two Days Tour</option>
+                        <option value="Vellore to Tirupati One Day Tour">Vellore to Tirupati One Day Tour</option>
+                        <option value="Vellore to Tirupati Two Days Tour">Vellore to Tirupati Two Days Tour</option>
+                      </>
+                    ) : selectedPackage === "Temple Tour Package" ? (
+                      <>
+                        <option value="">-- Select a Package --</option>
+                        <option value="Chennai-Kanchipuram Elruvanamalai Temple Package">
+                          Chennai-Kanchipuram Elruvanamalai Temple Package
+                        </option>
+                        <option value="Chennai-Navagraha Temple Package">
+                          Chennai-Navagraha Temple Package
+                        </option>
+                        <option value="Chennai-Trichy, Rameswaram, Madurai Temple Package">
+                          Chennai-Trichy, Rameswaram, Madurai Temple Package
+                        </option>
+                        <option value="Chennai-Trichy, Madurai, Tiruchendur, Kanyakumari Temple Package">
+                          Chennai-Trichy, Madurai, Tiruchendur, Kanyakumari Temple Package
+                        </option>
+                        <option value="Chennai-Srisolltom Mollis Arjuna Temple Package">
+                          Chennai-Srisolltom Mollis Arjuna Temple Package
+                        </option>
+                        <option value="Chennai To Kodaikanal-Palani Temple Package">
+                          Chennai To Kodaikanal-Palani Temple Package
+                        </option>
+                        <option value="Chennai-Kanchipuram, Mahabalipuram & Pondicherry Temple Package">
+                          Chennai-Kanchipuram, Mahabalipuram & Pondicherry Temple Package
+                        </option>
+                        <option value="Chennai To Kalahasti Tour Package">
+                          Chennai To Kalahasti Tour Package
+                        </option>
+                        <option value="Chennai-Vellore Temple Package">
+                          Chennai-Vellore Temple Package
+                        </option>
+                        <option value="Chennai - Tiruvannamalai Temple Package">
+                          Chennai - Tiruvannamalai Temple Package
+                        </option>
+                      </>
+                    ) : (
+                      <option value="">-- Select a Package --</option>
+                    )}
+                  </select>
+                  {/* Custom dropdown arrow */}
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 sm:pr-6 pointer-events-none">
+                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                </div>
+              </div>
+
+              {/* Row 4 - Your Message */}
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 w-full p-0 m-0">
+                <div className="flex-1 relative group w-full p-0 m-0">
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    placeholder="Your Message"
+                    rows={4}
+                    className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl resize-y text-sm sm:text-base min-w-0"
+                    style={{ boxSizing: 'border-box' }}
+                  ></textarea>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                </div>
               </div>
 
               {/* Submit Button */}
-              <div className="col-span-full flex justify-center mt-6 sm:mt-8">
+              <div className="flex justify-center mt-6 sm:mt-8">
                 <Button
                   type="submit"
                   size="lg"
