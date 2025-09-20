@@ -44,7 +44,7 @@ export default function HomePage() {
               </div>
               
               {/* Form Section */}
-              <div className="p-8">
+              <div className="p-8 flex justify-center">
          <BookingForm />
       </div>
             </div>
@@ -260,7 +260,7 @@ export default function HomePage() {
                 </div>
               </div>
               
-              <a href="/tirupati-package" className="inline-block">
+              <a href="#booking" className="inline-block">
                 <button className="px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2">
                   <span>Reserve Two-Day Package</span>
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
