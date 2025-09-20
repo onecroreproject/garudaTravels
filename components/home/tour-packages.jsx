@@ -123,8 +123,8 @@ export default function TourPackages() {
               <div className="p-6">
                 <h3 className="text-2xl font-semibold text-gray-800 mb-2">{pkg.name}</h3>
                 {/* <p className="text-blue-600 text-xl font-bold mb-4">{pkg.price}</p> */}
-                <small className="text-green-600 mb-6">*Include::{pkg.include}</small><br />
-                <small className="text-red-600 mb-6">*Exclude::{pkg.exclude}</small>
+                <small className="text-green-600 mb-6">*Include: {pkg.include}</small><br />
+                <small className="text-red-600 mb-6">*Exclude: {pkg.exclude}</small>
                <a href="#booking"><Button  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg">Book Now</Button></a> 
               </div>
             </div>
