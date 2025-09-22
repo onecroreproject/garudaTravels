@@ -9,12 +9,6 @@
   box-sizing: border-box;
 }
 
-/* Prevent horizontal overflow */
-html, body {
-  overflow-x: hidden;
-  max-width: 100vw;
-}
-
 html {
   scroll-behavior: smooth;
 }
@@ -34,8 +28,6 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
-  width: 100%;
-  overflow-x: hidden;
 }
 
 /* Typography */
@@ -690,29 +682,4 @@ select:focus {
 *:focus-visible {
   outline: 2px solid #2563eb; /* Blue outline */
   outline-offset: 2px;
-}
-
-/* Prevent horizontal overflow on all main elements */
-main, section, div {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-/* Ensure all fixed-width elements don't cause horizontal overflow */
-* {
-  max-width: 100vw;
-}
-
-/* Specific fixes for common overflow issues */
-.w-\[600px\], .w-\[1470px\], .w-80 {
-  max-width: 90vw;
-}
-
-@media (min-width: 640px) {
-  .w-\[600px\] {
-    max-width: 600px;
-  }
-  .w-80 {
-    max-width: 20rem;
-  }
 }
