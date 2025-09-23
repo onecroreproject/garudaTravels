@@ -1286,7 +1286,7 @@ export default function PackageForm({ packageType, packageId }) {
             </div>
 
             {/* Sightseeing Places */}
-            <div>
+            {/* <div>
               <EditableTitle
                 title={sectionTitles.sightseeingPlaces}
                 onTitleChange={(newTitle) => updateSectionTitle('sightseeingPlaces', newTitle)}
@@ -1309,7 +1309,6 @@ export default function PackageForm({ packageType, packageId }) {
                       <span className="sr-only">Remove place</span>
                     </Button>
 
-                    {/* Place Name and Image */}
                     <div className="flex flex-col sm:flex-row gap-4 mb-4">
                       <div className="flex-1">
                         <Label htmlFor={`place-name-${place.id}`}>Place Name</Label>
@@ -1363,7 +1362,7 @@ export default function PackageForm({ packageType, packageId }) {
                   Add Place
                 </Button>
               </div>
-            </div>
+            </div> */}
 
             {/* Dress Code */}
             <div>
