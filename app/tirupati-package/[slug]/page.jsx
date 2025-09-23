@@ -7,6 +7,7 @@ import Header from "@/components/header"
 import Footer from "@/components/footer"
 import BookingForm from "@/components/booking-form"
 import TirupatiPackageHero from "@/components/tirupati-package-hero"
+import PlacesCoverage from "@/components/places-we-cover"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -158,12 +159,12 @@ export default async function TirupatiPackageDetailPage({ params }) {
            <div className="px-2">
              <div className="flex flex-col lg:flex-row gap-8 items-stretch">
                {/* Left Side - Booking Form (75%) */}
-               <div className="w-full lg:w-3/4 order-2 lg:order-1">
+               <div className="w-full lg:w-3/4 order-1 lg:order-1 border border-gray-200 rounded-lg shadow-lg p-6 bg-white">
               <BookingForm />
             </div>
 
                {/* Right Side - Why Choose Us (25%) */}
-               <div className="w-full lg:w-1/4 order-1 lg:order-2">
+               <div className="w-full lg:w-1/4 order-2 lg:order-2">
                  <div className="flex flex-col items-center lg:items-start w-full h-full">
                    <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-6 text-center lg:text-left">Why Choose Us</h2>
                    <div className="grid grid-cols-1 gap-4 w-full flex-1">
@@ -638,7 +639,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
           </section>
 
         {/* Places We Cover Section */}
-        {packageData.sightseeingPlaces && packageData.sightseeingPlaces.length > 0 && (
+        {/* {packageData.sightseeingPlaces && packageData.sightseeingPlaces.length > 0 && (
           <section className="mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">{packageData.sectionTitles?.sightseeingPlaces || "Places We Cover in the Package"}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -663,7 +664,12 @@ export default async function TirupatiPackageDetailPage({ params }) {
               ))}
             </div>
           </section>
-        )}
+        )} */}
+
+<PlacesCoverage/>
+
+
+
 
         {/* Dress Code Section */}
         {(packageData.maleDressCodeImages?.length > 0 || packageData.femaleDressCodeImages?.length > 0) && (
@@ -785,6 +791,26 @@ export default async function TirupatiPackageDetailPage({ params }) {
                   )}
                   
                   <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
+
+                    {/* Image Section */}
+
+                            {section.imageUrl && (
+                      <div className={`relative ${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
+                        <div className="relative w-full h-96 rounded-2xl overflow-hidden shadow-2xl group">
+                          <Image
+                            src={section.imageUrl || "/placeholder.svg?height=300&width=500&query=section image"}
+                            alt={section.contentTitle || "Section image"}
+                            fill
+                            style={{ objectFit: "cover" }}
+                            className="transition-transform duration-500 group-hover:scale-110"
+                          />
+                          {/* Image Overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                          {/* Decorative Border */}
+                          <div className="absolute inset-0 rounded-2xl border-2 border-white/20 group-hover:border-white/40 transition-colors duration-300"></div>
+                        </div>
+                      </div>
+                    )}
                     {/* Content Section */}
                     <div className={`${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
                       <div className="relative">
@@ -822,24 +848,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
                       </div>
                     </div>
                     
-                    {/* Image Section */}
-                    {section.imageUrl && (
-                      <div className={`relative ${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
-                        <div className="relative w-full h-96 rounded-2xl overflow-hidden shadow-2xl group">
-                          <Image
-                            src={section.imageUrl || "/placeholder.svg?height=300&width=500&query=section image"}
-                            alt={section.contentTitle || "Section image"}
-                            fill
-                            style={{ objectFit: "cover" }}
-                            className="transition-transform duration-500 group-hover:scale-110"
-                          />
-                          {/* Image Overlay */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                          {/* Decorative Border */}
-                          <div className="absolute inset-0 rounded-2xl border-2 border-white/20 group-hover:border-white/40 transition-colors duration-300"></div>
-                        </div>
-                      </div>
-                    )}
+            
                   </div>
                 </div>
               ))}
