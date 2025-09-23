@@ -136,16 +136,18 @@ export default function AboutUs() {
           </div>
 
           {/* Right Column: Image */}
-          <div className="relative flex justify-center lg:justify-end">
-            <Image
+          <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-white-500/20 rounded-3xl transform -rotate-6 group-hover:-rotate-12 transition-transform duration-500"></div>
+                <div className="relative bg-white rounded-3xl shadow-2xl p-6 transform rotate-2 group-hover:rotate-0 transition-transform duration-500">
+                <Image
               src="/images/Balaji.webp?height=600&width=600" // Placeholder for the main image
               alt="Travelers exploring"
-              width={600}
-              height={600}
+              width={500}
+              height={500}
               className="rounded-lg object-cover w-full max-w-md lg:max-w-full h-auto shadow-lg"
             />
-            {/* Years of Experience Badge */}
-            <div className="absolute bottom-4 right-4 bg-[#4CAF50] text-white px-6 py-3 rounded-lg shadow-md flex items-center space-x-2">
+                  {/* Floating Badge */}
+                  <div className="absolute bottom-4 right-4 bg-[#4CAF50] text-white px-6 py-3 rounded-lg shadow-md flex items-center space-x-2">
               <span className="text-3xl font-bold">05</span>
               <span className="text-sm leading-tight">
                 Years of
@@ -153,7 +155,26 @@ export default function AboutUs() {
                 experience
               </span>
             </div>
-          </div>
+                </div>
+              </div>
+          {/* <div className="relative flex justify-center lg:justify-end">
+            <Image
+              src="/images/Balaji.webp?height=600&width=600" // Placeholder for the main image
+              alt="Travelers exploring"
+              width={600}
+              height={600}
+              className="rounded-lg object-cover w-full max-w-md lg:max-w-full h-auto shadow-lg"
+            /> */}
+            {/* Years of Experience Badge */}
+            {/* <div className="absolute bottom-4 right-4 bg-[#4CAF50] text-white px-6 py-3 rounded-lg shadow-md flex items-center space-x-2">
+              <span className="text-3xl font-bold">05</span>
+              <span className="text-sm leading-tight">
+                Years of
+                <br />
+                experience
+              </span>
+            </div>
+          </div>  */}
         </div>
       </section>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-8 p-8">

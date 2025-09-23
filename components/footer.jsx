@@ -133,7 +133,7 @@ export default function Footer() {
       </div>
 
       {/* Floating Buttons (GIFs) */}
-      <a
+        <a
         href="tel:9840789844"
         aria-label="Call Us"
         className="fixed bottom-4 left-4 bg-blue-500 p-3 rounded-full shadow-lg z-50 hover:bg-blue-600 transition-colors flex items-center justify-center animate-bounce hover:scale-110 transition-transform"
@@ -148,7 +148,7 @@ export default function Footer() {
         className="fixed bottom-4 right-4 bg-green-500 p-3 rounded-full shadow-lg z-50 hover:bg-green-600 transition-colors flex items-center justify-center animate-bounce hover:scale-110 transition-transform"
       >
         <MessageCircleMore className="h-6 w-6 text-white" />
-      </a>
+      </a> 
     </footer>
   )
 }

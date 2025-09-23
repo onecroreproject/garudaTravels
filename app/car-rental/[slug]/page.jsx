@@ -138,37 +138,44 @@ export default async function CarRentalPage({ params }) {
       </section>
        
       {/* Main Content Section */}
-      <section className="py-12 px-4 bg-white">
-        <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          {/* Left - Image */}
-          <div className="w-full">
-            <img
-              src={packageData.images?.[0] || "/placeholder.svg?height=400&width=600&query=car rental service"}
-              alt={packageData.title}
-              className="rounded-lg shadow-lg w-full h-auto object-cover"
-            />
-          </div>
-
-          {/* Right - Content */}
-          <div className="space-y-4">
-            <h2 className="text-3xl font-bold text-gray-800">{packageData.title}</h2>
-            {packageData.subtitle && (
-              <p className="text-xl text-gray-700 font-medium">{packageData.subtitle}</p>
-            )}
-            <div className="text-gray-600 space-y-3">
-              <div 
-                className="prose prose-sm max-w-none"
-                dangerouslySetInnerHTML={{ __html: packageData.content || "" }}
-              />
-            </div>
-            <a href="#booking">
-              <button className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition-all">
-                Book Now
-              </button>
-            </a>
-          </div>
+     <section className="py-12 px-4 bg-white">
+  <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+    
+    {/* Left - Image */}
+    <div className="w-full order-1 md:order-1">
+      <div className="relative group">
+        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-3xl transform rotate-6 group-hover:rotate-12 transition-transform duration-500"></div>
+        <div className="relative bg-white rounded-3xl shadow-2xl p-6 transform -rotate-2 group-hover:rotate-0 transition-transform duration-500">
+          <img
+            src={packageData.images?.[0] || "/placeholder.svg?height=400&width=600&query=car rental service"}
+            alt={packageData.title}
+            className="rounded-lg shadow-lg w-full h-auto object-cover"
+          />
         </div>
-      </section>
+      </div>
+    </div>
+
+    {/* Right - Content */}
+    <div className="space-y-4 bg-gray-50 order-2 md:order-2">
+      <h2 className="text-3xl font-bold text-gray-800">{packageData.title}</h2>
+      {packageData.subtitle && (
+        <p className="text-xl text-gray-700 font-medium">{packageData.subtitle}</p>
+      )}
+      <div className="text-gray-600 space-y-3">
+        <div
+          className="prose prose-sm max-w-none"
+          dangerouslySetInnerHTML={{ __html: packageData.content || "" }}
+        />
+      </div>
+      <a href="#booking">
+        <button className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition-all">
+          Book Now
+        </button>
+      </a>
+    </div>
+  </div>
+</section>
+
 
    
 

@@ -2,7 +2,7 @@ import { doc, getDoc, getDocs, collection, query, where } from "firebase/firesto
 import { db } from "@/lib/firebase"
 import Image from "next/image"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Check, Shirt, Star, ShieldCheck, Users, Clock, MapPin, Wallet, BriefcaseMedical, UserCheck, Award, Phone, Mail, MessageCircle, XCircle, GraduationCap, Flower } from 'lucide-react' // Added new icons for Why Choose Us
+import { Check, Star, ShieldCheck, Users, Clock, MapPin, Wallet, BriefcaseMedical, UserCheck, Award, Phone, Mail, MessageCircle, GraduationCap, Flower, Utensils, Coffee, Ticket, Car, Fuel, BadgeIndianRupee } from "lucide-react";   
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import BookingForm from "@/components/booking-form"
@@ -86,7 +86,7 @@ export async function generateMetadata({ params }) {
 // This is a Server Component, so it can directly fetch data
 export default async function TirupatiPackageDetailPage({ params }) {
   const { slug } = params
-
+  
   let packageData = null
   let error = null
   let otherPackages = []
@@ -96,8 +96,11 @@ export default async function TirupatiPackageDetailPage({ params }) {
     const docRef = doc(db, "tirupati-package", slug)
     const docSnap = await getDoc(docRef)
 
+
+  
     if (docSnap.exists()) {
       const rawData = docSnap.data()
+      console.log("days",rawData)
       // Convert Firebase timestamps and other complex objects to plain objects
       packageData = {
         id: docSnap.id,
@@ -767,7 +770,115 @@ export default async function TirupatiPackageDetailPage({ params }) {
             </div>
           </section>
         )}
+        <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Food Packages</h2>
 
+{
+  packageData.days == 1 ? (
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-6 px-4">
+      <div className="flex flex-col h-full border border-gray-200 rounded-lg overflow-hidden">
+        <div className="h-40 w-full relative bg-gray-100">
+          <Image 
+            src="/images/food/delcious-food.webp" 
+            alt="Breakfast" 
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 50vw, 25vw"
+          />
+        </div>
+        <p className="p-3 text-center text-lg font-semibold text-gray-800 bg-white">Delicious Breakfast</p>
+      </div>
+      <div className="flex flex-col h-full border border-gray-200 rounded-lg overflow-hidden">
+        <div className="h-40 w-full relative bg-gray-100">
+          <Image 
+            src="/images/food/delcious-lunch.jpg" 
+            alt="Lunch" 
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 50vw, 25vw"
+          />
+        </div>
+        <p className="p-3 text-center text-lg font-semibold text-gray-800 bg-white">Delicious Lunch</p>
+      </div>
+      <div className="flex flex-col h-full border border-gray-200 rounded-lg overflow-hidden">
+        <div className="h-40 w-full relative bg-gray-100">
+          <Image 
+            src="/images/food/dharsan-ticket.webp" 
+            alt="Darshan Ticket" 
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 50vw, 25vw"
+          />
+        </div>
+        <p className="p-3 text-center text-lg font-semibold text-gray-800 bg-white">Darshan Ticket</p>
+      </div>
+      <div className="flex flex-col h-full border border-gray-200 rounded-lg overflow-hidden">
+        <div className="h-40 w-full relative bg-gray-100">
+          <Image 
+            src="/images/food/driver-and-guide.webp" 
+            alt="Driver & Guide" 
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 50vw, 25vw"
+          />
+        </div>
+        <p className="p-3 text-center text-lg font-semibold text-gray-800 bg-white">Driver & Guide</p>
+      </div>
+    </div>
+  ) : (
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-6 px-4">
+      <div className="flex flex-col h-full border border-gray-200 rounded-lg overflow-hidden">
+        <div className="h-40 w-full relative bg-gray-100">
+          <Image 
+            src="/images/food/fuel.jpg" 
+            alt="Fuel Expenses" 
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 50vw, 25vw"
+          />
+        </div>
+        <p className="p-3 text-center text-lg font-semibold text-gray-800 bg-white">Fuel Expenses</p>
+      </div>
+      <div className="flex flex-col h-full border border-gray-200 rounded-lg overflow-hidden">
+        <div className="h-40 w-full relative bg-gray-100">
+          <Image 
+            src="/images/food/toll-permit.jpg" 
+            alt="Toll & Permit" 
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 50vw, 25vw"
+          />
+        </div>
+        <p className="p-3 text-center text-lg font-semibold text-gray-800 bg-white">Toll & Permit</p>
+      </div>
+      <div className="flex flex-col h-full border border-gray-200 rounded-lg overflow-hidden">
+        <div className="h-40 w-full relative bg-gray-100">
+          <Image 
+            src="/images/food/driver-and-guide.webp" 
+            alt="Driver & Guide" 
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 50vw, 25vw"
+          />
+        </div>
+        <p className="p-3 text-center text-lg font-semibold text-gray-800 bg-white">Driver & Guide</p>
+      </div>
+      <div className="flex flex-col h-full border border-gray-200 rounded-lg overflow-hidden">
+        <div className="h-40 w-full relative bg-gray-100">
+          <Image 
+            src="/images/food/cab.jpg" 
+            alt="Sanitised Cab" 
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 50vw, 25vw"
+          />
+        </div>
+        <p className="p-3 text-center text-lg font-semibold text-gray-800 bg-white">Sanitised Cab</p>
+      </div>
+    </div>
+  )
+}
+
+        
         {/* Dynamic Sections */}
         {packageData.sections && packageData.sections.length > 0 && (
           <section className="mb-16">
@@ -795,21 +906,44 @@ export default async function TirupatiPackageDetailPage({ params }) {
                     {/* Image Section */}
 
                             {section.imageUrl && (
-                      <div className={`relative ${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
-                        <div className="relative w-full h-96 rounded-2xl overflow-hidden shadow-2xl group">
-                          <Image
-                            src={section.imageUrl || "/placeholder.svg?height=300&width=500&query=section image"}
-                            alt={section.contentTitle || "Section image"}
-                            fill
-                            style={{ objectFit: "cover" }}
-                            className="transition-transform duration-500 group-hover:scale-110"
-                          />
-                          {/* Image Overlay */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                          {/* Decorative Border */}
-                          <div className="absolute inset-0 rounded-2xl border-2 border-white/20 group-hover:border-white/40 transition-colors duration-300"></div>
-                        </div>
-                      </div>
+                              <div className="w-full">
+                              <div className="relative group">
+                                {/* Background Gradient Effect */}
+                                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-blue-500/20 rounded-3xl transform rotate-6 group-hover:rotate-12 transition-transform duration-500"></div>
+                                
+                                {/* Image Wrapper */}
+                                <div className="relative bg-white rounded-3xl shadow-2xl p-6 transform -rotate-2 group-hover:rotate-0 transition-transform duration-500">
+                                  
+                                  {/* Fixed Aspect Ratio for Consistent Height */}
+                                  <div className="aspect-[16/9] w-full">
+                                    <img
+                                      src={
+                                        section.imageUrl ||
+                                        "/placeholder.svg?height=300&width=500&query=section image"
+                                      }
+                                      alt={section.contentTitle || "Section image"}
+                                      className="rounded-2xl w-full h-[500px] object-cover"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                      // <div className={`relative ${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
+                      //   <div className="relative w-full h-96 rounded-2xl overflow-hidden shadow-2xl group">
+                      //     <Image
+                      //       src={section.imageUrl || "/placeholder.svg?height=300&width=500&query=section image"}
+                      //       alt={section.contentTitle || "Section image"}
+                      //       fill
+                      //       style={{ objectFit: "cover" }}
+                      //       className="transition-transform duration-500 group-hover:scale-110"
+                      //     />
+                      //     {/* Image Overlay */}
+                      //     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      //     {/* Decorative Border */}
+                      //     <div className="absolute inset-0 rounded-2xl border-2 border-white/20 group-hover:border-white/40 transition-colors duration-300"></div>
+                      //   </div>
+                      // </div>
                     )}
                     {/* Content Section */}
                     <div className={`${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>

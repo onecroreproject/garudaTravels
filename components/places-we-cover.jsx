@@ -5,7 +5,7 @@ const places = [
 
 
 
-    { name: "Padmavati Temple", image: "/images/balaji-footprints.jpg" },
+  { name: "Padmavati Temple", image: "/images/balaji-footprints.jpg" },
   { name: "Sri Varaha Swamy Temple", image: "/images/dam.jpg" },
   { name: "Sri Varasidhi Vinayaka Swamy Temple", image: "/images/varahaswami.jpg" },
   { name: "Sri Bedi Anjaneya Swamy Temple", image: "/images/jabila.jpg" },
