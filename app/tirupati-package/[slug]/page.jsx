@@ -3,6 +3,7 @@ import { db } from "@/lib/firebase"
 import Image from "next/image"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Check, Star, ShieldCheck, Users, Clock, MapPin, Wallet, BriefcaseMedical, UserCheck, Award, Phone, Mail, MessageCircle, GraduationCap, Flower, Utensils, Coffee, Ticket, Car, Fuel, BadgeIndianRupee } from "lucide-react";   
+import PassengerNoteBox from "@/components/PassengerNoteBox.jsx"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import BookingForm from "@/components/booking-form"
@@ -880,115 +881,121 @@ export default async function TirupatiPackageDetailPage({ params }) {
 
         
         {/* Dynamic Sections */}
-        {packageData.sections && packageData.sections.length > 0 && (
-          <section className="mb-16">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-gray-800 mb-4">{packageData.sectionTitles?.sections || "More Details"}</h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-700 mx-auto rounded-full"></div>
+{packageData.sections && packageData.sections.length > 0 && (
+  <section className="mb-16">
+    <div className="text-center mb-12">
+      <h2 className="text-4xl font-bold text-gray-800 mb-4">{packageData.sectionTitles?.sections || "More Details"}</h2>
+      <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-700 mx-auto rounded-full"></div>
+    </div>
+    <div className="space-y-20">
+      {packageData.sections.map((section, index) => (
+        <div key={section.id} className="relative">
+          {/* Section Separator */}
+          {index > 0 && (
+            <div className="flex items-center justify-center mb-16">
+              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+              <div className="mx-6 p-3 bg-white rounded-full shadow-lg border border-gray-200">
+                <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full"></div>
+              </div>
+              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
             </div>
+          )}
+          
+          {/* Enhanced Section Container with Premium Styling */}
+          <section className="py-20 px-4 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 relative overflow-hidden rounded-3xl">
+            {/* Background Elements */}
+            <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-r from-green-200/30 to-emerald-200/30 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-0 right-0 w-80 h-80 bg-gradient-to-l from-teal-200/30 to-green-200/30 rounded-full blur-3xl"></div>
             
-            <div className="space-y-20">
-              {packageData.sections.map((section, index) => (
-                <div key={section.id} className="relative">
-                  {/* Section Separator */}
-                  {index > 0 && (
-                    <div className="flex items-center justify-center mb-16">
-                      <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
-                      <div className="mx-6 p-3 bg-white rounded-full shadow-lg border border-gray-200">
-                        <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full"></div>
-                      </div>
-                      <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+            <div className="container mx-auto relative z-10">
+              <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
+                
+                {/* Content Section */}
+                <div className={`space-y-8 ${index % 2 === 1 ? 'lg:order-2' : 'order-2 lg:order-1'}`}>
+                  <div className="space-y-4">
+                    <div className="inline-block px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-full text-sm font-semibold">
+                      {section.badge || "Premium Experience"}
+                    </div>
+                    {section.contentTitle && (
+                      <h2 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent leading-tight">
+                        {section.contentTitle.replace(/(.+)(\s\w+)$/, '$1 $2')}
+                      </h2>
+                    )}
+                    <div className="w-20 h-1 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full"></div>
+                  </div>
+                  
+                  {section.contentDescription && (
+                    <div className="space-y-6">
+                      <div
+                        className="text-lg text-gray-700 leading-relaxed prose prose-lg max-w-none"
+                        dangerouslySetInnerHTML={{ __html: section.contentDescription }}
+                      />
                     </div>
                   )}
                   
-                  <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
-
-                    {/* Image Section */}
-
-                            {section.imageUrl && (
-                              <div className="w-full">
-                              <div className="relative group">
-                                {/* Background Gradient Effect */}
-                                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-blue-500/20 rounded-3xl transform rotate-6 group-hover:rotate-12 transition-transform duration-500"></div>
-                                
-                                {/* Image Wrapper */}
-                                <div className="relative bg-white rounded-3xl shadow-2xl p-6 transform -rotate-2 group-hover:rotate-0 transition-transform duration-500">
-                                  
-                                  {/* Fixed Aspect Ratio for Consistent Height */}
-                                  <div className="aspect-[16/9] w-full">
-                                    <img
-                                      src={
-                                        section.imageUrl ||
-                                        "/placeholder.svg?height=300&width=500&query=section image"
-                                      }
-                                      alt={section.contentTitle || "Section image"}
-                                      className="rounded-2xl w-full h-[500px] object-cover"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                      // <div className={`relative ${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
-                      //   <div className="relative w-full h-96 rounded-2xl overflow-hidden shadow-2xl group">
-                      //     <Image
-                      //       src={section.imageUrl || "/placeholder.svg?height=300&width=500&query=section image"}
-                      //       alt={section.contentTitle || "Section image"}
-                      //       fill
-                      //       style={{ objectFit: "cover" }}
-                      //       className="transition-transform duration-500 group-hover:scale-110"
-                      //     />
-                      //     {/* Image Overlay */}
-                      //     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      //     {/* Decorative Border */}
-                      //     <div className="absolute inset-0 rounded-2xl border-2 border-white/20 group-hover:border-white/40 transition-colors duration-300"></div>
-                      //   </div>
-                      // </div>
-                    )}
-                    {/* Content Section */}
-                    <div className={`${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
-                      <div className="relative">
-                        {/* Content Background */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-white rounded-2xl -m-4"></div>
-                        <div className="relative p-8">
-                          {section.contentTitle && (
-                            <div className="mb-6">
-                              <h3 className="text-3xl font-bold text-gray-800 mb-3">{section.contentTitle}</h3>
-                              <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full"></div>
-                            </div>
-                          )}
-                          {section.contentDescription && (
-                            <div
-                              className="prose prose-lg max-w-none text-gray-700 mb-6 leading-relaxed"
-                              dangerouslySetInnerHTML={{ __html: section.contentDescription || "" }}
+                  {/* Enhanced List Items as Feature Grid */}
+                  {section.listInfo && section.listInfo.length > 0 && (
+                    <div className="grid grid-cols-2 gap-4">
+                      {section.listInfo.map((item, itemIndex) => (
+                        <div key={item.id} className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-green-200 group hover:shadow-xl transition-all duration-300">
+                          <div className="flex items-start gap-3">
+                            <div className="w-3 h-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform duration-300"></div>
+                            <div 
+                              className="text-gray-800 font-medium prose prose-sm max-w-none leading-relaxed"
+                              dangerouslySetInnerHTML={{ __html: item.text || "" }}
                             />
-                          )}
-                          {section.listInfo && section.listInfo.length > 0 && (
-                            <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-blue-100">
-                              <ul className="space-y-4 text-gray-700">
-                                {section.listInfo.map((item) => (
-                                  <li key={item.id} className="flex items-start group">
-                                    <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full mt-2 mr-4 flex-shrink-0 shadow-sm group-hover:shadow-md transition-shadow duration-300"></div>
-                                    <div 
-                                      className="prose prose-sm max-w-none leading-relaxed"
-                                      dangerouslySetInnerHTML={{ __html: item.text || "" }}
-                                    />
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  
+                  {/* Enhanced CTA Button */}
+                  <a href="#booking" className="inline-block">
+                    <button className="px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2">
+                      <span>Learn More</span>
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </button>
+                  </a>
+                </div>
+                
+                {/* Enhanced Image Section */}
+                {section.imageUrl && (
+                  <div className={`w-full ${index % 2 === 1 ? 'lg:order-1' : 'order-1 lg:order-2'}`}>
+                    <div className="relative group">
+                      <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-3xl transform -rotate-6 group-hover:-rotate-12 transition-transform duration-500"></div>
+                      <div className="relative bg-white rounded-3xl shadow-2xl p-6 transform rotate-2 group-hover:rotate-0 transition-transform duration-500">
+                        <div className="relative w-full h-96 rounded-2xl overflow-hidden">
+                          <Image
+                            src={section.imageUrl || "/placeholder.svg?height=300&width=500&query=section image"}
+                            alt={section.contentTitle || "Section image"}
+                            fill
+                            style={{ objectFit: "cover" }}
+                            className="transition-transform duration-500 group-hover:scale-110"
+                          />
+                          {/* Image Overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </div>
+                        
+                        {/* Floating Badge */}
+                        <div className="absolute -top-4 -left-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-2 rounded-full shadow-lg">
+                          <span className="font-bold text-sm">{section.badge || "Premium"}</span>
                         </div>
                       </div>
                     </div>
-                    
-            
                   </div>
-                </div>
-              ))}
+                )}
+              </div>
             </div>
           </section>
-        )}
+        </div>
+      ))}
+    </div>
+  </section>
+)}
+
 
         {/* Additional Packages Section */}
         {otherPackages.length > 0 && (
@@ -1029,7 +1036,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
             </div>
           </section>
         )}
-
+      <PassengerNoteBox />
         {/* FAQs Section */}
         {packageData.faqs && packageData.faqs.length > 0 && (
           <section className="mb-12">

@@ -61,8 +61,8 @@ export default function PassengerNoteBox() {
           Package prices for Chennai to Tirupati could vary due to darshan slot
           availability. To secure your one-day package at the listed rate,
           book 45 days in advance. For Tirupati package or VIP darshan info,
-          call <a href="tel:+919840789844" className="underline">+91 98407 89844</a> /
-          <a href="tel:+919840789857" className="underline">+91 98407 89857</a>.
+          call <a href="tel:+919840789844" className="underline text-white">+91 98407 89844</a> /
+          <a href="tel:+919840789857" className="underline text-white">+91 98407 89857</a>.
           Garuda Tours guarantees no hidden costs. Book early and travel spiritually.
         </p>
         <a href="tel:+919840789844" className="inline-block">

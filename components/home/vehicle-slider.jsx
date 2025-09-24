@@ -69,7 +69,7 @@ export default function VehicleFeatures() {
                           </span>
                         </div>
                         <button className="book-btn w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 px-4 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg relative overflow-hidden">
-                          <span className="relative z-10">Book Now</span>
+                          <span className="relative z-10"><a  className="text-white" href="tel:+919840789844">Book Now</a></span>
                         </button>
                       </div>
                     </div>
