@@ -1,6 +1,8 @@
 import './globals.css'
 import { Suspense } from 'react'
 import { Montserrat, Poppins } from 'next/font/google'
+import Header from '@/components/header'
+import Footer from '@/components/footer'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -22,13 +24,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${montserrat.variable} ${poppins.variable} font-montserrat font-poppins`}>
+      <body className={`${montserrat.variable} ${poppins.variable} font-montserrat font-poppins overflow-x-hidden w-full`}>
         <Suspense>
         
-        <main>{children}</main>
+        <main>  
+            {children}  
+        </main>
       
-      
-        </Suspense> 
+    </Suspense> 
       </body>
     </html>
   )

@@ -129,7 +129,7 @@ export default async function TemplePackagePage({ params }) {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 overflow-hidden">
         <Header />
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="text-center">
@@ -161,7 +161,7 @@ export default async function TemplePackagePage({ params }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 overflow-hidden">
       <Header />
 
       {/* Breadcrumb Section */}

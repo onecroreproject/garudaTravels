@@ -30,7 +30,7 @@ export default function PrivacyPolicyPage() {
   })
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen overflow-hidden">
       {/* Header */}
       <section className="w-full border-b bg-gray-50">
         <div className="mx-auto max-w-6xl px-4 py-10 md:py-12">

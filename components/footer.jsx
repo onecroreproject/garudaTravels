@@ -133,6 +133,8 @@ export default function Footer() {
       </div>
 
       {/* Floating Buttons (GIFs) */}
+
+
         <a
         href="tel:9840789844"
         aria-label="Call Us"
@@ -149,6 +151,8 @@ export default function Footer() {
       >
         <MessageCircleMore className="h-6 w-6 text-white" />
       </a> 
+      
+
     </footer>
   )
 }

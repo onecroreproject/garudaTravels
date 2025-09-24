@@ -35,8 +35,11 @@ export default function AboutUs() {
       description: "We understand every pilgrim is different. That’s why we offer flexible tour options: one-day, two-day, and car rental packages—all designed around your schedule."
     }
   ];
+
+  
   return (
     <>
+    <div className="min-h-screen overflow-hidden">
       <Header />
       <section className="bg-red-100 py-12">
                 <div className="container mx-auto text-center">
@@ -193,6 +196,7 @@ export default function AboutUs() {
       <StatsCounter />
       <CustomerReviews />
       <Footer />
+      </div>
     </>
   )
 }

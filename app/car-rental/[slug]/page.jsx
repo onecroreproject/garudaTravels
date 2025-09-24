@@ -85,7 +85,7 @@ export default async function CarRentalPage({ params }) {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white overflow-hidden">
         <Header />
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="text-center">
@@ -103,7 +103,7 @@ export default async function CarRentalPage({ params }) {
 
   if (!packageData) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white overflow-hidden">
         <Header />
         <div className="flex items-center justify-center min-h-[400px]">
           <p className="text-lg text-gray-700">Loading car rental package details...</p>
@@ -114,7 +114,7 @@ export default async function CarRentalPage({ params }) {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white overflow-hidden">
       <Header />
       
       {/* Hero Section */}

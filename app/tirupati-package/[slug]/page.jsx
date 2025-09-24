@@ -149,7 +149,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white overflow-hidden">
       <Header />
 
       <main>
