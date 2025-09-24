@@ -24,14 +24,19 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${montserrat.variable} ${poppins.variable} font-montserrat font-poppins overflow-x-hidden w-full`}>
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        />
+      </head>
+      <body className={`${montserrat.variable} ${poppins.variable} font-montserrat font-poppins`}>
         <Suspense>
         
-        <main>  
-            {children}  
-        </main>
+        <main>{children}</main>
       
-    </Suspense> 
+      
+        </Suspense> 
       </body>
     </html>
   )
