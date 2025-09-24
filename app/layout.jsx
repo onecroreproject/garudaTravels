@@ -1,6 +1,8 @@
 import './globals.css'
 import { Suspense } from 'react'
 import { Montserrat, Poppins } from 'next/font/google'
+import Header from '@/components/header'
+import Footer from '@/components/footer'
 
 const montserrat = Montserrat({
   subsets: ['latin'],

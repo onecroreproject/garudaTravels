@@ -129,7 +129,7 @@ export default async function TemplePackagePage({ params }) {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 overflow-hidden">
         <Header />
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="text-center">
@@ -161,7 +161,7 @@ export default async function TemplePackagePage({ params }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 overflow-hidden">
       <Header />
 
       {/* Breadcrumb Section */}
@@ -236,13 +236,28 @@ export default async function TemplePackagePage({ params }) {
             </div>
 
             {/* Right Side - Static Image */}
-            <div className="flex justify-center">
+
+            <div className="w-full order-1 lg:order-2">
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-3xl transform -rotate-6 group-hover:-rotate-12 transition-transform duration-500"></div>
+                <div className="relative bg-white rounded-3xl shadow-2xl p-6 transform rotate-2 group-hover:rotate-0 transition-transform duration-500 flex justify-center">
+                <img
+                src="/images/2.png" // static image path
+                alt="Tour Package"
+                className="rounded-lg shadow-lg w-full max-w-md object-cover"
+              />
+                </div>
+              </div>
+            </div>
+
+
+            {/* <div className="flex justify-center">
               <img
                 src="/images/2.png" // static image path
                 alt="Tour Package"
                 className="rounded-lg shadow-lg w-full max-w-md object-cover"
               />
-            </div>
+            </div> */}
 
           </div>
         </div>

@@ -14,7 +14,7 @@ function CarRentalPage() {
 
 
 
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-white overflow-hidden">
             <Header />
             <section className="bg-red-100 py-12">
                 <div className="container mx-auto text-center">
