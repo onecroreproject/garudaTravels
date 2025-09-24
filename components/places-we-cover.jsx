@@ -5,26 +5,26 @@ const places = [
 
 
 
-  { name: "Padmavati Temple", image: "/images/balaji-footprints.jpg" },
-  { name: "Sri Varaha Swamy Temple", image: "/images/dam.jpg" },
-  { name: "Sri Varasidhi Vinayaka Swamy Temple", image: "/images/varahaswami.jpg" },
-  { name: "Sri Bedi Anjaneya Swamy Temple", image: "/images/jabila.jpg" },
-  { name: "Balaji face rock", image: "/images/anjaneya.jpg" },
+  { name: "Padmavati Temple", image: "/places/Padmavathii.jpg" },
+  { name: "Sri Varaha Swamy Temple", image: "/places/varaha_temple.jpg" },
+  { name: "Sri Varasidhi Vinayaka Swamy Temple", image: "/places/Sri_Varasidhi_Vinayaka_Swamy_Temple.jpg" },
+  { name: "Sri Bedi Anjaneya Swamy Temple", image: "/places/sri_beda_temple.avif" },
+  { name: "Balaji face rock", image: "/places/Balaji_face_rock.jpg" },
 ];
 
 const additionalCoverages = [
-  { name: "Silathoranam, Tirumala Hills", image: "/images/silathoranam.jpg" },
-  { name: "Rock Garden", image: "/images/rock-garden.jpg" },
-  { name: "Japali Teertham", image: "/images/japali-teertham.jpg" },
-  { name: "Akasa Ganga", image: "/images/akasa-ganga.jpg" },
-  { name: "Sri Venkateshwara Museum", image: "/images/museum.jpg" },
-  { name: "Papavinasanam Theertham", image: "/images/papavinasanam.jpg" },
-    { name: "Geetopadesam Park", image: "/images/geetopadesam.jpg" },
-  { name: "Lord Balaji Foot Prints", image: "/images/balaji-footprints.jpg" },
-  { name: "Papa Vinasanam Dam", image: "/images/dam.jpg" },
-  { name: "Sri Varahaswami Temple", image: "/images/varahaswami.jpg" },
-  { name: "Jabila Theertham", image: "/images/jabila.jpg" },
-  { name: "Sri Bedi Anjaneya Swamy Temple", image: "/images/anjaneya.jpg" },
+  { name: "Silathoranam, Tirumala Hills", image: "/places/thirumala.png" },
+  { name: "Rock Garden", image: "/places/rock_hgarden.jfif" },
+  { name: "Japali Teertham", image: "/places/Jabila_Theertham.jpg" },
+  { name: "Akasa Ganga", image: "/places/akasa_ganga.jpg" },
+  { name: "Sri Venkateshwara Museum", image: "/places/sri_venkateshvara_museum.png" },
+  { name: "Papavinasanam Theertham", image: "/places/papavinsanam-theertham.jpg" },
+  { name: "Geetopadesam Park", image: "/places/geetopadesam-park.jpg" },
+  { name: "Lord Balaji Foot Prints", image: "/places/lord-baalaji-foot-prints.webp" },
+  { name: "Papa Vinasanam Dam", image: "/places/papavinsanam-dam.webp" },
+  { name: "Sri Varahaswami Temple", image: "/places/sri-varahaswami-temple.jpg" },
+  { name: "Jabila Theertham", image: "/places/Jabila_Theertham.avif" },
+  { name: "Sri Bedi Anjaneya Swamy Temple", image: "/places/sri_bedi_anjaneya.jpg" },
 
 ];
 
