@@ -779,7 +779,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
       <div className="flex flex-col h-full border border-gray-200 rounded-lg overflow-hidden">
         <div className="h-40 w-full relative bg-gray-100">
           <Image 
-            src="/images/food/delcious-food.webp" 
+            src="/images/food/delcious-food.jpeg" 
             alt="Breakfast" 
             fill
             className="object-cover"
