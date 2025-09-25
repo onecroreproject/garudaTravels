@@ -107,7 +107,8 @@ export default function HomePage() {
                 {/* Profile Image */}
                 <div className="flex justify-center mb-6">
                   <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-red-400 shadow-lg">
-                    <img src="/vijakannth.jpg" alt="Vijayakanth" className="w-full h-full object-cover" />
+                  <img src="/vijaykanth.png" alt="Vijayakanth" className="w-full h-full object-cover" />
+
                   </div>
                 </div>
                 
