@@ -826,7 +826,7 @@ export default function TemplePackageForm({ packageId }) {
                     {images.map((url, index) => (
                       <div key={index} className="relative group">
                         <img
-                          src={url || "/placeholder.svg"}
+                          src={url || "/placeholder.webp"}
                           alt={`Existing image ${index + 1}`}
                           width={150}
                           height={100}
@@ -856,7 +856,7 @@ export default function TemplePackageForm({ packageId }) {
                     {newImageFiles.map((file, index) => (
                       <div key={index} className="relative group">
                         <img
-                          src={URL.createObjectURL(file) || "/placeholder.svg"}
+                          src={URL.createObjectURL(file) || "/placeholder.webp"}
                           alt={`New image ${index + 1}`}
                           width={150}
                           height={100}
@@ -951,7 +951,7 @@ export default function TemplePackageForm({ packageId }) {
                         setSeoData(prev => ({ ...prev, ogImage: e.target.value }))
                         setIsDirty(true)
                       }}
-                      placeholder="https://example.com/image.jpg"
+                      placeholder="https://example.com/image.webp"
                     />
                     <p className="text-xs text-gray-500 mt-1">Image for social media sharing</p>
                   </div>
@@ -1024,7 +1024,7 @@ export default function TemplePackageForm({ packageId }) {
                           src={
                             temple.imageFile
                               ? URL.createObjectURL(temple.imageFile)
-                              : temple.imageUrl || "/placeholder.svg"
+                              : temple.imageUrl || "/placeholder.webp"
                           }
                           alt={`${temple.name} image`}
                           width={200}

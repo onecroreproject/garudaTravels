@@ -14,7 +14,7 @@ import {
 const vehicleList = [
   {
     id: 1,
-    image: "/cars/innova.png",
+    image: "/cars/innova.webp",
     name: "Innova ",
     rating: 4.5,
     hasAC: true,
@@ -25,7 +25,7 @@ const vehicleList = [
   },
   {
     id: 2,
-    image: "/cars/ertiga.png",
+    image: "/cars/ertiga.webp",
     name: "Ertiga",
     rating: 4.2,
     hasAC: true,
@@ -36,7 +36,7 @@ const vehicleList = [
   },
   {
     id: 3,
-    image: "/cars/swift.png",
+    image: "/cars/swift.webp",
     name: "Dzire or Etios",
     rating: 4.0,
     hasAC: true,
@@ -47,7 +47,7 @@ const vehicleList = [
   },
   {
     id: 4,
-    image: "/cars/crysta.png",
+    image: "/cars/crysta.webp",
     name: "Innova Crysta ",
     rating: 4.3,
     hasAC: true,
@@ -58,7 +58,7 @@ const vehicleList = [
   },
   {
     id: 5,
-    image: "/cars/tempo.png",
+    image: "/cars/tempo.webp",
     name: "Tempo Traveller",
     rating: 4.7,
     hasAC: true,

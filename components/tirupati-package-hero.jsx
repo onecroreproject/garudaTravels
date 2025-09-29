@@ -15,7 +15,7 @@ export default function TirupatiPackageHero({ packageData }) {
       <div
         className="w-full h-full bg-cover bg-center bg-no-repeat relative"
         style={{ 
-          backgroundImage: `url("https://wallpaperaccess.com/full/3479478.jpg")` 
+          backgroundImage: `url("https://wallpaperaccess.com/full/3479478.webp")` 
         }}
       >
         {/* Enhanced Overlay with Gradient */}

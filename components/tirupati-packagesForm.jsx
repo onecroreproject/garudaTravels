@@ -957,7 +957,7 @@ export default function PackageForm({ packageType, packageId }) {
                     {images.map((url, index) => (
                       <div key={index} className="relative group">
                         <img
-                          src={url || "/placeholder.svg"}
+                          src={url || "/placeholder.webp"}
                           alt={`Existing image ${index + 1}`}
                           width={150}
                           height={100}
@@ -987,7 +987,7 @@ export default function PackageForm({ packageType, packageId }) {
                     {newImageFiles.map((file, index) => (
                       <div key={index} className="relative group">
                         <img
-                          src={URL.createObjectURL(file) || "/placeholder.svg"}
+                          src={URL.createObjectURL(file) || "/placeholder.webp"}
                           alt={`New image ${index + 1}`}
                           width={150}
                           height={100}
@@ -1185,7 +1185,7 @@ export default function PackageForm({ packageType, packageId }) {
                         setSeoData(prev => ({ ...prev, ogImage: e.target.value }))
                         setIsDirty(true)
                       }}
-                      placeholder="https://example.com/image.jpg"
+                      placeholder="https://example.com/image.webp"
                     />
                     <p className="text-xs text-gray-500 mt-1">Image for social media sharing</p>
                   </div>
@@ -1392,7 +1392,7 @@ export default function PackageForm({ packageType, packageId }) {
                         {newMaleDressCodeFiles.map((file, index) => (
                           <div key={index} className="relative group w-24 h-16">
                             <img
-                              src={URL.createObjectURL(file) || "/placeholder.svg"}
+                              src={URL.createObjectURL(file) || "/placeholder.webp"}
                               alt={`New male dress code image ${index + 1}`}
                               width={96}
                               height={64}
@@ -1417,7 +1417,7 @@ export default function PackageForm({ packageType, packageId }) {
                         {maleDressCodeImages.map((url, index) => (
                           <div key={index} className="relative group w-24 h-16">
                             <img
-                              src={url || "/placeholder.svg"}
+                              src={url || "/placeholder.webp"}
                               alt={`Existing male dress code image ${index + 1}`}
                               width={96}
                               height={64}
@@ -1455,7 +1455,7 @@ export default function PackageForm({ packageType, packageId }) {
                         {newFemaleDressCodeFiles.map((file, index) => (
                           <div key={index} className="relative group w-24 h-16">
                             <img
-                              src={URL.createObjectURL(file) || "/placeholder.svg"}
+                              src={URL.createObjectURL(file) || "/placeholder.webp"}
                               alt={`New female dress code image ${index + 1}`}
                               width={96}
                               height={64}
@@ -1480,7 +1480,7 @@ export default function PackageForm({ packageType, packageId }) {
                         {femaleDressCodeImages.map((url, index) => (
                           <div key={index} className="relative group w-24 h-16">
                             <img
-                              src={url || "/placeholder.svg"}
+                              src={url || "/placeholder.webp"}
                               alt={`Existing female dress code image ${index + 1}`}
                               width={96}
                               height={64}

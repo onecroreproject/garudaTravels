@@ -12,7 +12,7 @@ const packagesData = {
       price: "$150",
       include: "Home Pickup & Drop, Breakfast & Lunch, Special Entry Darshan Ticket, SriVari Laddu per person.",
       exclude: "Accommodation not provided, Multiple pickups, Guide fees excluded, Extra Laddus.",
-      image: "/images/c-t.png",
+      image: "/images/c-t.webp",
     },
     {
       id: 2,
@@ -20,7 +20,7 @@ const packagesData = {
       price: "$250",
       include: "Home Pickup & Drop, Breakfast & Lunch, Special Entry Darshan Ticket, SriVari Laddu per person",
       exclude: "Accommodation not provided, Multiple pickups, Guide fees excluded, Extra Laddu",
-      image: "/images/v-t.png",
+      image: "/images/v-t.webp",
     },
     {
       id: 3,
@@ -28,7 +28,7 @@ const packagesData = {
       price: "$400",
       include: "Home Pickup & Drop, Breakfast & Lunch, Special Entry Darshan Ticket, SriVari Laddu per person.",
       exclude: "Accommodation not provided, Multiple pickups, Guide fees excluded, Extra Laddu",
-      image: "/images/b-t.png",
+      image: "/images/b-t.webp",
     },
   ],
   // "Temple Tour Package": [
@@ -37,21 +37,21 @@ const packagesData = {
   //     name: "South India Temple Tour",
   //     price: "$500",
   //     description: "Explore ancient temples across South India with expert guides.",
-  //     image: "/placeholder.svg?height=200&width=300",
+  //     image: "/placeholder.webp?height=200&width=300",
   //   },
   //   {
   //     id: 5,
   //     name: "North India Temple Tour",
   //     price: "$650",
   //     description: "Discover the spiritual heritage of North India's iconic temples.",
-  //     image: "/placeholder.svg?height=200&width=300",
+  //     image: "/placeholder.webp?height=200&width=300",
   //   },
   //   {
   //     id: 6,
   //     name: "Custom Temple Tour",
   //     price: "Custom",
   //     description: "Design your own spiritual journey to temples of your choice.",
-  //     image: "/placeholder.svg?height=200&width=300",
+  //     image: "/placeholder.webp?height=200&width=300",
   //   },
   // ],
   // "Car Rental Package": [
@@ -60,21 +60,21 @@ const packagesData = {
   //     name: "Sedan Rental (Daily)",
   //     price: "$80/day",
   //     description: "Rent a comfortable sedan for your daily travel needs.",
-  //     image: "/placeholder.svg?height=200&width=300",
+  //     image: "/placeholder.webp?height=200&width=300",
   //   },
   //   {
   //     id: 8,
   //     name: "SUV Rental (Weekly)",
   //     price: "$500/week",
   //     description: "Spacious SUV for family trips or longer journeys.",
-  //     image: "/placeholder.svg?height=200&width=300",
+  //     image: "/placeholder.webp?height=200&width=300",
   //   },
   //   {
   //     id: 9,
   //     name: "Van Rental (Group)",
   //     price: "$120/day",
   //     description: "Ideal for group travel, offering ample space and comfort.",
-  //     image: "/placeholder.svg?height=200&width=300",
+  //     image: "/placeholder.webp?height=200&width=300",
   //   },
   // ],
 }
@@ -113,7 +113,7 @@ export default function TourPackages() {
             <div key={pkg.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
               <div className="relative w-full h-64">
                 <Image
-                  src={pkg.image || "/placeholder.svg"}
+                  src={pkg.image || "/placeholder.webp"}
                   alt={pkg.name}
                   fill
                   style={{ objectFit: "cover" }}
