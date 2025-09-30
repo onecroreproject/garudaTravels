@@ -3,27 +3,34 @@
 import { useState, useEffect } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
 const slides = [
   {
     id: 1,
-    image: "/images/slider3.png",
+    image: "/images/slider3.webp",
+    width: 1920,
+    height: 1000,
     title: "Temple Tour Packages from Chennai – Book Now",
     description:"Explore divine temples like Tirupati, Rameswaram & Kanchipuram. Garuda offers trusted temple tour packages from Chennai with expert planning.",
     buttonText: "View Packages",
   },
   {
     id: 2,
-    image: "/images/hero2.png",
+    image: "/images/hero2.webp",
+    width: 1920,
+    height: 1000,
     title: "Chennai to Tirupati One Day Tour – Fast & Easy",
     description:"Book your Chennai to Tirupati one day package with VIP darshan, smooth travel & quick booking via Garuda.",
     buttonText:"Book 1-Day Trip"
   },
   {
     id: 3,
-    image: "/images/hero1.png",
+    image: "/images/hero1.webp",
+    width: 1920,
+    height: 1000,
     title: "Tirupati Darshan Package from Chennai – VIP & Quick",
-    description:" Choose Garuda’s VIP Tirupati darshan package from Chennai for a peaceful, guided temple visit with fast-track access.",
+    description:" Choose Garuda's VIP Tirupati darshan package from Chennai for a peaceful, guided temple visit with fast-track access.",
     buttonText: "Book VIP Darshan",
   },
 ]
@@ -61,10 +68,16 @@ export default function HeroSlider() {
             index === currentSlide ? "opacity-100" : "opacity-0"
           }`}
         >
-          <div
-            className="w-full h-full bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(${slide.image})` }}
-          >
+          <div className="relative w-full h-full">
+          <Image
+            src={slide.image}
+            alt={slide.title}
+             fill
+             priority   
+             sizes="100vw"
+             className="object-cover object-center"
+              quality={index === 0 ? 90 : 80}
+             />
             {/* Enhanced Overlay */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/60" />
 

@@ -78,7 +78,7 @@ export default function HomePage() {
                 <div className="flex justify-center mb-6">
                   <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-orange-400 shadow-lg">
                     <div className="w-full h-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center">
-                      <span className="text-white font-bold text-lg"><img src="/A._P._J._Abdul_Kalam.jpg.webp" alt="Dr. APJ Abdul Kalam" className="w-full h-full object-cover" /></span>
+                      <span className="text-white font-bold text-lg"><img src="/A._P._J._Abdul_Kalam.webp" alt="Dr. APJ Abdul Kalam" className="w-full h-full object-cover" /></span>
                     </div>
                   </div>
                 </div>
@@ -107,8 +107,7 @@ export default function HomePage() {
                 {/* Profile Image */}
                 <div className="flex justify-center mb-6">
                   <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-red-400 shadow-lg">
-                  <img src="/vijaykanth.png" alt="Vijayakanth" className="w-full h-full object-cover" />
-
+                    <img src="/vijakannth.webp" alt="Vijayakanth" className="w-full h-full object-cover" />
                   </div>
                 </div>
                 
@@ -136,7 +135,7 @@ export default function HomePage() {
                 {/* Profile Image */}
                 <div className="flex justify-center mb-6">
                   <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-green-400 shadow-lg">
-                    <img src="/kamarajar.jpg" alt="K. Kamaraj" className="w-full h-full object-cover" />
+                    <img src="/kamarajar.webp" alt="K. Kamaraj" className="w-full h-full object-cover" />
                   </div>
                 </div>
                 
@@ -241,7 +240,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl transform rotate-3"></div>
                 <div className="relative bg-white rounded-2xl shadow-2xl p-4 transform -rotate-1 hover:rotate-0 transition-transform duration-500">
             <img
-              src="/images/about.png"
+              src="/images/about.webp"
                     alt="About Garuda Tours"
                     className="rounded-xl w-full h-auto object-cover"
             />
@@ -269,7 +268,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-3xl transform rotate-6 group-hover:rotate-12 transition-transform duration-500"></div>
                 <div className="relative bg-white rounded-3xl shadow-2xl p-6 transform -rotate-2 group-hover:rotate-0 transition-transform duration-500">
             <img
-              src="/images/6.png"
+              src="/images/6.webp"
                     alt="One-Day Tirupati Package"
                     className="rounded-2xl w-full h-auto object-cover"
                   />
@@ -408,7 +407,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-3xl transform -rotate-6 group-hover:-rotate-12 transition-transform duration-500"></div>
                 <div className="relative bg-white rounded-3xl shadow-2xl p-6 transform rotate-2 group-hover:rotate-0 transition-transform duration-500">
             <img
-              src="/images/4.png"
+              src="/images/4.webp"
                     alt="Two-Day Tirupati Package"
                     className="rounded-2xl w-full h-auto object-cover"
                   />
@@ -437,7 +436,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-indigo-500/20 rounded-3xl transform rotate-6 group-hover:rotate-12 transition-transform duration-500"></div>
                 <div className="relative bg-white rounded-3xl shadow-2xl p-6 transform -rotate-2 group-hover:rotate-0 transition-transform duration-500">
             <img
-              src="/images/5.png"
+              src="/images/5.webp"
                     alt="Car Rental Package"
                     className="rounded-2xl w-full h-auto object-cover"
                   />
@@ -576,7 +575,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-3xl transform -rotate-6 group-hover:-rotate-12 transition-transform duration-500"></div>
                 <div className="relative bg-white rounded-3xl shadow-2xl p-6 transform rotate-2 group-hover:rotate-0 transition-transform duration-500">
             <img
-              src="/images/1.png"
+              src="/images/1.webp"
                     alt="Temple Tour Packages"
                     className="rounded-2xl w-full h-auto object-cover"
                   />

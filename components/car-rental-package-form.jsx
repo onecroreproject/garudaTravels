@@ -734,7 +734,7 @@ export default function CarRentalPackageForm({ packageId }) {
                     {images.map((url, index) => (
                       <div key={index} className="relative group">
                         <img
-                          src={url || "/placeholder.svg"}
+                          src={url || "/placeholder.webp"}
                           alt={`Existing image ${index + 1}`}
                           width={150}
                           height={100}
@@ -764,7 +764,7 @@ export default function CarRentalPackageForm({ packageId }) {
                     {newImageFiles.map((file, index) => (
                       <div key={index} className="relative group">
                         <img
-                          src={URL.createObjectURL(file) || "/placeholder.svg"}
+                          src={URL.createObjectURL(file) || "/placeholder.webp"}
                           alt={`New image ${index + 1}`}
                           width={150}
                           height={100}
@@ -859,7 +859,7 @@ export default function CarRentalPackageForm({ packageId }) {
                         setSeoData(prev => ({ ...prev, ogImage: e.target.value }))
                         setIsDirty(true)
                       }}
-                      placeholder="https://example.com/image.jpg"
+                      placeholder="https://example.com/image.webp"
                     />
                     <p className="text-xs text-gray-500 mt-1">Image for social media sharing</p>
                   </div>
@@ -1017,7 +1017,7 @@ export default function CarRentalPackageForm({ packageId }) {
                     {(car.imageUrl || car.imageFile) && (
                       <div className="mb-4">
                         <img
-                          src={car.imageFile ? URL.createObjectURL(car.imageFile) : car.imageUrl || "/placeholder.svg"}
+                          src={car.imageFile ? URL.createObjectURL(car.imageFile) : car.imageUrl || "/placeholder.webp"}
                           alt={`${car.name} image`}
                           width={200}
                           height={150}

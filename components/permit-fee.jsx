@@ -6,7 +6,7 @@ import { Check, X } from "lucide-react"
 const vehiclePermits = [
   {
     id: 1,
-    image: "/placeholder.svg?height=100&width=150",
+    image: "/placeholder.webp?height=100&width=150",
     title: "Swift/Etios",
     details: [
       { label: "R.Pe", value: "₹ 2500" },
@@ -17,7 +17,7 @@ const vehiclePermits = [
   },
   {
     id: 2,
-    image: "/placeholder.svg?height=100&width=150",
+    image: "/placeholder.webp?height=100&width=150",
     title: "SUV (Innova/Ertiga)",
     details: [
       { label: "R.Pe", value: "₹ 4000" },
@@ -28,7 +28,7 @@ const vehiclePermits = [
   },
   {
     id: 3,
-    image: "/placeholder.svg?height=100&width=150",
+    image: "/placeholder.webp?height=100&width=150",
     title: "Van (Tempo Traveller)",
     details: [
       { label: "R.Pe", value: "₹ 6000" },
@@ -39,7 +39,7 @@ const vehiclePermits = [
   },
   {
     id: 4,
-    image: "/placeholder.svg?height=100&width=150",
+    image: "/placeholder.webp?height=100&width=150",
     title: "Luxury Sedan",
     details: [
       { label: "R.Pe", value: "₹ 5500" },
@@ -66,7 +66,7 @@ export default function PermitFeeSection() {
             {/* Vehicle Card 1 */}
             <div className="bg-white rounded-lg shadow-md p-6 flex flex-col sm:flex-row items-center sm:items-start gap-4">
               <Image
-                src={vehiclePermits[0].image || "/placeholder.svg"}
+                src={vehiclePermits[0].image || "/placeholder.webp"}
                 alt={vehiclePermits[0].title}
                 width={150}
                 height={100}
@@ -87,7 +87,7 @@ export default function PermitFeeSection() {
             {/* Vehicle Card 2 */}
             <div className="bg-white rounded-lg shadow-md p-6 flex flex-col sm:flex-row items-center sm:items-start gap-4">
               <Image
-                src={vehiclePermits[1].image || "/placeholder.svg"}
+                src={vehiclePermits[1].image || "/placeholder.webp"}
                 alt={vehiclePermits[1].title}
                 width={150}
                 height={100}
@@ -124,7 +124,7 @@ export default function PermitFeeSection() {
             {/* Vehicle Card 3 */}
             <div className="bg-white rounded-lg shadow-md p-6 flex flex-col sm:flex-row items-center sm:items-start gap-4">
               <Image
-                src={vehiclePermits[2].image || "/placeholder.svg"}
+                src={vehiclePermits[2].image || "/placeholder.webp"}
                 alt={vehiclePermits[2].title}
                 width={150}
                 height={100}
@@ -145,7 +145,7 @@ export default function PermitFeeSection() {
             {/* Vehicle Card 4 */}
             <div className="bg-white rounded-lg shadow-md p-6 flex flex-col sm:flex-row items-center sm:items-start gap-4">
               <Image
-                src={vehiclePermits[3].image || "/placeholder.svg"}
+                src={vehiclePermits[3].image || "/placeholder.webp"}
                 alt={vehiclePermits[3].title}
                 width={150}
                 height={100}

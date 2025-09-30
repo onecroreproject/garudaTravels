@@ -7,7 +7,7 @@
 //       {/* Left: Image */}
 //       <div className="w-28 h-28 flex-shrink-0">
 //         <Image
-//           src="/images/feed/note.png" // 🔁 Replace this with your image
+//           src="/images/feed/note.webp" // 🔁 Replace this with your image
 //           alt="Passenger Note Icon"
 //           width={112}
 //           height={112}
@@ -43,7 +43,7 @@ export default function PassengerNoteBox() {
       <div className="flex-shrink-0">
         <div className="relative w-28 h-28 bg-white rounded-full shadow-lg overflow-hidden">
           <Image
-            src="/images/feed/note.png"
+            src="/images/feed/note.webp"
             alt="Passenger Note Icon"
             width={112}
             height={112}

@@ -105,7 +105,7 @@ const confirmDelete = async () => {
 
     for (const url of imageUrls) {
       try {
-        // Extract path from URL (e.g., "tirupati-package/family-package/img1.jpg")
+        // Extract path from URL (e.g., "tirupati-package/family-package/img1.webp")
         const path = decodeURIComponent(url.split(`${storagePathPrefix}/`)[1].split("?")[0])
         const imageRef = ref(storage, `${storagePathPrefix}/${path}`)
         await deleteObject(imageRef)

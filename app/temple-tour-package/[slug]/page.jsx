@@ -242,7 +242,7 @@ export default async function TemplePackagePage({ params }) {
                 <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-3xl transform -rotate-6 group-hover:-rotate-12 transition-transform duration-500"></div>
                 <div className="relative bg-white rounded-3xl shadow-2xl p-6 transform rotate-2 group-hover:rotate-0 transition-transform duration-500 flex justify-center">
                 <img
-                src="/images/2.png" // static image path
+                src="/images/2.webp" // static image path
                 alt="Tour Package"
                 className="rounded-lg shadow-lg w-full max-w-md object-cover"
               />
@@ -253,7 +253,7 @@ export default async function TemplePackagePage({ params }) {
 
             {/* <div className="flex justify-center">
               <img
-                src="/images/2.png" // static image path
+                src="/images/2.webp" // static image path
                 alt="Tour Package"
                 className="rounded-lg shadow-lg w-full max-w-md object-cover"
               />
@@ -272,7 +272,7 @@ export default async function TemplePackagePage({ params }) {
               {/* Main Image */}
               <div className="mb-6">
                 <img
-                  src={packageData.images[0] || "/placeholder.svg?height=400&width=800&query=temple tour"}
+                  src={packageData.images[0] || "/placeholder.webp?height=400&width=800&query=temple tour"}
                   alt={`${packageData.title} - Main Image`}
                   className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
                 />
@@ -287,7 +287,7 @@ export default async function TemplePackagePage({ params }) {
                       className="flex-shrink-0 rounded-lg overflow-hidden border-2 border-transparent"
                     >
                       <img
-                        src={image || "/placeholder.svg"}
+                        src={image || "/placeholder.webp"}
                         alt={`Thumbnail ${index + 1}`}
                         className="w-20 h-16 object-cover"
                       />
@@ -371,7 +371,7 @@ export default async function TemplePackagePage({ params }) {
                       >
                         {temple.imageUrl && (
                           <img
-                            src={temple.imageUrl || "/placeholder.svg"}
+                            src={temple.imageUrl || "/placeholder.webp"}
                             alt={temple.name}
                             className="w-full h-60 object-cover rounded-lg mb-3"
                           />

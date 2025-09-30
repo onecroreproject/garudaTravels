@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {/* Company Info */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left">
-          <img src="/footer-logo.png" alt="Logo" className="h-6 md:h-8 lg:h-10 w-auto" />
+          <img src="/footer-logo.webp" alt="Logo" className="h-6 md:h-8 lg:h-10 w-auto" />
           <p className="mb-6 text-sm leading-relaxed mt-4">
             Garuda Tours and Travels offers trusted Chennai to Tirupati packages, VIP darshan trips, and temple tour packages with comfort, care, and devotion.
           </p>
@@ -89,7 +89,7 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="/privacy-&-policy" className="flex items-center hover:text-blue-400 transition-colors">
+              <a href="/privacy-policy" className="flex items-center hover:text-blue-400 transition-colors">
                 <ChevronRight className="h-4 w-4 mr-2 text-blue-400" /> Privacy Policy
               </a>
             </li>

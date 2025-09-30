@@ -147,7 +147,7 @@ export default async function CarRentalPage({ params }) {
         <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-3xl transform rotate-6 group-hover:rotate-12 transition-transform duration-500"></div>
         <div className="relative bg-white rounded-3xl shadow-2xl p-6 transform -rotate-2 group-hover:rotate-0 transition-transform duration-500">
           <img
-            src={packageData.images?.[0] || "/placeholder.svg?height=400&width=600&query=car rental service"}
+            src={packageData.images?.[0] || "/placeholder.webp?height=400&width=600&query=car rental service"}
             alt={packageData.title}
             className="rounded-lg shadow-lg w-full h-auto object-cover"
           />
@@ -409,7 +409,7 @@ export default async function CarRentalPage({ params }) {
                   {section.imageUrl && (
                     <div className="w-full">
                       <img
-                        src={section.imageUrl || "/placeholder.svg"}
+                        src={section.imageUrl || "/placeholder.webp"}
                         alt={section.contentTitle || `Section ${index + 1}`}
                         className="rounded-lg shadow-lg w-full h-auto object-cover"
                       />

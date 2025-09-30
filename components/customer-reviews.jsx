@@ -6,7 +6,7 @@ import { Quote } from "lucide-react" // Using Quote icon for decorative purposes
 const customerReviews = [
   {
     id: 1,
-    avatar: "/images/client/1.png?height=64&width=64", // Placeholder for customer avatar
+    avatar: "/images/client/1.webp?height=64&width=64", // Placeholder for customer avatar
     name: "Priya Sharma",
     location: "Chennai, India",
     content:
@@ -14,7 +14,7 @@ const customerReviews = [
   },
   {
     id: 2,
-    avatar: "/images/client/3.png?height=64&width=64", // Placeholder for customer avatar
+    avatar: "/images/client/3.webp?height=64&width=64", // Placeholder for customer avatar
     name: "P.Ramanujam",
     location: "Kumbakonam",
     content:
@@ -22,7 +22,7 @@ const customerReviews = [
   },
   {
     id: 3,
-    avatar: "/images/client/2.png?height=64&width=64", // Placeholder for customer avatar
+    avatar: "/images/client/2.webp?height=64&width=64", // Placeholder for customer avatar
     name: "Karthikeyan",
     location: "Theni, Tamil Nadu",
     content:
@@ -30,7 +30,7 @@ const customerReviews = [
   },
   {
     id: 4,
-    avatar: "/images/client/4.png?height=64&width=64", // Placeholder for customer avatar
+    avatar: "/images/client/4.webp?height=64&width=64", // Placeholder for customer avatar
     name: "Pandi Kumar",
     location: "Madurai, Tamil Nadu",
     content:
@@ -50,7 +50,7 @@ export default function CustomerReviews() {
               {/* Full round image icon in top-left corner */}
               {/* <div className="absolute -top-8 -left-8 w-24 h-24 rounded-full bg-white border-2 border-red-500 flex items-center justify-center shadow-md">
                 <Image
-                  src={review.avatar || "/placeholder.svg"}
+                  src={review.avatar || "/placeholder.webp"}
                   alt={review.name}
                   width={64}
                   height={64}
@@ -70,7 +70,7 @@ export default function CustomerReviews() {
               {/* Customer Name and Location with a larger avatar */}
               <div className="flex items-center justify-start gap-4 mt-4">
                 <Image
-                  src={review.avatar || "/placeholder.svg"}
+                  src={review.avatar || "/placeholder.webp"}
                   alt={review.name}
                   width={50}
                   height={50}

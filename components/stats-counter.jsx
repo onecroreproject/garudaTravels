@@ -106,7 +106,7 @@ export default function StatsCounter() {
     <section
       className="relative py-10 px-4 bg-gray-100 overflow-hidden"
       style={{
-        backgroundImage: `url(/placeholder.svg?height=800&width=1600)`, // Placeholder for background image
+        backgroundImage: `url(/placeholder.webp?height=800&width=1600)`, // Placeholder for background image
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed", // Parallax effect
