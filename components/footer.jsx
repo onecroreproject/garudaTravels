@@ -89,7 +89,7 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="/privacy-&-policy" className="flex items-center hover:text-blue-400 transition-colors">
+              <a href="/privacy-policy" className="flex items-center hover:text-blue-400 transition-colors">
                 <ChevronRight className="h-4 w-4 mr-2 text-blue-400" /> Privacy Policy
               </a>
             </li>

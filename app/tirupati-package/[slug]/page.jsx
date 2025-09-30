@@ -97,8 +97,11 @@ export default async function TirupatiPackageDetailPage({ params }) {
     const docRef = doc(db, "tirupati-package", slug)
     const docSnap = await getDoc(docRef)
 
+
+  
     if (docSnap.exists()) {
       const rawData = docSnap.data()
+      console.log("days",rawData)
       // Convert Firebase timestamps and other complex objects to plain objects
       packageData = {
         id: docSnap.id,
@@ -274,7 +277,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
                   {/* Car Image */}
                   <div className="w-full h-48 relative">
                     <Image
-                      src={car.imageUrl || "/placeholder.webp?height=200&width=300&query=Car for " + car.carName}
+                      src={car.imageUrl || "/placeholder.svg?height=200&width=300&query=Car for " + car.carName}
                       alt={car.carName}
                       fill
                       className="object-cover"
@@ -428,7 +431,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
                         {car.image && (
                           <div className="w-full h-48 relative">
                             <Image
-                              src={car.image || "/placeholder.webp?height=200&width=300&query=Car"}
+                              src={car.image || "/placeholder.svg?height=200&width=300&query=Car"}
                               alt={car.name || "Car"}
                               fill
                               className="object-cover"
@@ -648,7 +651,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
                 <div key={item.id} className="bg-white rounded-lg shadow-md overflow-hidden">
                   <div className="relative w-full h-48">
                     <Image
-                      src={item.imageUrl || "/placeholder.webp?height=200&width=300&query=sightseeing place"}
+                      src={item.imageUrl || "/placeholder.svg?height=200&width=300&query=sightseeing place"}
                       alt={item.text}
                       fill
                       style={{ objectFit: "cover" }}
@@ -688,8 +691,8 @@ export default async function TirupatiPackageDetailPage({ params }) {
                         <Image
                           src={
                             packageData.femaleDressCodeImages[0] ||
-                            "/placeholder.webp?height=300&width=200&query=female traditional dress"
-                           || "/placeholder.webp"}
+                            "/placeholder.svg?height=300&width=200&query=female traditional dress"
+                           || "/placeholder.svg"}
                           alt="Female dress code example"
                           fill
                           style={{ objectFit: "cover" }}
@@ -709,8 +712,8 @@ export default async function TirupatiPackageDetailPage({ params }) {
                         <Image
                           src={
                             packageData.maleDressCodeImages[0] ||
-                            "/placeholder.webp?height=300&width=200&query=male traditional dress"
-                           || "/placeholder.webp"}
+                            "/placeholder.svg?height=300&width=200&query=male traditional dress"
+                           || "/placeholder.svg"}
                           alt="Male dress code example"
                           fill
                           style={{ objectFit: "cover" }}
@@ -788,7 +791,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
       <div className="flex flex-col h-full border border-gray-200 rounded-lg overflow-hidden">
         <div className="h-40 w-full relative bg-gray-100">
           <Image 
-            src="/images/food/delcious-lunch.webp" 
+            src="/images/food/delcious-lunch.jpg" 
             alt="Lunch" 
             fill
             className="object-cover"
@@ -827,7 +830,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
       <div className="flex flex-col h-full border border-gray-200 rounded-lg overflow-hidden">
         <div className="h-40 w-full relative bg-gray-100">
           <Image 
-            src="/images/food/fuel.webp" 
+            src="/images/food/fuel.jpg" 
             alt="Fuel Expenses" 
             fill
             className="object-cover"
@@ -839,7 +842,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
       <div className="flex flex-col h-full border border-gray-200 rounded-lg overflow-hidden">
         <div className="h-40 w-full relative bg-gray-100">
           <Image 
-            src="/images/food/toll-permit.webp" 
+            src="/images/food/toll-permit.jpg" 
             alt="Toll & Permit" 
             fill
             className="object-cover"
@@ -863,7 +866,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
       <div className="flex flex-col h-full border border-gray-200 rounded-lg overflow-hidden">
         <div className="h-40 w-full relative bg-gray-100">
           <Image 
-            src="/images/food/cab.webp" 
+            src="/images/food/cab.jpg" 
             alt="Sanitised Cab" 
             fill
             className="object-cover"
@@ -877,7 +880,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
 }
 
         
-              {/* Dynamic Sections */}
+        {/* Dynamic Sections */}
 {packageData.sections && packageData.sections.length > 0 && (
   <section className="mb-16">
     <div className="text-center mb-12">
@@ -993,6 +996,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
   </section>
 )}
 
+
         {/* Additional Packages Section */}
         {otherPackages.length > 0 && (
           <section className="mb-12">
@@ -1003,7 +1007,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
                   <CardHeader className="p-0 flex-shrink-0">
                     <div className="relative w-full h-48">
                       <Image
-                        src={pkg.images?.[0] || "/images/city/free.webp?height=200&width=300&query=other package image"}
+                        src={pkg.images?.[0] || "/images/city/free.png?height=200&width=300&query=other package image"}
                         alt={pkg.title}
                         fill
                         style={{ objectFit: "cover" }}
