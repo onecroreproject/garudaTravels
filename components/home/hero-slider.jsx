@@ -58,7 +58,7 @@ export default function HeroSlider() {
   const goToSlide = (index) => {
     setCurrentSlide(index)
   }
-
+  
   return (
     <section className="relative h-[500px] md:h-[600px] lg:h-[1000px] overflow-hidden">
       {slides.map((slide, index) => (

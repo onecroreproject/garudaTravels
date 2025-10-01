@@ -48,6 +48,7 @@ export default function PassengerNoteBox() {
             width={112}
             height={112}
             className="object-contain w-full h-full"
+            priority
           />
         </div>
       </div>

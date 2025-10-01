@@ -116,6 +116,7 @@ function VehicleCard({ vehicle }) {
           alt={vehicle.name}
           fill
           className="object-cover transition-transform duration-300 hover:scale-105"
+          priority
         />
       </div>
 

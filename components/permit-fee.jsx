@@ -71,6 +71,7 @@ export default function PermitFeeSection() {
                 width={150}
                 height={100}
                 className="rounded-md object-cover flex-shrink-0"
+                priority
               />
               <div className="text-center sm:text-left w-full">
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">{vehiclePermits[0].title}</h3>
@@ -92,6 +93,7 @@ export default function PermitFeeSection() {
                 width={150}
                 height={100}
                 className="rounded-md object-cover flex-shrink-0"
+                priority
               />
               <div className="text-center sm:text-left w-full">
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">{vehiclePermits[1].title}</h3>
@@ -129,6 +131,7 @@ export default function PermitFeeSection() {
                 width={150}
                 height={100}
                 className="rounded-md object-cover flex-shrink-0"
+                priority
               />
               <div className="text-center sm:text-left w-full">
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">{vehiclePermits[2].title}</h3>
@@ -150,6 +153,7 @@ export default function PermitFeeSection() {
                 width={150}
                 height={100}
                 className="rounded-md object-cover flex-shrink-0"
+                priority
               />
               <div className="text-center sm:text-left w-full">
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">{vehiclePermits[3].title}</h3>

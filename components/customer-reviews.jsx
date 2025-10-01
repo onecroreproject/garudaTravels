@@ -75,6 +75,7 @@ export default function CustomerReviews() {
                   width={50}
                   height={50}
                   className="w-10 h-10 rounded-full object-cover border border-gray-300"
+                  priority
                 />
                 <div className="text-right">
                   <p className="font-semibold text-gray-900">{review.name}</p>

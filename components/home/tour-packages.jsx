@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
+import { OptimizedImage } from "@/components/ImageOptimizer"
 import { Button } from "@/components/ui/button"
 
 const packagesData = {
@@ -106,23 +106,25 @@ export default function TourPackages() {
             </Button>
           ))}
         </div>
-
         {/* Package Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {currentPackages.map((pkg) => (
             <div key={pkg.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
               <div className="relative w-full h-64">
-                <Image
-                  src={pkg.image || "/placeholder.webp"}
-                  alt={pkg.name}
-                  fill
-                  style={{ objectFit: "cover" }}
-                  className="transition-transform duration-300 hover:scale-105"
-                />
+                <div className="w-full h-48 relative">
+                  <OptimizedImage
+                    src={pkg.image}
+                    alt={pkg.name}
+                    width={400}
+                    height={300}
+                    quality={70}
+                    className="w-full h-full object-cover rounded-t-lg"
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+                  />
+                </div>
               </div>
               <div className="p-6">
                 <h3 className="text-2xl font-semibold text-gray-800 mb-2">{pkg.name}</h3>
-                {/* <p className="text-blue-600 text-xl font-bold mb-4">{pkg.price}</p> */}
                 <small className="text-green-600 mb-6">*Include: {pkg.include}</small><br />
                 <small className="text-red-600 mb-6">*Exclude: {pkg.exclude}</small>
                <a href="#booking"><Button  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg">Book Now</Button></a> 

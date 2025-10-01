@@ -3,11 +3,32 @@ import nodemailer from "nodemailer"
 import { db } from "@/lib/firebase"
 import { collection, addDoc, Timestamp } from "firebase/firestore"
 
+// Handle CORS preflight requests
+export async function OPTIONS() {
+  const response = new NextResponse(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  });
+  return response;
+}
+
 export async function POST(request) {
+  // Set CORS headers for the main request
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Content-Type': 'application/json',
+  };
+
   try {
     const formData = await request.json()
 
-     // Save booking data to Firestore
+    // Save booking data to Firestore
     let firestoreSaveSuccess = false
     let firestoreError = null
     try {
@@ -21,6 +42,21 @@ export async function POST(request) {
     } catch (e) {
       console.error("Error adding document to Firestore: ", e)
       firestoreError = e.message
+    }
+
+    // Check if email credentials are set
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      console.error('Email credentials not configured');
+      return new NextResponse(
+        JSON.stringify({ 
+          success: false, 
+          message: 'Email service not configured' 
+        }), 
+        { 
+          status: 500, 
+          headers 
+        }
+      );
     }
 
     // Configure Nodemailer transporter
@@ -247,44 +283,56 @@ ${formData.selectedOption ? `🎫 *Option:* ${formData.selectedOption}` : ""}
       failedServices.push(`Telegram (${telegramErrorDetails})`)
     }
 
+    const responseHeaders = {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET,HEAD,POST,PATCH,PUT,DELETE',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    }
+
     if (businessEmailSuccess && clientEmailSuccess && telegramSuccess) {
-      return NextResponse.json({
-        success: true,
-        message: "Booking request submitted successfully! You will receive a confirmation email shortly.",
-      })
+      return new NextResponse(
+        JSON.stringify({ 
+          success: true, 
+          message: 'Booking request submitted successfully. You will receive a confirmation email shortly.',
+          firestoreSaveSuccess
+        }), 
+        { 
+          status: 200, 
+          headers: { ...responseHeaders }
+        }
+      )
     } else {
       console.error("Some notification services failed:", {
         businessEmail: businessEmailSuccess ? "Success" : emailResults[0].reason,
         clientEmail: clientEmailSuccess ? "Success" : emailResults[1].reason,
-        telegram: telegramSuccess ? "Success" : telegramResponse.statusText || "Telegram error",
-        failedDetails: failedServices,
+        telegram: telegramSuccess ? "Success" : telegramResponse.statusText
       })
 
-      // If at least one email or telegram succeeded, consider it a partial success
-      if (businessEmailSuccess || clientEmailSuccess || telegramSuccess) {
-        return NextResponse.json({
-          success: true,
-          message: `Booking submitted. Some notifications might be delayed: ${failedServices.join(", ")}.`,
-        })
-      } else {
-        // All critical services failed
-        return NextResponse.json(
-          {
-            success: false,
-            message: `Failed to submit booking request. All notifications could not be sent. Please try again or contact us directly.`,
-          },
-          { status: 500 },
-        )
-      }
+      return new NextResponse(
+        JSON.stringify({ 
+          success: false, 
+          message: 'Your booking was saved but some notifications failed. We will contact you soon.',
+          failedServices,
+          firestoreSaveSuccess
+        }), 
+        { 
+          status: 500, 
+          headers: { ...responseHeaders }
+        }
+      )
     }
   } catch (error) {
-    console.error("Error submitting booking (catch block):", error)
-    return NextResponse.json(
-      {
-        success: false,
-        message: "An unexpected error occurred. Please try again or contact us directly.",
-      },
-      { status: 500 },
+    console.error('Error processing booking:', error)
+    return new NextResponse(
+      JSON.stringify({ 
+        success: false, 
+        message: 'Internal server error. Please contact us directly.',
+        error: process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'
+      }), 
+      { 
+        status: 500, 
+        headers: { ...headers }
+      }
     )
   }
 }

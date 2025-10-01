@@ -147,6 +147,7 @@ export default function AboutUs() {
               alt="Travelers exploring"
               width={500}
               height={500}
+              priority
               className="rounded-lg object-cover w-full max-w-md lg:max-w-full h-auto shadow-lg"
             />
                   {/* Floating Badge */}
