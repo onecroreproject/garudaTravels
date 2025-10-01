@@ -1,21 +1,127 @@
 "use client"
 
+import { useEffect, useState } from 'react';
+import Head from 'next/head';
+import Image from 'next/image';
 import HeroSlider from "@/components/home/hero-slider"
 import BookingForm from "@/components/booking-form"
 import TourPackages from "@/components/home/tour-packages"
 import Vehicl from "@/components/home/vehicle-slider"
-import PassengerNoteBox from "@/components/PassengerNoteBox"
-import Counter from "@/components/stats-counter"
 import CustomerReviews from "@/components/customer-reviews"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
+import ConnectionStatus from "@/components/connection-status"
+import PassengerNoteBox from "@/components/PassengerNoteBox"
+import Counter from "@/components/stats-counter"
+import { webSocketManager, setupPageVisibilityHandling, setupBeforeUnloadHandling } from '@/lib/websocket';
 
 export default function HomePage() {
+  const [connectionStatus, setConnectionStatus] = useState('disconnected');
+  const [realTimeUpdates, setRealTimeUpdates] = useState([]);
+
+  useEffect(() => {
+    // Only run on client-side
+    if (typeof window === 'undefined') return;
+
+    // Set up WebSocket connection
+    const initWebSocket = async () => {
+      try {
+        const wsProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+        const wsUrl = process.env.NEXT_PUBLIC_WEBSOCKET_URL || 
+                     `${wsProtocol}${window.location.host}`;
+        
+        await webSocketManager.connect(wsUrl);
+      } catch (error) {
+        console.error('WebSocket connection error:', error);
+      }
+    };
+
+    // Only set up WebSocket in production or if explicitly enabled in development
+    if (process.env.NODE_ENV === 'production' || process.env.NEXT_PUBLIC_ENABLE_WEBSOCKET === 'true') {
+      initWebSocket();
+    } else {
+      console.log('WebSocket disabled in development. Set NEXT_PUBLIC_ENABLE_WEBSOCKET=true to enable.');
+    }
+    
+    // Set up page visibility handling
+    const cleanupVisibility = setupPageVisibilityHandling();
+    const cleanupBeforeUnload = setupBeforeUnloadHandling();
+    
+    // Add message handler for real-time updates
+    const handleRealTimeUpdate = (message) => {
+      console.log('Received real-time update:', message);
+      setRealTimeUpdates(prev => [
+        { ...message, timestamp: new Date().toISOString() },
+        ...prev.slice(0, 9) // Keep only the last 10 updates
+      ]);
+    };
+    
+    const removeHandler = webSocketManager.addMessageHandler(handleRealTimeUpdate);
+    
+    // Update connection status
+    const updateStatus = () => {
+      setConnectionStatus(webSocketManager.isConnected ? 'connected' : 'disconnected');
+    };
+    
+    // Initial status update
+    updateStatus();
+    
+    // Set up status change listener
+    const statusCheckInterval = setInterval(updateStatus, 5000);
+    
+    // Cleanup function
+    return () => {
+      clearInterval(statusCheckInterval);
+      removeHandler();
+      cleanupVisibility();
+      cleanupBeforeUnload();
+      webSocketManager.disconnect();
+    };
+  }, []);
+
+
+  // Function to send a message through WebSocket
+  const sendMessage = (message) => {
+    if (webSocketManager.isConnected) {
+      webSocketManager.send({
+        type: 'client_message',
+        data: message,
+        timestamp: new Date().toISOString()
+      });
+    } else {
+      console.warn('Cannot send message: WebSocket not connected');
+    }
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      <ConnectionStatus />
+      <Head>
+        {/* Preload critical hero images */}
+        <link 
+          rel="preload" 
+          href="/images/hero-slider-1.webp" 
+          as="image" 
+          type="image/webp"
+        />
+        <link 
+          rel="preload" 
+          href="/images/hero-slider-2.webp" 
+          as="image" 
+          type="image/webp"
+        />
+        {/* Preload about image */}
+        <link 
+          rel="preload" 
+          href="/images/about.webp" 
+          as="image" 
+          type="image/webp"
+        />
+      </Head>
+
       <Header />
 
-      <HeroSlider />
+      {/* Hero Slider with high priority */}
+      <HeroSlider fetchPriority="high" />
       
       {/* Enhanced Booking Section */}
       <section id="booking" className="py-20 px-4 bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 relative overflow-hidden">
@@ -42,8 +148,8 @@ export default function HomePage() {
               
               {/* Form Section */}
               <div className="p-4 sm:p-6 lg:p-8 flex justify-center">
-         <BookingForm />
-      </div>
+                <BookingForm />
+              </div>
             </div>
           </div>
         </div>
@@ -55,20 +161,6 @@ export default function HomePage() {
       {/* Quotes Section */}
       <section className="py-20 px-4 bg-gradient-to-br from-white via-gray-50 to-blue-50 relative overflow-hidden">
         <div className="container mx-auto relative z-10">
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <div className="inline-block px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full text-sm font-semibold mb-6">
-              Words of Wisdom
-            </div>
-            {/* <h2 className="text-4xl lg:text-6xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent leading-tight mb-6">
-              Inspirational <span className="text-blue-600">Quotes</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Draw inspiration from the timeless wisdom of India's greatest leaders and visionaries
-            </p>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mt-6"></div> */}
-          </div>
-
           {/* Quotes Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Dr. APJ Abdul Kalam */}
@@ -77,9 +169,15 @@ export default function HomePage() {
                 {/* Profile Image */}
                 <div className="flex justify-center mb-6">
                   <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-orange-400 shadow-lg">
-                    <div className="w-full h-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center">
-                      <span className="text-white font-bold text-lg"><img src="/A._P._J._Abdul_Kalam.webp" alt="Dr. APJ Abdul Kalam" className="w-full h-full object-cover" /></span>
-                    </div>
+                    <Image
+                      src="/A._P._J._Abdul_Kalam.webp"
+                      alt="Dr. APJ Abdul Kalam"
+                      width={96}
+                      height={96}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
                 </div>
                 
@@ -107,7 +205,15 @@ export default function HomePage() {
                 {/* Profile Image */}
                 <div className="flex justify-center mb-6">
                   <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-red-400 shadow-lg">
-                    <img src="/vijakannth.webp" alt="Vijayakanth" className="w-full h-full object-cover" />
+                    <Image
+                      src="/vijakannth.webp"
+                      alt="Vijayakanth"
+                      width={96}
+                      height={96}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
                 </div>
                 
@@ -135,14 +241,22 @@ export default function HomePage() {
                 {/* Profile Image */}
                 <div className="flex justify-center mb-6">
                   <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-green-400 shadow-lg">
-                    <img src="/kamarajar.webp" alt="K. Kamaraj" className="w-full h-full object-cover" />
+                    <Image
+                      src="/kamarajar.webp"
+                      alt="K. Kamaraj"
+                      width={96}
+                      height={96}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
                 </div>
                 
                 {/* Quote */}
                 <div className="text-center space-y-4">
                   <blockquote className="text-lg text-gray-700 font-medium leading-relaxed italic">
-                    "Learn to live and live to learn ,Contionously learning makes a man perfect ."
+                    "Learn to live and live to learn, Continuously learning makes a man perfect."
                   </blockquote>
                   
                   <div className="pt-4 border-t border-gray-200">
@@ -229,21 +343,24 @@ export default function HomePage() {
                 <a href="#booking" className="inline-block">
                   <button className="px-8 py-4 bg-white border-2 border-blue-600 text-blue-600 font-semibold rounded-xl shadow-lg hover:bg-blue-50 transform hover:scale-105 transition-all duration-300">
                     Book Now
-              </button>
-            </a>
-          </div>
+                  </button>
+                </a>
+              </div>
             </div>
             
-          {/* Right - Image */}
+            {/* Right - Image */}
             <div className="w-full order-1 lg:order-2">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl transform rotate-3"></div>
                 <div className="relative bg-white rounded-2xl shadow-2xl p-4 transform -rotate-1 hover:rotate-0 transition-transform duration-500">
-            <img
-              src="/images/about.webp"
+                  <Image
+                    src="/images/about.webp"
                     alt="About Garuda Tours"
+                    width={800}
+                    height={600}
                     className="rounded-xl w-full h-auto object-cover"
-            />
+                    priority={true}
+                  />
                 </div>
               </div>
             </div>
@@ -267,10 +384,14 @@ export default function HomePage() {
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-3xl transform rotate-6 group-hover:rotate-12 transition-transform duration-500"></div>
                 <div className="relative bg-white rounded-3xl shadow-2xl p-6 transform -rotate-2 group-hover:rotate-0 transition-transform duration-500">
-            <img
-              src="/images/6.webp"
+                  <Image
+                    src="/images/6.webp"
                     alt="One-Day Tirupati Package"
+                    width={800}
+                    height={600}
                     className="rounded-2xl w-full h-auto object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                   {/* Floating Badge */}
                   <div className="absolute -top-4 -right-4 bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-full shadow-lg">
@@ -278,11 +399,11 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-          </div>
+            </div>
 
             {/* Right - Content */}
             <div className="space-y-8 order-2">
-          <div className="space-y-4">
+              <div className="space-y-4">
                 <div className="inline-block px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-full text-sm font-semibold">
                   Quick & Devotional
                 </div>
@@ -297,8 +418,8 @@ export default function HomePage() {
                   Looking for a seamless <span className="font-semibold text-orange-600">Chennai to Tirupati one day package</span>? Garuda Tours and Travels offers a complete one day package from Chennai to Tirupati with doorstep pickup, AC cab, breakfast, and VIP darshan. Perfect for families and solo pilgrims alike, this Tirupati package from Chennai lets you experience the blessings of Lord Venkateswara and return home the same day—without stress or long queues.
                 </p>
                 <p className="text-lg text-gray-700 leading-relaxed">
-              With our expert coordination, your Chennai to Tirupati travel package becomes more than a trip—it becomes a spiritual journey. Book now and travel in comfort while we take care of your darshan timing, travel schedule, and support throughout.
-            </p>
+                  With our expert coordination, your Chennai to Tirupati travel package becomes more than a trip—it becomes a spiritual journey. Book now and travel in comfort while we take care of your darshan timing, travel schedule, and support throughout.
+                </p>
               </div>
               
               {/* Features Grid */}
@@ -331,8 +452,8 @@ export default function HomePage() {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
-            </button>
-            </a>
+                </button>
+              </a>
             </div>
           </div>
         </div>
@@ -397,19 +518,23 @@ export default function HomePage() {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
-              </button>
-            </a>
-          </div>
+                </button>
+              </a>
+            </div>
             
-          {/* Right - Image */}
+            {/* Right - Image */}
             <div className="w-full order-1 lg:order-2">
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-3xl transform -rotate-6 group-hover:-rotate-12 transition-transform duration-500"></div>
                 <div className="relative bg-white rounded-3xl shadow-2xl p-6 transform rotate-2 group-hover:rotate-0 transition-transform duration-500">
-            <img
-              src="/images/4.webp"
+                  <Image
+                    src="/images/4.webp"
                     alt="Two-Day Tirupati Package"
+                    width={800}
+                    height={600}
                     className="rounded-2xl w-full h-auto object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                   {/* Floating Badge */}
                   <div className="absolute -top-4 -left-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-2 rounded-full shadow-lg">
@@ -435,10 +560,14 @@ export default function HomePage() {
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-indigo-500/20 rounded-3xl transform rotate-6 group-hover:rotate-12 transition-transform duration-500"></div>
                 <div className="relative bg-white rounded-3xl shadow-2xl p-6 transform -rotate-2 group-hover:rotate-0 transition-transform duration-500">
-            <img
-              src="/images/5.webp"
+                  <Image
+                    src="/images/5.webp"
                     alt="Car Rental Package"
+                    width={800}
+                    height={600}
                     className="rounded-2xl w-full h-auto object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                   {/* Floating Badge */}
                   <div className="absolute -top-4 -right-4 bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-4 py-2 rounded-full shadow-lg">
@@ -446,11 +575,11 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-          </div>
+            </div>
 
             {/* Right - Content */}
             <div className="space-y-8 order-2">
-          <div className="space-y-4">
+              <div className="space-y-4">
                 <div className="inline-block px-4 py-2 bg-gradient-to-r from-purple-500 to-indigo-500 text-white rounded-full text-sm font-semibold">
                   Flexible & Private
                 </div>
@@ -499,8 +628,8 @@ export default function HomePage() {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
-            </button>
-            </a>
+                </button>
+              </a>
             </div>
           </div>
         </div>
@@ -559,25 +688,29 @@ export default function HomePage() {
                 </div>
               </div>
               
-            <a href="#booking" className="inline-block">
+              <a href="#booking" className="inline-block">
                 <button className="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2">
                   <span>Explore All Temple Tours</span>
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
-              </button>
-            </a>
-          </div>
+                </button>
+              </a>
+            </div>
             
-          {/* Right - Image */}
+            {/* Right - Image */}
             <div className="w-full order-1 lg:order-2">
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-3xl transform -rotate-6 group-hover:-rotate-12 transition-transform duration-500"></div>
                 <div className="relative bg-white rounded-3xl shadow-2xl p-6 transform rotate-2 group-hover:rotate-0 transition-transform duration-500">
-            <img
-              src="/images/1.webp"
+                  <Image
+                    src="/images/1.webp"
                     alt="Temple Tour Packages"
+                    width={800}
+                    height={600}
                     className="rounded-2xl w-full h-auto object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                   {/* Floating Badge */}
                   <div className="absolute -top-4 -left-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-full shadow-lg">
@@ -589,9 +722,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      
-      
 
       <CustomerReviews />
       <Counter />

@@ -280,6 +280,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
                       src={car.imageUrl || "/placeholder.svg?height=200&width=300&query=Car for " + car.carName}
                       alt={car.carName}
                       fill
+                      priority
                       className="object-cover"
                     />
                   </div>
@@ -431,6 +432,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
                         {car.image && (
                           <div className="w-full h-48 relative">
                             <Image
+                              priority
                               src={car.image || "/placeholder.svg?height=200&width=300&query=Car"}
                               alt={car.name || "Car"}
                               fill
@@ -689,6 +691,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
                     <CardContent className="p-0">
                       <div className="relative w-full h-64">
                         <Image
+                          priority
                           src={
                             packageData.femaleDressCodeImages[0] ||
                             "/placeholder.svg?height=300&width=200&query=female traditional dress"
@@ -710,6 +713,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
                     <CardContent className="p-0">
                       <div className="relative w-full h-64">
                         <Image
+                          priority
                           src={
                             packageData.maleDressCodeImages[0] ||
                             "/placeholder.svg?height=300&width=200&query=male traditional dress"
@@ -784,6 +788,8 @@ export default async function TirupatiPackageDetailPage({ params }) {
             fill
             className="object-cover"
             sizes="(max-width: 768px) 50vw, 25vw"
+            priority
+            quality={75}
           />
         </div>
         <p className="p-3 text-center text-lg font-semibold text-gray-800 bg-white">Delicious Breakfast</p>
@@ -791,11 +797,13 @@ export default async function TirupatiPackageDetailPage({ params }) {
       <div className="flex flex-col h-full border border-gray-200 rounded-lg overflow-hidden">
         <div className="h-40 w-full relative bg-gray-100">
           <Image 
-            src="/images/food/delcious-lunch.jpg" 
+            src="/images/food/delcious-lunch.webp" 
             alt="Lunch" 
             fill
             className="object-cover"
             sizes="(max-width: 768px) 50vw, 25vw"
+            priority
+            quality={75}
           />
         </div>
         <p className="p-3 text-center text-lg font-semibold text-gray-800 bg-white">Delicious Lunch</p>
@@ -808,6 +816,8 @@ export default async function TirupatiPackageDetailPage({ params }) {
             fill
             className="object-cover"
             sizes="(max-width: 768px) 50vw, 25vw"
+            priority
+            quality={75}
           />
         </div>
         <p className="p-3 text-center text-lg font-semibold text-gray-800 bg-white">Darshan Ticket</p>
@@ -820,6 +830,8 @@ export default async function TirupatiPackageDetailPage({ params }) {
             fill
             className="object-cover"
             sizes="(max-width: 768px) 50vw, 25vw"
+            priority
+            quality={75}
           />
         </div>
         <p className="p-3 text-center text-lg font-semibold text-gray-800 bg-white">Driver & Guide</p>
@@ -835,6 +847,8 @@ export default async function TirupatiPackageDetailPage({ params }) {
             fill
             className="object-cover"
             sizes="(max-width: 768px) 50vw, 25vw"
+            priority
+            quality={75}
           />
         </div>
         <p className="p-3 text-center text-lg font-semibold text-gray-800 bg-white">Fuel Expenses</p>
@@ -847,6 +861,8 @@ export default async function TirupatiPackageDetailPage({ params }) {
             fill
             className="object-cover"
             sizes="(max-width: 768px) 50vw, 25vw"
+            priority
+            quality={75}
           />
         </div>
         <p className="p-3 text-center text-lg font-semibold text-gray-800 bg-white">Toll & Permit</p>
@@ -859,6 +875,8 @@ export default async function TirupatiPackageDetailPage({ params }) {
             fill
             className="object-cover"
             sizes="(max-width: 768px) 50vw, 25vw"
+            priority
+            quality={75}
           />
         </div>
         <p className="p-3 text-center text-lg font-semibold text-gray-800 bg-white">Driver & Guide</p>
@@ -871,6 +889,8 @@ export default async function TirupatiPackageDetailPage({ params }) {
             fill
             className="object-cover"
             sizes="(max-width: 768px) 50vw, 25vw"
+            priority
+            quality={75}
           />
         </div>
         <p className="p-3 text-center text-lg font-semibold text-gray-800 bg-white">Sanitised Cab</p>
@@ -974,6 +994,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
                             fill
                             style={{ objectFit: "cover" }}
                             className="transition-transform duration-500 group-hover:scale-110"
+                            priority  
                           />
                           {/* Image Overlay */}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -1012,6 +1033,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
                         fill
                         style={{ objectFit: "cover" }}
                         className="transition-transform duration-300 hover:scale-105"
+                        priority
                       />
                     </div>
                   </CardHeader>

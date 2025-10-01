@@ -37,6 +37,7 @@ function Card({ name, image, extra }) {
         width={400}
         height={250}
         className="w-full h-48 object-cover"
+        priority
       />
       {extra && (
         <span className="absolute top-2 right-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-md">

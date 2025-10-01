@@ -13,6 +13,7 @@ export default function UnderConstructionPage() {
             fill
             style={{ objectFit: "contain" }}
             className="animate-bounce-slow"
+            priority
           />
         </div>
         <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">Page Under Construction</h1>
