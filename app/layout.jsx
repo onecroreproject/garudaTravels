@@ -19,8 +19,11 @@ const poppins = Poppins({
 })
 
 export const metadata = {
-  title: 'Chennai to Tirupati Tour Packages | Tirupati Tours | Temple Tour Packages - Garuda Tours & Travels',
-  description: 'Explore affordable Chennai to Tirupati tour packages with Garuda Tours & Travels. Hassle-free temple visits, VIP darshan, and customized itineraries. Book your Tirupati temple tour today!',
+  title: 'Chennai to Tirupati Packages | Tirupati Packages | Temple Tour Packages - Garuda Tours & Travels',
+  description: 'Explore affordable Chennai to Tirupati tour packages with Garuda Tours & Travels. Hassle-free temple visits, VIP darshan, and customized itineraries. Book your Tirupati package from chennai today!',
+  verification: {
+    google: "K7ewXgKXvbit-3awn54q3G0xI8ESfogL5ljIuwXoJDQ"
+  }
 }
 
 export default function RootLayout({ children }) {
