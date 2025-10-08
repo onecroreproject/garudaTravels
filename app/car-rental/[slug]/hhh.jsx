@@ -20,7 +20,7 @@ function CarRentalPage() {
                 <div className="container mx-auto text-center">
                     {/* Title */}
                     <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-3">
-                        Kelomeater Based Car Rental Service
+                        Kilometer Based Car Rental Service
                     </h1>
 
                     {/* Breadcrumb */}
