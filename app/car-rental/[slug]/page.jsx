@@ -199,8 +199,7 @@ export default async function CarRentalPage({ params }) {
                         <img
                           src={car.imageUrl}
                           alt={car.name}
-                          className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-                        />
+                          className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"/>
                         {/* Rating Badge */}
                         {car.rating && (
                           <div className="absolute top-3 right-3 bg-gradient-to-r from-yellow-400 to-orange-500 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1 shadow-lg">
