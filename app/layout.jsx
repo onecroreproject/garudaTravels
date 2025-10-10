@@ -25,7 +25,7 @@ export const metadata = {
     google: "K7ewXgKXvbit-3awn54q3G0xI8ESfogL5ljIuwXoJDQ"
   },
   icons: {
-    icon: "/favicon.ico", 
+    icon: '/favicon.ico',
   },
 }
 
@@ -34,6 +34,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         {/* Preload hero image for better LCP */}
+
+        <link rel="icon" href="/icon.png" sizes='any'/>
+
         <link
           rel="preload"
           href="/images/slider3.webp"
