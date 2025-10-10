@@ -23,7 +23,10 @@ export const metadata = {
   description: 'Explore affordable Chennai to Tirupati tour packages with Garuda Tours & Travels. Hassle-free temple visits, VIP darshan, and customized itineraries. Book your Tirupati package from chennai today!',
   verification: {
     google: "K7ewXgKXvbit-3awn54q3G0xI8ESfogL5ljIuwXoJDQ"
-  }
+  },
+  icons: {
+    icon: "/favicon.ico", 
+  },
 }
 
 export default function RootLayout({ children }) {
