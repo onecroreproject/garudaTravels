@@ -18,11 +18,11 @@ export async function POST(request) {
     const formData = await request.formData()
     const file = formData.get("file")
 
-    if (!file || !(file instanceof File)) {
+    if (!file || typeof file !== "object" || !file.arrayBuffer) {
       return NextResponse.json(
-        { error: "No file provided" },
+        { error: "No valid file provided" },
         { status: 400 }
-      )
+      );
     }
 
     const bucket = "garudatours-nextjs"
@@ -49,12 +49,12 @@ export async function POST(request) {
       const url = `http://${process.env.MINIO_ENDPOINT || "minio.thereciprocalsolutions.com"}:${process.env.MINIO_PORT || "9880"}/${bucket}/${objectName}`
 
       // Clean up temp file
-      await unlink(tempFilePath).catch(() => {})
+      await unlink(tempFilePath).catch(() => { })
 
       return NextResponse.json({ url })
     } catch (uploadError) {
       // Clean up temp file on error
-      await unlink(tempFilePath).catch(() => {})
+      await unlink(tempFilePath).catch(() => { })
       throw uploadError
     }
   } catch (err) {
