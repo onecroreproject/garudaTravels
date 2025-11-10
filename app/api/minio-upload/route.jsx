@@ -46,7 +46,7 @@ export async function POST(request) {
       // Upload to MinIO
       await minioClient.fPutObject(bucket, objectName, tempFilePath)
 
-      const url = `http://${process.env.MINIO_ENDPOINT || "minio.thereciprocalsolutions.com"}:${process.env.MINIO_PORT || "9880"}/${bucket}/${objectName}`
+      const url = `http://${process.env.MINIO_ENDPOINT || "minio.thereciprocalsolutions.com"}/${bucket}/${objectName}`
 
       // Clean up temp file
       await unlink(tempFilePath).catch(() => { })
