@@ -1,7 +1,14 @@
-import { doc, getDoc, getDocs, collection, query, where } from "firebase/firestore"
-import { db } from "@/lib/firebase"
-import BookingForm from "@/components/booking-form"
-import Link from "next/link"
+import {
+  doc,
+  getDoc,
+  getDocs,
+  collection,
+  query,
+  where,
+} from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import BookingForm from "@/components/booking-form";
+import Link from "next/link";
 import {
   ChevronRight,
   MapPin,
@@ -23,84 +30,127 @@ import {
   IndianRupee,
   Eye,
   Headset,
-} from "lucide-react"
-import Header from "@/components/header"
-import Footer from "@/components/footer"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+} from "lucide-react";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import NavagrahaMarquee from "@/components/NavagrahaMarquee";
 
 // Generate dynamic metadata
 export async function generateMetadata({ params }) {
-  const { slug } = params
-  
+  const { slug } = await params;
+
   try {
-    const docRef = doc(db, "templePackages", slug)
-    const docSnap = await getDoc(docRef)
-    
+    const docRef = doc(db, "templePackages", slug);
+    const docSnap = await getDoc(docRef);
+
     if (docSnap.exists()) {
-      const data = docSnap.data()
-      const seoData = data.seoData || {}
-      
+      const data = docSnap.data();
+      const seoData = data.seoData || {};
+
       return {
-        title: seoData.pageTitle || data.title || "Temple Tour Package | Garuda Tours and Travels",
-        description: seoData.metaDescription || data.subtitle || "Book your temple tour package with Garuda Tours and Travels. Professional service, expert guides, and spiritual journey.",
-        keywords: seoData.metaKeywords || "temple tour, spiritual journey, south india temples, garuda tours, travel",
+        title:
+          seoData.pageTitle ||
+          data.title ||
+          "Temple Tour Package | Garuda Tours and Travels",
+        description:
+          seoData.metaDescription ||
+          data.subtitle ||
+          "Book your temple tour package with Garuda Tours and Travels. Professional service, expert guides, and spiritual journey.",
+        keywords:
+          seoData.metaKeywords ||
+          "temple tour, spiritual journey, south india temples, garuda tours, travel",
         openGraph: {
-          title: seoData.ogTitle || seoData.pageTitle || data.title || "Temple Tour Package | Garuda Tours and Travels",
-          description: seoData.ogDescription || seoData.metaDescription || data.subtitle || "Book your temple tour package with Garuda Tours and Travels",
-          images: seoData.ogImage ? [seoData.ogImage] : (data.images?.[0] ? [data.images[0]] : []),
-          type: 'website',
+          title:
+            seoData.ogTitle ||
+            seoData.pageTitle ||
+            data.title ||
+            "Temple Tour Package | Garuda Tours and Travels",
+          description:
+            seoData.ogDescription ||
+            seoData.metaDescription ||
+            data.subtitle ||
+            "Book your temple tour package with Garuda Tours and Travels",
+          images: seoData.ogImage
+            ? [seoData.ogImage]
+            : data.images?.[0]
+            ? [data.images[0]]
+            : [],
+          type: "website",
         },
         twitter: {
-          card: 'summary_large_image',
-          title: seoData.ogTitle || seoData.pageTitle || data.title || "Temple Tour Package | Garuda Tours and Travels",
-          description: seoData.ogDescription || seoData.metaDescription || data.subtitle || "Book your temple tour package with Garuda Tours and Travels",
-          images: seoData.ogImage ? [seoData.ogImage] : (data.images?.[0] ? [data.images[0]] : []),
+          card: "summary_large_image",
+          title:
+            seoData.ogTitle ||
+            seoData.pageTitle ||
+            data.title ||
+            "Temple Tour Package | Garuda Tours and Travels",
+          description:
+            seoData.ogDescription ||
+            seoData.metaDescription ||
+            data.subtitle ||
+            "Book your temple tour package with Garuda Tours and Travels",
+          images: seoData.ogImage
+            ? [seoData.ogImage]
+            : data.images?.[0]
+            ? [data.images[0]]
+            : [],
         },
-      }
+      };
     }
   } catch (error) {
-    console.error("Error generating metadata:", error)
+    console.error("Error generating metadata:", error);
   }
-  
+
   // Fallback metadata
   return {
     title: "Temple Tour Package | Garuda Tours and Travels",
-    description: "Book your temple tour package with Garuda Tours and Travels. Professional service, expert guides, and spiritual journey.",
-    keywords: "temple tour, spiritual journey, south india temples, garuda tours, travel",
-  }
+    description:
+      "Book your temple tour package with Garuda Tours and Travels. Professional service, expert guides, and spiritual journey.",
+    keywords:
+      "temple tour, spiritual journey, south india temples, garuda tours, travel",
+  };
 }
 
 // This is a Server Component, so it can directly fetch data
 export default async function TemplePackagePage({ params }) {
-  const { slug } = params
+  const { slug } = await params;
 
-  let packageData = null
-  let error = null
+  let packageData = null;
+  let error = null;
 
   try {
     // Fetch current package data
-    const docRef = doc(db, "templePackages", slug)
-    const docSnap = await getDoc(docRef)
+    const docRef = doc(db, "templePackages", slug);
+    const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      const rawData = docSnap.data()
+      const rawData = docSnap.data();
       // Convert Firebase timestamps and other complex objects to plain objects
       packageData = {
         id: docSnap.id,
         ...rawData,
-        createdAt: rawData.createdAt ? rawData.createdAt.toDate().toISOString() : null,
-        updatedAt: rawData.updatedAt ? rawData.updatedAt.toDate().toISOString() : null,
-      }
+        createdAt: rawData.createdAt
+          ? rawData.createdAt.toDate().toISOString()
+          : null,
+        updatedAt: rawData.updatedAt
+          ? rawData.updatedAt.toDate().toISOString()
+          : null,
+      };
     } else {
-      error = "Temple package not found or inactive."
+      error = "Temple package not found or inactive.";
     }
   } catch (err) {
-    console.error("Error fetching temple package:", err)
-    error = "Failed to load temple package details. Please try again later."
+    console.error("Error fetching temple package:", err);
+    error = "Failed to load temple package details. Please try again later.";
   }
-
 
   const renderIcon = (iconName) => {
     const iconMap = {
@@ -122,10 +172,10 @@ export default async function TemplePackagePage({ params }) {
       IndianRupee,
       Eye,
       Headset,
-    }
-    const IconComponent = iconMap[iconName] || Shield
-    return <IconComponent className="w-8 h-8" />
-  }
+    };
+    const IconComponent = iconMap[iconName] || Shield;
+    return <IconComponent className="w-8 h-8" />;
+  };
 
   if (error) {
     return (
@@ -133,7 +183,9 @@ export default async function TemplePackagePage({ params }) {
         <Header />
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Package Not Found</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              Package Not Found
+            </h2>
             <p className="text-gray-600 mb-6">{error}</p>
             <Link
               href="/"
@@ -145,7 +197,7 @@ export default async function TemplePackagePage({ params }) {
         </div>
         <Footer />
       </div>
-    )
+    );
   }
 
   if (!packageData) {
@@ -153,11 +205,13 @@ export default async function TemplePackagePage({ params }) {
       <div className="min-h-screen bg-gray-50">
         <Header />
         <div className="flex items-center justify-center min-h-[400px]">
-          <p className="text-lg text-gray-700">Loading temple package details...</p>
+          <p className="text-lg text-gray-700">
+            Loading temple package details...
+          </p>
         </div>
         <Footer />
       </div>
-    )
+    );
   }
 
   return (
@@ -208,7 +262,6 @@ export default async function TemplePackagePage({ params }) {
       <section className="bg-orange-50 py-8">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
-
             {/* Left Side - Text */}
             <div className="text-left max-w-2xl">
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
@@ -220,15 +273,24 @@ export default async function TemplePackagePage({ params }) {
                 </p>
               )}
               <div className="flex flex-wrap items-center gap-4">
-                <Badge variant="secondary" className="flex items-center gap-1 px-3 py-1">
+                <Badge
+                  variant="secondary"
+                  className="flex items-center gap-1 px-3 py-1"
+                >
                   <Clock className="w-4 h-4" />
                   {packageData.days} Days
                 </Badge>
-                <Badge variant="outline" className="flex items-center gap-1 px-3 py-1">
+                <Badge
+                  variant="outline"
+                  className="flex items-center gap-1 px-3 py-1"
+                >
                   <MapPin className="w-4 h-4" />
                   Temple Tour
                 </Badge>
-                <Badge variant="outline" className="flex items-center gap-1 px-3 py-1">
+                <Badge
+                  variant="outline"
+                  className="flex items-center gap-1 px-3 py-1"
+                >
                   <Users className="w-4 h-4" />
                   All Group Sizes
                 </Badge>
@@ -241,15 +303,14 @@ export default async function TemplePackagePage({ params }) {
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-3xl transform -rotate-6 group-hover:-rotate-12 transition-transform duration-500"></div>
                 <div className="relative bg-white rounded-3xl shadow-2xl p-6 transform rotate-2 group-hover:rotate-0 transition-transform duration-500 flex justify-center">
-                <img
-                src="/images/2.webp" // static image path
-                alt="Tour Package"
-                className="rounded-lg shadow-lg w-full max-w-md object-cover"
-              />
+                  <img
+                    src="/images/2.webp" // static image path
+                    alt="Tour Package"
+                    className="rounded-lg shadow-lg w-full max-w-md object-cover"
+                  />
                 </div>
               </div>
             </div>
-
 
             {/* <div className="flex justify-center">
               <img
@@ -258,11 +319,9 @@ export default async function TemplePackagePage({ params }) {
                 className="rounded-lg shadow-lg w-full max-w-md object-cover"
               />
             </div> */}
-
           </div>
         </div>
       </section>
-
 
       {/* Image Gallery Section */}
       {packageData.images && packageData.images.length > 0 && (
@@ -270,13 +329,19 @@ export default async function TemplePackagePage({ params }) {
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
               {/* Main Image */}
-              <div className="mb-6">
+              <div className="mb-4">
                 <img
-                  src={packageData.images[0] || "/placeholder.webp?height=400&width=800&query=temple tour"}
+                  src={
+                    packageData.images[0] ||
+                    "/placeholder.webp?height=400&width=800&query=temple tour"
+                  }
                   alt={`${packageData.title} - Main Image`}
                   className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
                 />
               </div>
+
+              {/* Navagraha Marquee Swiper */}
+              <NavagrahaMarquee />
 
               {/* Thumbnail Images */}
               {packageData.images.length > 1 && (
@@ -297,7 +362,9 @@ export default async function TemplePackagePage({ params }) {
                     <div className="flex-shrink-0 w-20 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
                       <div className="text-center">
                         <Eye className="w-4 h-4 mx-auto mb-1 text-gray-600" />
-                        <span className="text-xs text-gray-600">+{packageData.images.length - 6}</span>
+                        <span className="text-xs text-gray-600">
+                          +{packageData.images.length - 6}
+                        </span>
                       </div>
                     </div>
                   )}
@@ -327,34 +394,42 @@ export default async function TemplePackagePage({ params }) {
                     Package Overview
                   </h2>
                   <div className="space-y-4">
-                    <div 
-                        className="text-gray-700 leading-relaxed whitespace-pre-line"
-                        dangerouslySetInnerHTML={{ __html: packageData.content || "" }}
+                    <div
+                      className="text-gray-700 leading-relaxed whitespace-pre-line"
+                      dangerouslySetInnerHTML={{
+                        __html: packageData.content || "",
+                      }}
                     />
                   </div>
                 </div>
               )}
 
               {/* Tour Highlights */}
-              {packageData.tourHighlights && packageData.tourHighlights.length > 0 && (
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-                    <Star className="w-6 h-6 text-yellow-500" />
-                    Tour Highlights
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {packageData.tourHighlights.map((highlight, index) => (
-                      <div key={highlight.id || index} className="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
-                        <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                        <div 
-                          className="text-gray-700 leading-relaxed whitespace-pre-line"
-                          dangerouslySetInnerHTML={{ __html: highlight.text || "" }}
-                        />
-                      </div>
-                    ))}
+              {packageData.tourHighlights &&
+                packageData.tourHighlights.length > 0 && (
+                  <div className="bg-white rounded-lg shadow-sm p-6">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                      <Star className="w-6 h-6 text-yellow-500" />
+                      Tour Highlights
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {packageData.tourHighlights.map((highlight, index) => (
+                        <div
+                          key={highlight.id || index}
+                          className="flex items-start gap-3 p-3 bg-green-50 rounded-lg"
+                        >
+                          <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                          <div
+                            className="text-gray-700 leading-relaxed whitespace-pre-line"
+                            dangerouslySetInnerHTML={{
+                              __html: highlight.text || "",
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
               {/* Temple List */}
               {packageData.templeList && packageData.templeList.length > 0 && (
@@ -376,11 +451,15 @@ export default async function TemplePackagePage({ params }) {
                             className="w-full h-60 object-cover rounded-lg mb-3"
                           />
                         )}
-                        <h4 className="font-semibold text-gray-800 mb-2">{temple.name}</h4>
+                        <h4 className="font-semibold text-gray-800 mb-2">
+                          {temple.name}
+                        </h4>
                         {temple.description && (
-                          <div 
+                          <div
                             className="text-sm text-gray-600 leading-relaxed whitespace-pre-line"
-                            dangerouslySetInnerHTML={{ __html: temple.description || "" }}
+                            dangerouslySetInnerHTML={{
+                              __html: temple.description || "",
+                            }}
                           />
                         )}
                       </div>
@@ -390,68 +469,86 @@ export default async function TemplePackagePage({ params }) {
               )}
 
               {/* Itinerary */}
-              {packageData.itineraries && packageData.itineraries.length > 0 && (
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-                    <Route className="w-6 h-6 text-blue-600" />
-                    Detailed Itinerary
-                  </h2>
-                  <div className="space-y-4">
-                    {packageData.itineraries.map((item, index) => (
-                      <div key={item.id || index} className="flex gap-4 p-4 bg-blue-50 rounded-lg">
-                        <div className="flex-shrink-0">
-                          <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
-                            {index + 1}
+              {packageData.itineraries &&
+                packageData.itineraries.length > 0 && (
+                  <div className="bg-white rounded-lg shadow-sm p-6">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                      <Route className="w-6 h-6 text-blue-600" />
+                      Detailed Itinerary
+                    </h2>
+                    <div className="space-y-4">
+                      {packageData.itineraries.map((item, index) => (
+                        <div
+                          key={item.id || index}
+                          className="flex gap-4 p-4 bg-blue-50 rounded-lg"
+                        >
+                          <div className="flex-shrink-0">
+                            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                              {index + 1}
+                            </div>
+                          </div>
+                          <div className="flex-1">
+                            <div
+                              className="text-gray-700 leading-relaxed whitespace-pre-line"
+                              dangerouslySetInnerHTML={{
+                                __html: item.text || "",
+                              }}
+                            />
                           </div>
                         </div>
-                        <div className="flex-1">
-                          <div 
-                            className="text-gray-700 leading-relaxed whitespace-pre-line"
-                            dangerouslySetInnerHTML={{ __html: item.text || "" }}
-                          />
-                        </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
               {/* Sightseeing Places */}
-              {packageData.sightseeingPlaces && packageData.sightseeingPlaces.length > 0 && (
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-                    <Camera className="w-6 h-6 text-purple-600" />
-                    Sightseeing Places
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {packageData.sightseeingPlaces.map((place, index) => (
-                      <div
-                        key={place.id || index}
-                        className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
-                      >
-                        <h4 className="font-semibold text-gray-800 mb-2">{place.name}</h4>
-                        {place.description && (
-                          <div 
-                            className="text-sm text-gray-600 leading-relaxed whitespace-pre-line"
-                            dangerouslySetInnerHTML={{ __html: place.description || "" }}
-                          />
-                        )}
-                      </div>
-                    ))}
+              {packageData.sightseeingPlaces &&
+                packageData.sightseeingPlaces.length > 0 && (
+                  <div className="bg-white rounded-lg shadow-sm p-6">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                      <Camera className="w-6 h-6 text-purple-600" />
+                      Sightseeing Places
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {packageData.sightseeingPlaces.map((place, index) => (
+                        <div
+                          key={place.id || index}
+                          className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+                        >
+                          <h4 className="font-semibold text-gray-800 mb-2">
+                            {place.name}
+                          </h4>
+                          {place.description && (
+                            <div
+                              className="text-sm text-gray-600 leading-relaxed whitespace-pre-line"
+                              dangerouslySetInnerHTML={{
+                                __html: place.description || "",
+                              }}
+                            />
+                          )}
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
               {/* Additional Sections */}
               {packageData.sections && packageData.sections.length > 0 && (
                 <div className="space-y-6">
                   {packageData.sections.map((section, index) => (
-                    <div key={section.id || index} className="bg-white rounded-lg shadow-sm p-6">
-                      <h2 className="text-2xl font-bold text-gray-800 mb-4">{section.title}</h2>
+                    <div
+                      key={section.id || index}
+                      className="bg-white rounded-lg shadow-sm p-6"
+                    >
+                      <h2 className="text-2xl font-bold text-gray-800 mb-4">
+                        {section.title}
+                      </h2>
                       <div className="text-gray-700 leading-relaxed">
-                        <div 
+                        <div
                           className="whitespace-pre-line"
-                          dangerouslySetInnerHTML={{ __html: section.content || "" }}
+                          dangerouslySetInnerHTML={{
+                            __html: section.content || "",
+                          }}
                         />
                       </div>
                     </div>
@@ -470,11 +567,16 @@ export default async function TemplePackagePage({ params }) {
                     </h3>
                     <ul className="space-y-3">
                       {packageData.includes.map((item, index) => (
-                        <li key={item.id || index} className="flex items-start gap-3">
+                        <li
+                          key={item.id || index}
+                          className="flex items-start gap-3"
+                        >
                           <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                          <div 
+                          <div
                             className="text-sm text-gray-700 whitespace-pre-line"
-                            dangerouslySetInnerHTML={{ __html: item.text || "" }}
+                            dangerouslySetInnerHTML={{
+                              __html: item.text || "",
+                            }}
                           />
                         </li>
                       ))}
@@ -491,11 +593,16 @@ export default async function TemplePackagePage({ params }) {
                     </h3>
                     <ul className="space-y-3">
                       {packageData.excludes.map((item, index) => (
-                        <li key={item.id || index} className="flex items-start gap-3">
+                        <li
+                          key={item.id || index}
+                          className="flex items-start gap-3"
+                        >
                           <XCircle className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
-                          <div 
+                          <div
                             className="text-sm text-gray-700 whitespace-pre-line"
-                            dangerouslySetInnerHTML={{ __html: item.text || "" }}
+                            dangerouslySetInnerHTML={{
+                              __html: item.text || "",
+                            }}
                           />
                         </li>
                       ))}
@@ -505,25 +612,33 @@ export default async function TemplePackagePage({ params }) {
               </div>
 
               {/* Important Notes */}
-              {packageData.importantNotes && packageData.importantNotes.length > 0 && (
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-                  <h3 className="text-xl font-bold text-yellow-800 mb-4 flex items-center gap-2">
-                    <Info className="w-5 h-5" />
-                    Important Notes
-                  </h3>
-                  <ul className="space-y-3">
-                    {packageData.importantNotes.map((note, index) => (
-                      <li key={note.id || index} className="flex items-start gap-3">
-                        <span className="text-yellow-600 mt-1 font-bold">•</span>
-                        <div 
-                          className="text-sm text-gray-700 whitespace-pre-line"
-                          dangerouslySetInnerHTML={{ __html: note.text || "" }}
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+              {packageData.importantNotes &&
+                packageData.importantNotes.length > 0 && (
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                    <h3 className="text-xl font-bold text-yellow-800 mb-4 flex items-center gap-2">
+                      <Info className="w-5 h-5" />
+                      Important Notes
+                    </h3>
+                    <ul className="space-y-3">
+                      {packageData.importantNotes.map((note, index) => (
+                        <li
+                          key={note.id || index}
+                          className="flex items-start gap-3"
+                        >
+                          <span className="text-yellow-600 mt-1 font-bold">
+                            •
+                          </span>
+                          <div
+                            className="text-sm text-gray-700 whitespace-pre-line"
+                            dangerouslySetInnerHTML={{
+                              __html: note.text || "",
+                            }}
+                          />
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
               {/* FAQs */}
               {packageData.faqs && packageData.faqs.length > 0 && (
@@ -534,17 +649,25 @@ export default async function TemplePackagePage({ params }) {
                   </h2>
                   <Accordion type="single" collapsible className="w-full">
                     {packageData.faqs.map((faq, index) => (
-                      <AccordionItem key={faq.id || index} value={`item-${index}`} className="border-b border-gray-200">
+                      <AccordionItem
+                        key={faq.id || index}
+                        value={`item-${index}`}
+                        className="border-b border-gray-200"
+                      >
                         <AccordionTrigger className="text-left hover:no-underline py-4">
-                          <div 
+                          <div
                             className="text-base font-bold text-gray-800 whitespace-pre-line"
-                            dangerouslySetInnerHTML={{ __html: faq.question || "" }}
+                            dangerouslySetInnerHTML={{
+                              __html: faq.question || "",
+                            }}
                           />
                         </AccordionTrigger>
                         <AccordionContent className="pb-4">
                           <div
                             className="text-gray-600 leading-relaxed whitespace-pre-line"
-                            dangerouslySetInnerHTML={{ __html: faq.answer || "" }}
+                            dangerouslySetInnerHTML={{
+                              __html: faq.answer || "",
+                            }}
                           />
                         </AccordionContent>
                       </AccordionItem>
@@ -556,18 +679,23 @@ export default async function TemplePackagePage({ params }) {
 
             {/* Right Sidebar - 1/3 width */}
             <div className="space-y-6">
-
               {/* Quick Info */}
               <div className="bg-white rounded-lg shadow-sm p-6">
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Quick Information</h3>
+                <h3 className="text-xl font-bold text-gray-800 mb-4">
+                  Quick Information
+                </h3>
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
                       <Clock className="w-5 h-5 text-blue-600" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-800">Duration</p>
-                      <p className="text-sm text-gray-600">{packageData.days} Days</p>
+                      <p className="text-sm font-medium text-gray-800">
+                        Duration
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        {packageData.days} Days
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -576,7 +704,9 @@ export default async function TemplePackagePage({ params }) {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-gray-800">Type</p>
-                      <p className="text-sm text-gray-600">Temple Tour Package</p>
+                      <p className="text-sm text-gray-600">
+                        Temple Tour Package
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -584,7 +714,9 @@ export default async function TemplePackagePage({ params }) {
                       <Users className="w-5 h-5 text-green-600" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-800">Group Size</p>
+                      <p className="text-sm font-medium text-gray-800">
+                        Group Size
+                      </p>
                       <p className="text-sm text-gray-600">Flexible</p>
                     </div>
                   </div>
@@ -593,7 +725,9 @@ export default async function TemplePackagePage({ params }) {
                       <Calendar className="w-5 h-5 text-purple-600" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-800">Availability</p>
+                      <p className="text-sm font-medium text-gray-800">
+                        Availability
+                      </p>
                       <p className="text-sm text-gray-600">24/7</p>
                     </div>
                   </div>
@@ -602,33 +736,42 @@ export default async function TemplePackagePage({ params }) {
 
               {/* Contact Card */}
               <div className="bg-white rounded-lg shadow-sm p-6">
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Need Help?</h3>
+                <h3 className="text-xl font-bold text-gray-800 mb-4">
+                  Need Help?
+                </h3>
                 <p className="text-sm text-gray-600 mb-4">
-                  Have questions about this temple tour package? Our travel experts are here to help!
+                  Have questions about this temple tour package? Our travel
+                  experts are here to help!
                 </p>
                 <div className="space-y-3">
                   <a href="tel:9840789844">
-
-                    <Button variant="outline" className="w-full justify-start hover:bg-blue-50">
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start hover:bg-blue-50"
+                    >
                       <Phone className="w-4 h-4 mr-2" />
                       Call Us
                     </Button>
                   </a>
                   <a href="mail:garudattd1@gmail.com">
-                    <Button variant="outline" className="w-full justify-start hover:bg-blue-50">
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start hover:bg-blue-50"
+                    >
                       <Mail className="w-4 h-4 mr-2" />
                       Email Us
                     </Button>
-
                   </a>
 
                   <a href="tel:9840789857">
-                    <Button variant="outline" className="w-full justify-start hover:bg-blue-50">
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start hover:bg-blue-50"
+                    >
                       <MessageCircle className="w-4 h-4 mr-2" />
                       WhatsApp
                     </Button>
                   </a>
-
                 </div>
               </div>
               {/* Car Prices */}
@@ -644,7 +787,9 @@ export default async function TemplePackagePage({ params }) {
                         key={carPrice.id || index}
                         className="flex justify-between items-center p-3 bg-gray-50 rounded-lg"
                       >
-                        <span className="font-medium text-gray-800 text-sm">{carPrice.carType}</span>
+                        <span className="font-medium text-gray-800 text-sm">
+                          {carPrice.carType}
+                        </span>
                         <span className="flex items-center gap-1 font-bold text-blue-600">
                           <IndianRupee className="w-4 h-4" />
                           {Number.parseInt(carPrice.price).toLocaleString()}
@@ -656,14 +801,16 @@ export default async function TemplePackagePage({ params }) {
                     <p className="text-xs text-gray-500 mb-3 text-center">
                       * Prices may vary based on season and availability
                     </p>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700" size="lg">
+                    <Button
+                      className="w-full bg-blue-600 hover:bg-blue-700"
+                      size="lg"
+                    >
                       <Phone className="w-4 h-4 mr-2" />
                       Book Now
                     </Button>
                   </div>
                 </div>
               )}
-
             </div>
           </div>
         </div>
@@ -717,41 +864,46 @@ export default async function TemplePackagePage({ params }) {
       </section> */}
 
       {/* Why Choose Us Section */}
-      {packageData.whyChooseUsItems && packageData.whyChooseUsItems.length > 0 && (
-        <section className="bg-orange-50 py-12">
-          <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto">
-              <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">{packageData.sectionTitles?.whyChooseUsItems || "Why Choose Our Temple Tours"}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {packageData.whyChooseUsItems.map((item, index) => (
-                  <div
-                    key={index}
-                    className="text-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
-                  >
-                    <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <div className="text-orange-600">{renderIcon(item.iconName)}</div>
+      {packageData.whyChooseUsItems &&
+        packageData.whyChooseUsItems.length > 0 && (
+          <section className="bg-orange-50 py-12">
+            <div className="container mx-auto px-4">
+              <div className="max-w-6xl mx-auto">
+                <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
+                  {packageData.sectionTitles?.whyChooseUsItems ||
+                    "Why Choose Our Temple Tours"}
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {packageData.whyChooseUsItems.map((item, index) => (
+                    <div
+                      key={index}
+                      className="text-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
+                    >
+                      <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <div className="text-orange-600">
+                          {renderIcon(item.iconName)}
+                        </div>
+                      </div>
+                      <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                        {item.title}
+                      </h3>
+                      {item.description && (
+                        <div
+                          className="text-sm text-gray-600 leading-relaxed whitespace-pre-line"
+                          dangerouslySetInnerHTML={{
+                            __html: item.description || "",
+                          }}
+                        />
+                      )}
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-800 mb-2">{item.title}</h3>
-                    {item.description && (
-                      <div 
-                        className="text-sm text-gray-600 leading-relaxed whitespace-pre-line"
-                        dangerouslySetInnerHTML={{ __html: item.description || "" }}
-                      />
-                    )}
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-      )}
-
-
-
-
+          </section>
+        )}
 
       <Footer />
     </div>
-  )
+  );
 }
-
