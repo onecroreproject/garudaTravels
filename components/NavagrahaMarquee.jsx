@@ -8,6 +8,12 @@ const images = [
   "/images/navagraha2.webp",
   "/images/navagraha3.webp",
   "/images/navagraha4.webp",
+  "/images/navagraha5.webp",
+  "/images/navagraha6.webp",
+  "/images/navagraha7.webp",
+  "/images/navagraha8.webp",
+  "/images/navagraha9.webp",
+
 ]
 
 export default function NavagrahaMarquee() {

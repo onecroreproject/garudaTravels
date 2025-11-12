@@ -1,8 +1,10 @@
-"use client"
+"use client";
 
-import TemplePackageForm from "@/components/temple-package-form"
+import TemplePackageForm from "@/components/temple-package-form";
+
+import { use } from "react";
 
 export default function EditTemplePackagePage({ params }) {
-  const { id } = params
-  return <TemplePackageForm packageId={id} />
+  const { id } = use(params);
+  return <TemplePackageForm packageId={id} />;
 }

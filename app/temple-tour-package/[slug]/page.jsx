@@ -341,7 +341,9 @@ export default async function TemplePackagePage({ params }) {
               </div>
 
               {/* Navagraha Marquee Swiper */}
-              <NavagrahaMarquee />
+              {slug === "chennai-navagraha-temple-tour-package" && (
+                <NavagrahaMarquee />
+              )}
 
               {/* Thumbnail Images */}
               {packageData.images.length > 1 && (
