@@ -40,12 +40,19 @@ const nextConfig = withBundleAnalyzer({
     ];
   },
   webpack: (config, { isServer }) => {
-    // Add a rule to handle source maps
+    // Add a rule to handle source maps with error suppression
     config.module.rules.push({
       test: /\.(js|jsx|ts|tsx)$/,
       enforce: 'pre',
       use: ['source-map-loader'],
+      exclude: /node_modules/,
     });
+
+    // Suppress source map warnings from node_modules
+    config.ignoreWarnings = [
+      /Failed to parse source map/,
+      /ENOENT: no such file or directory/,
+    ];
 
     // Handle critters module
     if (!isServer) {

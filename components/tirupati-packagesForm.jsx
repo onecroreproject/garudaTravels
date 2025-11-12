@@ -14,6 +14,7 @@ import { X } from 'lucide-react'
 import { isAuthenticated } from "@/lib/custom-auth" // Import custom auth check
 import EditableTitle from "@/components/editable-title"
 import RichTextEditor from "@/components/ui/rich-text-editor"
+import { uploadToMinIO } from "@/lib/fileUpload"
 
 // Helper to generate unique IDs for dynamic fields
 const generateUniqueId = () => Math.random().toString(36).substring(2, 15)
@@ -24,10 +25,10 @@ export default function PackageForm({ packageType, packageId }) {
   const [isDirty, setIsDirty] = useState(false)
 
   // Core package fields
-  const [packageUrl, setPackageUrl] = useState("") 
+  const [packageUrl, setPackageUrl] = useState("")
   const [title, setTitle] = useState("")
   const [subtitle, setSubtitle] = useState("")
-  const [packageOrder, setPackageOrder] = useState(1) 
+  const [packageOrder, setPackageOrder] = useState(1)
   const [tripDays, setTripDays] = useState("1")
 
   // Section titles state
@@ -45,18 +46,18 @@ export default function PackageForm({ packageType, packageId }) {
 
   // Image management
   const [images, setImages] = useState([])
-  const [newImageFiles, setNewImageFiles] = useState([]) 
+  const [newImageFiles, setNewImageFiles] = useState([])
 
   // Dynamic sections
-  const [packagesAndCars, setPackagesAndCars] = useState([]) 
+  const [packagesAndCars, setPackagesAndCars] = useState([])
   const [includes, setIncludes] = useState([])
   const [passengerNotes, setPassengerNotes] = useState([])
-  const [sightseeingPlaces, setSightseeingPlaces] = useState([]) 
+  const [sightseeingPlaces, setSightseeingPlaces] = useState([])
   // Updated structure for carPrices
-  const [carPrices, setCarPrices] = useState([]) 
-  const [sections, setSections] = useState([]) 
-  const [faqs, setFaqs] = useState([]) 
-  const [tables, setTables] = useState([]) 
+  const [carPrices, setCarPrices] = useState([])
+  const [sections, setSections] = useState([])
+  const [faqs, setFaqs] = useState([])
+  const [tables, setTables] = useState([])
 
   // SEO fields
   const [seoData, setSeoData] = useState({
@@ -69,9 +70,9 @@ export default function PackageForm({ packageType, packageId }) {
   })
 
   const [maleDressCodeImages, setMaleDressCodeImages] = useState([])
-  const [newMaleDressCodeFiles, setNewMaleDressCodeFiles] = useState([]) 
-  const [femaleDressCodeImages, setFemaleDressCodeImages] = useState([]) 
-  const [newFemaleDressCodeFiles, setNewFemaleDressCodeFiles] = useState([]) 
+  const [newMaleDressCodeFiles, setNewMaleDressCodeFiles] = useState([])
+  const [femaleDressCodeImages, setFemaleDressCodeImages] = useState([])
+  const [newFemaleDressCodeFiles, setNewFemaleDressCodeFiles] = useState([])
 
   const [loading, setLoading] = useState(false)
   const [initialLoading, setInitialLoading] = useState(true)
@@ -379,9 +380,9 @@ export default function PackageForm({ packageType, packageId }) {
       prev.map((pkg) =>
         pkg.id === packageIdToUpdate
           ? {
-              ...pkg,
-              cars: pkg.cars.map((car) => (car.id === carIdToUpdate ? { ...car, [field]: value } : car)),
-            }
+            ...pkg,
+            cars: pkg.cars.map((car) => (car.id === carIdToUpdate ? { ...car, [field]: value } : car)),
+          }
           : pkg,
       ),
     )
@@ -443,9 +444,9 @@ export default function PackageForm({ packageType, packageId }) {
       prev.map((car) =>
         car.id === carId
           ? {
-              ...car,
-              prices: car.prices.map((price) => (price.id === priceId ? { ...price, [field]: value } : price)),
-            }
+            ...car,
+            prices: car.prices.map((price) => (price.id === priceId ? { ...price, [field]: value } : price)),
+          }
           : car,
       ),
     )
@@ -581,9 +582,9 @@ export default function PackageForm({ packageType, packageId }) {
       prev.map((section) =>
         section.id === sectionId
           ? {
-              ...section,
-              listInfo: section.listInfo.map((item) => (item.id === listInfoId ? { ...item, text: newText } : item)),
-            }
+            ...section,
+            listInfo: section.listInfo.map((item) => (item.id === listInfoId ? { ...item, text: newText } : item)),
+          }
           : section,
       ),
     )
@@ -646,140 +647,130 @@ export default function PackageForm({ packageType, packageId }) {
   }, [isDirty, router])
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    console.log("Form submission started.")
+    e.preventDefault();
+    setLoading(true);
+    console.log("Form submission started.");
 
     if (!packageUrl) {
       toast({
         title: "Validation Error",
-        description: "Package URL is .",
+        description: "Package URL is required.",
         variant: "destructive",
-      })
-      setLoading(false)
-      console.error("Validation failed: Package URL is empty.")
-      return
+      });
+      setLoading(false);
+      console.error("Validation failed: Package URL is empty.");
+      return;
     }
 
     try {
-      // 1. Upload main package images to Firebase Storage
-      const uploadedImageUrls = []
+      const uploadedImageUrls = [];
       const folderName =
         packageUrl
           .toLowerCase()
           .replace(/[^a-z0-9]+/g, "-")
-          .replace(/^-|-$/g, "") || "untitled-package"
-      const storagePathPrefix = `${packageType}/${folderName}`
-      console.log(`Storage path prefix for main images: ${storagePathPrefix}`)
+          .replace(/^-|-$/g, "") || "untitled-package";
 
+      const storagePathPrefix = `${packageType}/${folderName}`;
+      console.log(`Storage path prefix for main images: ${storagePathPrefix}`);
+
+      // 1. Upload Main Images to MinIO
       for (const file of newImageFiles) {
-        console.log(`Attempting to upload main file: ${file.name}`)
-        const imageRef = ref(storage, `${storagePathPrefix}/${file.name}`)
-        await uploadBytes(imageRef, file)
-        const url = await getDownloadURL(imageRef)
-        uploadedImageUrls.push(url)
-        console.log(`Uploaded ${file.name}, URL: ${url}`)
+        console.log(`Uploading main file: ${file.name}`);
+        const url = await uploadToMinIO(file, `${storagePathPrefix}`);
+        uploadedImageUrls.push(url);
+        console.log(`Uploaded ${file.name}, URL: ${url}`);
       }
 
-      // Combine existing main images with newly uploaded ones
-      const allImageUrls = [...images, ...uploadedImageUrls]
-      console.log("All main image URLs (existing + new):", allImageUrls)
+      const allImageUrls = [...images, ...uploadedImageUrls];
+      console.log("All main image URLs:", allImageUrls);
 
-      // 2. Process car prices, including image uploads for each car
+      // 2. Process Car Prices and Upload Images
       const processedCarPrices = await Promise.all(
         carPrices.map(async (car) => {
-          let carImageUrl = car.imageUrl // Start with existing URL
+          let carImageUrl = car.imageUrl;
+
           if (car.imageFile) {
-            // Only upload if a new file is selected
-            const carImageRef = ref(storage, `${storagePathPrefix}/cars/${car.imageFile.name}`)
-            await uploadBytes(carImageRef, car.imageFile)
-            carImageUrl = await getDownloadURL(carImageRef)
-            console.log(`Uploaded car image ${car.imageFile.name}, URL: ${carImageUrl}`)
+            const url = await uploadToMinIO(
+              car.imageFile,
+              `${storagePathPrefix}/cars`
+            );
+            carImageUrl = url;
+            console.log(`Uploaded car image ${car.imageFile.name}, URL: ${carImageUrl}`);
           }
+
           return {
             id: car.id,
             carName: car.carName,
-            imageUrl: carImageUrl, // Store the final image URL
+            imageUrl: carImageUrl,
             prices: car.prices,
-            includes: car.includes, // Include new includes field
-            excludes: car.excludes, // Include new excludes field
-          }
-        }),
-      )
-      console.log("Processed car prices:", processedCarPrices)
+            includes: car.includes,
+            excludes: car.excludes,
+          };
+        })
+      );
 
-      // New: Process sightseeing places, including image uploads for each place
+      // 3. Sightseeing Places
       const processedSightseeingPlaces = await Promise.all(
         sightseeingPlaces.map(async (place) => {
-          let placeImageUrl = place.imageUrl // Start with existing URL
+          let placeImageUrl = place.imageUrl;
           if (place.imageFile) {
-            // Only upload if a new file is selected
-            const placeImageRef = ref(storage, `${storagePathPrefix}/places/${place.imageFile.name}`)
-            await uploadBytes(placeImageRef, place.imageFile)
-            placeImageUrl = await getDownloadURL(placeImageRef)
-            console.log(`Uploaded sightseeing place image ${place.imageFile.name}, URL: ${placeImageUrl}`)
+            const url = await uploadToMinIO(
+              place.imageFile,
+              `${storagePathPrefix}/places`
+            );
+            placeImageUrl = url;
+            console.log(`Uploaded place image ${place.imageFile.name}, URL: ${placeImageUrl}`);
           }
           return {
             id: place.id,
             text: place.text,
-            imageUrl: placeImageUrl, // Store the final image URL
-          }
-        }),
-      )
-      console.log("Processed sightseeing places:", processedSightseeingPlaces)
+            imageUrl: placeImageUrl,
+          };
+        })
+      );
 
-      // New: Process male dress code images
-      const uploadedMaleDressCodeUrls = []
+      // 4. Male Dress Code
+      const uploadedMaleDressCodeUrls = [];
       for (const file of newMaleDressCodeFiles) {
-        console.log(`Attempting to upload male dress code file: ${file.name}`)
-        const imageRef = ref(storage, `${storagePathPrefix}/dress-code/male/${file.name}`)
-        await uploadBytes(imageRef, file)
-        const url = await getDownloadURL(imageRef)
-        uploadedMaleDressCodeUrls.push(url)
-        console.log(`Uploaded male dress code image ${file.name}, URL: ${url}`)
+        const url = await uploadToMinIO(file, `${storagePathPrefix}/dress-code/male`);
+        uploadedMaleDressCodeUrls.push(url);
       }
-      const allMaleDressCodeUrls = [...maleDressCodeImages, ...uploadedMaleDressCodeUrls]
-      console.log("All male dress code image URLs (existing + new):", allMaleDressCodeUrls)
+      const allMaleDressCodeUrls = [...maleDressCodeImages, ...uploadedMaleDressCodeUrls];
 
-      // New: Process female dress code images
-      const uploadedFemaleDressCodeUrls = []
+      // 5. Female Dress Code
+      const uploadedFemaleDressCodeUrls = [];
       for (const file of newFemaleDressCodeFiles) {
-        console.log(`Attempting to upload female dress code file: ${file.name}`)
-        const imageRef = ref(storage, `${storagePathPrefix}/dress-code/female/${file.name}`)
-        await uploadBytes(imageRef, file)
-        const url = await getDownloadURL(imageRef)
-        uploadedFemaleDressCodeUrls.push(url)
-        console.log(`Uploaded female dress code image ${file.name}, URL: ${url}`)
+        const url = await uploadToMinIO(file, `${storagePathPrefix}/dress-code/female`);
+        uploadedFemaleDressCodeUrls.push(url);
       }
-      const allFemaleDressCodeUrls = [...femaleDressCodeImages, ...uploadedFemaleDressCodeUrls]
-      console.log("All female dress code image URLs (existing + new):", allFemaleDressCodeUrls)
+      const allFemaleDressCodeUrls = [...femaleDressCodeImages, ...uploadedFemaleDressCodeUrls];
 
-      // 3. Process sections, including image uploads for each section
+      // 6. Process Sections
       const processedSections = await Promise.all(
         sections.map(async (section) => {
-          let sectionImageUrl = section.imageUrl // Start with existing URL
+          let sectionImageUrl = section.imageUrl;
+
           if (section.hasImage && section.imageFile) {
-            // Only upload if hasImage is true and a new file is selected
-            const sectionImageRef = ref(storage, `${storagePathPrefix}/sections/${section.imageFile.name}`)
-            await uploadBytes(sectionImageRef, section.imageFile)
-            sectionImageUrl = await getDownloadURL(sectionImageRef)
-            console.log(`Uploaded section image ${section.imageFile.name}, URL: ${sectionImageUrl}`)
+            const url = await uploadToMinIO(
+              section.imageFile,
+              `${storagePathPrefix}/sections`
+            );
+            sectionImageUrl = url;
           } else if (!section.hasImage) {
-            // If hasImage is false, clear the image URL
-            sectionImageUrl = ""
+            sectionImageUrl = "";
           }
+
           return {
             id: section.id,
             contentTitle: section.contentTitle,
             contentDescription: section.contentDescription,
-            imageUrl: sectionImageUrl, // Store the final image URL
+            imageUrl: sectionImageUrl,
             listInfo: section.listInfo,
-          }
-        }),
-      )
-      console.log("Processed sections:", processedSections)
+          };
+        })
+      );
 
-      // 4. Prepare package data
+      // 7. Final Data Object
       const packageData = {
         url: packageUrl,
         title,
@@ -791,46 +782,45 @@ export default function PackageForm({ packageType, packageId }) {
         includes,
         passengerNotes,
         sightseeingPlaces: processedSightseeingPlaces,
-        carPrices: processedCarPrices, // Use the processed car prices
-        sections: processedSections, // Use the processed sections
+        carPrices: processedCarPrices,
+        sections: processedSections,
         faqs,
         tables,
         seoData,
         maleDressCodeImages: allMaleDressCodeUrls,
         femaleDressCodeImages: allFemaleDressCodeUrls,
-        sectionTitles, // Add section titles
-        createdAt: isEditMode ? (await getDoc(doc(db, packageType, packageId))).data().createdAt : Timestamp.now(),
+        sectionTitles,
+        createdAt: isEditMode
+          ? (await getDoc(doc(db, packageType, packageId))).data().createdAt
+          : Timestamp.now(),
         updatedAt: Timestamp.now(),
-      }
-      console.log("Prepared package data:", packageData)
+      };
 
-      // 5. Save/Update document in Firestore using packageUrl as document ID
-      const docRef = doc(db, packageType, packageUrl)
-      console.log(`Attempting to save document to Firestore at path: ${packageType}/${packageUrl}`)
-      await setDoc(docRef, packageData) // setDoc handles both create and update
-      console.log("Document successfully saved to Firestore!")
+      // 8. Save to Firestore
+      const docRef = doc(db, packageType, packageUrl);
+      await setDoc(docRef, packageData);
 
       toast({
-        title: "Success! 🎉",
+        title: "Success 🎉",
         description: isEditMode ? "Package updated successfully." : "New package added successfully.",
         variant: "success",
-      })
+      });
 
-      router.push(`/admin/${packageType}`) // Redirect to the list page
+      router.push(`/admin/${packageType}`);
     } catch (err) {
-      console.error("Error saving package:", err)
+      console.error("Error saving package:", err);
       toast({
         title: "Error ❌",
         description: `Failed to save package: ${err.message}`,
         variant: "destructive",
-      })
+      });
     } finally {
-      setLoading(false)
-      console.log("Form submission finished.")
+      setLoading(false);
     }
 
-    setIsDirty(false)
-  }
+    setIsDirty(false);
+  };
+
 
   if (!clientAuthenticated) {
     // Use clientAuthenticated here
@@ -883,11 +873,11 @@ export default function PackageForm({ packageType, packageId }) {
               title={title}
               onTitleChange={(newTitle) => {
                 setTitle(newTitle)
-                  setIsDirty(true)
-                }}
-                placeholder="Eg: Chennai to Tirupati"
+                setIsDirty(true)
+              }}
+              placeholder="Eg: Chennai to Tirupati"
               required={true}
-              />
+            />
 
             {/* Package Subtitle */}
             <div>
