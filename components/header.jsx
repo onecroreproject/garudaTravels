@@ -45,7 +45,10 @@ export function Header() {
           id: doc.id,
           ...doc.data()
         }))
-        setTemplePackages(templeData)
+        // Filter active packages and sort by order field (ascending), with fallback to 999 for items without order
+        const activeTempleData = templeData.filter((pkg) => pkg.isActive !== false && !pkg.isDeleted && !pkg.deletedAt)
+        const sortedTempleData = activeTempleData.sort((a, b) => (a.order || 999) - (b.order || 999))
+        setTemplePackages(sortedTempleData)
       } catch (error) {
         console.error("Error fetching packages:", error)
       } finally {
@@ -80,7 +83,7 @@ export function Header() {
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <a href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity duration-200">
-              <img src="/logo.webp" alt="Garuda Tours Logo" className="h-6 md:h-8 lg:h-10 w-auto" />
+              <img src="/footer-logo.webp" alt="Garuda Tours Logo" className="h-6 md:h-8 lg:h-10 w-auto" />
             </a>
           </div>
 
@@ -96,6 +99,7 @@ export function Header() {
             >
               Home
             </a>
+
             <a 
               href="/about" 
               className={`font-medium transition-colors duration-200 ${
@@ -240,7 +244,7 @@ export function Header() {
                   ? 'text-blue-600 border-b-2 border-blue-600' 
                   : 'text-gray-700 hover:text-blue-600'
               }`}>
-                Car Rental Packages
+                Outstation Car Rental Packages
                 <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
               </button>
               <div className="absolute top-full left-0 mt-2 w-80 max-w-[90vw] sm:w-80 bg-[#f5ece1] rounded-lg shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
@@ -520,7 +524,7 @@ export function Header() {
                         : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
                     }`}
                   >
-                    Car Rental Packages
+                Outstation Car Rental Packages
                     <ChevronDown
                       className={`h-4 w-4 transition-transform duration-200 ${mobileDropdowns.carRental ? "rotate-180" : ""}`}
                     />
@@ -573,7 +577,7 @@ export function Header() {
                         templePackages.map((pkg) => (
                           <a
                             key={pkg.id}
-                            href={`/temple-tour-package/${pkg.id}`}
+                            href={`/temple-tour-package/${pkg.url || pkg.id}`}
                             className="block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors duration-200 text-sm"
                           >
                             {pkg.title}

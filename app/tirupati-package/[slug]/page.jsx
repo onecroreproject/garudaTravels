@@ -44,7 +44,7 @@ const IconMap = {
 
 // Generate dynamic metadata
 export async function generateMetadata({ params }) {
-  const { slug } = params
+  const { slug } = await params
   
   try {
     const docRef = doc(db, "tirupati-package", slug)
@@ -86,7 +86,7 @@ export async function generateMetadata({ params }) {
 
 // This is a Server Component, so it can directly fetch data
 export default async function TirupatiPackageDetailPage({ params }) {
-  const { slug } = params
+  const { slug } = await params
   
   let packageData = null
   let error = null

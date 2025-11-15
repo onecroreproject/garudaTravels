@@ -6,7 +6,7 @@ import Image from 'next/image';
 import HeroSlider from "@/components/home/hero-slider"
 import BookingForm from "@/components/booking-form"
 import TourPackages from "@/components/home/tour-packages"
-import Vehicl from "@/components/home/vehicle-slider"
+import Vehicle from "@/components/home/vehicle-slider"
 import CustomerReviews from "@/components/customer-reviews"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
@@ -156,7 +156,7 @@ export default function HomePage() {
       </section>
      
       <TourPackages />
-      <Vehicl />
+      <Vehicle />
       
       {/* Quotes Section */}
       <section className="py-20 px-4 bg-gradient-to-br from-white via-gray-50 to-blue-50 relative overflow-hidden">

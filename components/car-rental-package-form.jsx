@@ -3,8 +3,7 @@
 import { useState, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore"
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
-import { db, storage } from "@/lib/firebase"
+import { db } from "@/lib/firebase"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -15,6 +14,7 @@ import { isAuthenticated } from "@/lib/custom-auth"
 import { Switch } from "@/components/ui/switch"
 import EditableTitle from "@/components/editable-title"
 import RichTextEditor from "@/components/ui/rich-text-editor"
+import { uploadToMinIO } from "@/lib/fileUpload"
 
 // Helper to generate unique IDs for dynamic fields
 const generateUniqueId = () => Math.random().toString(36).substring(2, 15)
@@ -488,7 +488,7 @@ export default function CarRentalPackageForm({ packageId }) {
     }
 
     try {
-      // Upload main package images to Firebase Storage
+      // Upload main package images to MinIO
       const uploadedImageUrls = []
       const folderName =
         packageUrl
@@ -498,9 +498,10 @@ export default function CarRentalPackageForm({ packageId }) {
       const storagePathPrefix = `car-rental-packages/${folderName}`
 
       for (const file of newImageFiles) {
-        const imageRef = ref(storage, `${storagePathPrefix}/${file.name}`)
-        await uploadBytes(imageRef, file)
-        const url = await getDownloadURL(imageRef)
+        const url = await uploadToMinIO(file, `${storagePathPrefix}/main`)
+        if (!url) {
+          throw new Error(`Failed to upload image: ${file.name}`)
+        }
         uploadedImageUrls.push(url)
       }
 
@@ -512,9 +513,11 @@ export default function CarRentalPackageForm({ packageId }) {
         carTypes.map(async (car) => {
           let carImageUrl = car.imageUrl
           if (car.imageFile) {
-            const carImageRef = ref(storage, `${storagePathPrefix}/cars/${car.imageFile.name}`)
-            await uploadBytes(carImageRef, car.imageFile)
-            carImageUrl = await getDownloadURL(carImageRef)
+            const url = await uploadToMinIO(car.imageFile, `${storagePathPrefix}/cars`)
+            if (!url) {
+              throw new Error(`Failed to upload ${car.imageFile.name}`)
+            }
+            carImageUrl = url
           }
           return {
             id: car.id,
@@ -538,9 +541,11 @@ export default function CarRentalPackageForm({ packageId }) {
           let sectionImageUrl = section.imageUrl // Start with existing URL
           if (section.hasImage && section.imageFile) {
             // Only upload if hasImage is true and a new file is selected
-            const sectionImageRef = ref(storage, `${storagePathPrefix}/sections/${section.imageFile.name}`)
-            await uploadBytes(sectionImageRef, section.imageFile)
-            sectionImageUrl = await getDownloadURL(sectionImageRef)
+            const url = await uploadToMinIO(section.imageFile, `${storagePathPrefix}/sections`)
+            if (!url) {
+              throw new Error(`Failed to upload ${section.imageFile.name}`)
+            }
+            sectionImageUrl = url
           } else if (!section.hasImage) {
             // If hasImage is false, clear the image URL
             sectionImageUrl = ""

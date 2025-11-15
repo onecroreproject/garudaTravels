@@ -3,8 +3,7 @@
 import { useState, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore"
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
-import { db, storage } from "@/lib/firebase"
+import { db } from "@/lib/firebase"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -16,6 +15,7 @@ import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
 import EditableTitle from "@/components/editable-title"
 import RichTextEditor from "@/components/ui/rich-text-editor"
+import { uploadToMinIO } from "@/lib/fileUpload"
 
 // Helper to generate unique IDs for dynamic fields
 const generateUniqueId = () => Math.random().toString(36).substring(2, 15)
@@ -510,7 +510,7 @@ export default function TemplePackageForm({ packageId }) {
     }
 
     try {
-      // Upload main package images to Firebase Storage
+      // Upload main package images to MinIO
       const uploadedImageUrls = []
       const folderName =
         packageUrl
@@ -520,9 +520,10 @@ export default function TemplePackageForm({ packageId }) {
       const storagePathPrefix = `temple-packages/${folderName}`
 
       for (const file of newImageFiles) {
-        const imageRef = ref(storage, `${storagePathPrefix}/${file.name}`)
-        await uploadBytes(imageRef, file)
-        const url = await getDownloadURL(imageRef)
+        const url = await uploadToMinIO(file, `${storagePathPrefix}/main`)
+        if (!url) {
+          throw new Error(`Failed to upload image: ${file.name}`)
+        }
         uploadedImageUrls.push(url)
       }
 
@@ -539,9 +540,11 @@ export default function TemplePackageForm({ packageId }) {
 
           let templeImageUrl = temple.imageUrl || ""
           if (temple.imageFile) {
-            const templeImageRef = ref(storage, `${storagePathPrefix}/temples/${temple.imageFile.name}`)
-            await uploadBytes(templeImageRef, temple.imageFile)
-            templeImageUrl = await getDownloadURL(templeImageRef)
+            const url = await uploadToMinIO(temple.imageFile, `${storagePathPrefix}/temples`)
+            if (!url) {
+              throw new Error(`Failed to upload ${temple.imageFile.name}`)
+            }
+            templeImageUrl = url
           }
 
           const processedTemple = {
