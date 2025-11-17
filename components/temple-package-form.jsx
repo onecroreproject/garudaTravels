@@ -115,6 +115,8 @@ export default function TemplePackageForm({ packageId }) {
   // Image management
   const [images, setImages] = useState([])
   const [newImageFiles, setNewImageFiles] = useState([])
+  const [heroImage, setHeroImage] = useState("")
+  const [heroImageFile, setHeroImageFile] = useState(null)
 
   // Temple-specific sections
   const [templeList, setTempleList] = useState([])
@@ -245,6 +247,9 @@ export default function TemplePackageForm({ packageId }) {
             // Set images array, filter out empty strings
             setImages((data.images || []).filter((img) => img && img.trim() !== ""))
 
+            // Set hero image
+            setHeroImage(data.heroImage || "")
+
             // Set temple list with proper structure
             setTempleList(
               ensureArrayStructure(data.templeList || [], {
@@ -358,6 +363,19 @@ export default function TemplePackageForm({ packageId }) {
 
   const removeExistingImage = (urlToRemove) => {
     setImages((prev) => prev.filter((url) => url !== urlToRemove))
+    setIsDirty(true)
+  }
+
+  const handleHeroImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setHeroImageFile(e.target.files[0])
+      setIsDirty(true)
+    }
+  }
+
+  const removeHeroImage = () => {
+    setHeroImage("")
+    setHeroImageFile(null)
     setIsDirty(true)
   }
 
@@ -510,6 +528,22 @@ export default function TemplePackageForm({ packageId }) {
     }
 
     try {
+      // Upload hero image to MinIO
+      let heroImageUrl = heroImage || ""
+      if (heroImageFile) {
+        const folderName =
+          packageUrl
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-|-$/g, "") || "untitled-package"
+        const storagePathPrefix = `temple-packages/${folderName}`
+        const url = await uploadToMinIO(heroImageFile, `${storagePathPrefix}/hero`)
+        if (!url) {
+          throw new Error(`Failed to upload hero image: ${heroImageFile.name}`)
+        }
+        heroImageUrl = url
+      }
+
       // Upload main package images to MinIO
       const uploadedImageUrls = []
       const folderName =
@@ -592,6 +626,10 @@ export default function TemplePackageForm({ packageId }) {
 
       if (allImageUrls.length > 0) {
         packageData.images = allImageUrls
+      }
+
+      if (heroImageUrl && heroImageUrl.trim() !== "") {
+        packageData.heroImage = heroImageUrl.trim()
       }
 
       if (validTempleList.length > 0) {
@@ -815,11 +853,92 @@ export default function TemplePackageForm({ packageId }) {
               />
             </div>
 
+            {/* Hero Image */}
+            <div className="border-2 border-blue-200 rounded-lg p-4 bg-blue-50">
+              <Label htmlFor="heroImage" className="text-base font-semibold text-blue-900">
+                Hero Image (Main Display Image) ⭐
+              </Label>
+              <Input
+                id="heroImage"
+                type="file"
+                accept="image/*"
+                onChange={handleHeroImageChange}
+                className="cursor-pointer mt-2"
+              />
+              <p className="text-sm text-blue-700 mt-2 font-medium">
+                📸 This is the MAIN image that appears prominently in the hero section (right side) of the package page.
+                <br />
+                <span className="text-xs text-blue-600 mt-1 block">
+                  Recommended size: Square or landscape (800x800px or larger) for best display quality.
+                </span>
+              </p>
+
+              {/* Display existing hero image */}
+              {heroImage && !heroImageFile && (
+                <div className="mt-4">
+                  <h4 className="text-md font-semibold mb-2">Current Hero Image (Main Display):</h4>
+                  <div className="relative inline-block group">
+                    <img
+                      src={heroImage || "/placeholder.webp"}
+                      alt="Hero image"
+                      className="rounded-md object-cover w-full max-w-md h-auto border-2 border-green-400 shadow-lg"
+                    />
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      size="icon"
+                      className="absolute top-2 right-2 h-8 w-8 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      onClick={removeHeroImage}
+                    >
+                      <X className="h-4 w-4" />
+                      <span className="sr-only">Remove hero image</span>
+                    </Button>
+                  </div>
+                  <p className="text-xs text-green-600 mt-2 font-medium">
+                    ✓ This image will be displayed as the main hero image on the package page
+                  </p>
+                </div>
+              )}
+
+              {/* Display new hero image preview */}
+              {heroImageFile && (
+                <div className="mt-4">
+                  <h4 className="text-md font-semibold mb-2">New Hero Image Preview (Main Display):</h4>
+                  <div className="relative inline-block group">
+                    <img
+                      src={URL.createObjectURL(heroImageFile) || "/placeholder.webp"}
+                      alt="New hero image"
+                      className="rounded-md object-cover w-full max-w-md h-auto border-2 border-blue-400 shadow-lg"
+                    />
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      size="icon"
+                      className="absolute top-2 right-2 h-8 w-8 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      onClick={removeHeroImage}
+                    >
+                      <X className="h-4 w-4" />
+                      <span className="sr-only">Remove new hero image</span>
+                    </Button>
+                  </div>
+                  <p className="text-xs text-blue-600 mt-2 font-medium">
+                    ✓ This image will be displayed as the main hero image on the package page
+                  </p>
+                </div>
+              )}
+            </div>
+
             {/* Package Images */}
-            <div>
-              <Label htmlFor="images">Package Images</Label>
-              <Input id="images" type="file" multiple onChange={handleFileChange} className="cursor-pointer" />
-              <p className="text-sm text-gray-500 mt-1">Upload multiple images for this temple package.</p>
+            <div className="border border-gray-200 rounded-lg p-4 bg-gray-50 mt-4">
+              <Label htmlFor="images">Package Images (Gallery)</Label>
+              <Input id="images" type="file" multiple onChange={handleFileChange} className="cursor-pointer mt-2" />
+              <p className="text-sm text-gray-600 mt-2">
+                📷 These images appear in the gallery section below the hero. Upload multiple images for the image gallery.
+                <br />
+                <span className="text-xs text-gray-500 mt-1 block">
+                  Note: The Hero Image above is separate from these gallery images.
+                </span>
+              </p>
 
               {/* Display existing images */}
               {images.length > 0 && (

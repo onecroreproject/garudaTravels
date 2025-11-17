@@ -51,7 +51,7 @@ export default function RootLayout({ children }) {
         {/* Load PreloadLinks */}
         {/* <PreloadLinks /> */}
       </head>
-      <body className={`${montserrat.variable} ${poppins.variable}`}>
+      <body className={`${montserrat.variable} ${poppins.variable}`} suppressHydrationWarning>
         {children}
       </body>
     </html>

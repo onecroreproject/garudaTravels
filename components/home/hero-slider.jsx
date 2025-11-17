@@ -91,11 +91,9 @@ export default function HeroSlider() {
                     { slide.title}
                   </span>
                 </h1>
-                
                 <p className="text-xl md:text-2xl lg:text-3xl mb-10 leading-relaxed opacity-95 drop-shadow-md max-w-4xl mx-auto font-light">
                   {slide.description}
                 </p>
-                
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                   <a href="#booking">
                     <Button size="lg" className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-10 py-5 text-xl font-bold shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300 rounded-xl">
