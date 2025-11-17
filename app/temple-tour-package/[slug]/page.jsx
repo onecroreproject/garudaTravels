@@ -41,7 +41,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import NavagrahaMarquee from "@/components/NavagrahaMarquee";
+// import NavagrahaMarquee from "@/components/NavagrahaMarquee";
+import Image from "next/image";
 
 // Generate dynamic metadata
 export async function generateMetadata({ params }) {
@@ -258,7 +259,7 @@ export default async function TemplePackagePage({ params }) {
           </div>
         </div>
       </section> */}
-
+<br /><br />
       <section className="bg-orange-50 py-8">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
@@ -297,17 +298,27 @@ export default async function TemplePackagePage({ params }) {
               </div>
             </div>
 
-            {/* Right Side - Static Image */}
+            {/* Right Side - Dynamic Hero Image */}
 
             <div className="w-full order-1 lg:order-2">
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-3xl transform -rotate-6 group-hover:-rotate-12 transition-transform duration-500"></div>
-                <div className="relative bg-white rounded-3xl shadow-2xl p-6 transform rotate-2 group-hover:rotate-0 transition-transform duration-500 flex justify-center">
-                  <img
-                    src="/images/2.webp" // static image path
-                    alt="Tour Package"
-                    className="rounded-lg shadow-lg w-full max-w-md object-cover"
-                  />
+                <div className="relative bg-white rounded-3xl shadow-2xl p-6 transform rotate-2 group-hover:rotate-0 transition-transform duration-500 flex justify-center items-center">
+                  <div className="relative w-full max-w-2xl aspect-square lg:aspect-[4/3]">
+                    <Image
+                      src={
+                        packageData.heroImage ||
+                        packageData.images?.[0] ||
+                        "/images/2.webp"
+                      }
+                      alt={packageData.title || "Tour Package"}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 700px"
+                      className="rounded-lg shadow-lg object-cover"
+                      priority
+                      quality={95}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -340,10 +351,7 @@ export default async function TemplePackagePage({ params }) {
                 />
               </div>
 
-              {/* Navagraha Marquee Swiper */}
-              {slug === "chennai-navagraha-temple-tour-package" && (
-                <NavagrahaMarquee />
-              )}
+           
 
               {/* Thumbnail Images */}
               {packageData.images.length > 1 && (

@@ -18,6 +18,7 @@ export default function TirupatiPackageHero({ packageData }) {
           backgroundImage: `url("https://wallpaperaccess.com/full/3479478.webp")` 
         }}
       >
+        <br />
         {/* Enhanced Overlay with Gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/60 to-black/80" />
         

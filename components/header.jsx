@@ -77,7 +77,7 @@ export function Header() {
 
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white/95 shadow-md backdrop-blur">
       <div className="max-w-[1470px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -347,7 +347,7 @@ export function Header() {
             <div className="flex items-center space-x-3 bg-green-50 px-4 py-2 rounded-lg border border-green-100">
               <PhoneCall className="h-5 w-5 text-green-600" />
               <div className="flex flex-col">
-                <span className="text-xs text-gray-600 font-medium">For Inquiry</span>
+                <span className="text-xs text-gray-600 font-medium">For enquiry</span>
                 <a
                   href="tel:+919840789844"
                   className="text-sm font-bold text-green-600 hover:text-green-700 transition-colors duration-200"
