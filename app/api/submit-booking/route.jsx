@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server"
-import nodemailer from "nodemailer"
 import { db } from "@/lib/firebase"
 import { collection, addDoc, Timestamp } from "firebase/firestore"
+import axios from "axios"
+import https from "https"
+import { encryptPayload } from "@/lib/encryption"
+import { companyInfo } from "@/config/credentials"
 
 // Handle CORS preflight requests
 export async function OPTIONS() {
@@ -44,34 +47,11 @@ export async function POST(request) {
       firestoreError = e.message
     }
 
-    // Check if email credentials are set
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-      console.error('Email credentials not configured');
-      return new NextResponse(
-        JSON.stringify({ 
-          success: false, 
-          message: 'Email service not configured' 
-        }), 
-        { 
-          status: 500, 
-          headers 
-        }
-      );
-    }
-
-    // Configure Nodemailer transporter
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    })
-
     // Business Email (to you)
     const businessMailOptions = {
-      from: process.env.EMAIL_USER,
-      to: "garudattd1@gmail.com", // Your business email
+      from: companyInfo.email,
+      to: companyInfo.email,
+      replyTo: formData.email,
       subject: `New Booking Request - ${formData.packageType}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
@@ -112,7 +92,7 @@ export async function POST(request) {
 
     // Client Confirmation Email
     const clientMailOptions = {
-      from: process.env.EMAIL_USER,
+      from: companyInfo.email,
       to: formData.email,
       subject: `Booking Confirmation - ${formData.packageType} | Garuda Tours & Travels`,
       html: `
@@ -215,9 +195,33 @@ export async function POST(request) {
       `,
     }
 
-    // Send emails using Nodemailer
-    const businessEmailPromise = transporter.sendMail(businessMailOptions)
-    const clientEmailPromise = transporter.sendMail(clientMailOptions)
+    // Send emails using encrypted microservice
+    const templates = [businessMailOptions, clientMailOptions]
+
+    const payload = encryptPayload({
+      templates,
+      data: {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        service: `Tour Booking - ${formData.packageType}`,
+      },
+    })
+
+    const httpsAgent = new https.Agent({ rejectUnauthorized: false });
+    
+    let emailResult
+    try {
+      emailResult = await axios.post(
+        'https://mail.service.thereciprocalsolutions.com/v1/mail/send',
+        { payload },
+        { httpsAgent }
+      )
+      console.log('Email sent successfully via microservice:', emailResult.data)
+    } catch (emailError) {
+      console.error('Email microservice error:', emailError)
+      emailResult = { status: 500, data: { error: emailError.message } }
+    }
 
     // Send Telegram Message
     const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN
@@ -261,16 +265,13 @@ ${formData.selectedOption ? `🎫 *Option:* ${formData.selectedOption}` : ""}
     }
 
     // Evaluate results from all services
-    const emailResults = await Promise.allSettled([businessEmailPromise, clientEmailPromise])
-
-    const businessEmailSuccess = emailResults[0].status === "fulfilled"
-    const clientEmailSuccess = emailResults[1].status === "fulfilled"
+    const emailSuccess = emailResult.status === 200
     const telegramSuccess = telegramResponse.ok // Check .ok property of the fetch Response
 
     const failedServices = []
-    if (!businessEmailSuccess)
-      failedServices.push(`Business Email (${emailResults[0].reason?.message || "unknown error"})`)
-    if (!clientEmailSuccess) failedServices.push(`Client Email (${emailResults[1].reason?.message || "unknown error"})`)
+    if (!emailSuccess) {
+      failedServices.push(`Email Service (${emailResult.data?.error || "unknown error"})`)
+    }
     if (!telegramSuccess) {
       let telegramErrorDetails = "unknown error"
       try {
@@ -289,7 +290,7 @@ ${formData.selectedOption ? `🎫 *Option:* ${formData.selectedOption}` : ""}
       'Access-Control-Allow-Headers': 'Content-Type',
     }
 
-    if (businessEmailSuccess && clientEmailSuccess && telegramSuccess) {
+    if (emailSuccess && telegramSuccess) {
       return new NextResponse(
         JSON.stringify({ 
           success: true, 
@@ -303,8 +304,7 @@ ${formData.selectedOption ? `🎫 *Option:* ${formData.selectedOption}` : ""}
       )
     } else {
       console.error("Some notification services failed:", {
-        businessEmail: businessEmailSuccess ? "Success" : emailResults[0].reason,
-        clientEmail: clientEmailSuccess ? "Success" : emailResults[1].reason,
+        email: emailSuccess ? "Success" : emailResult.data?.error,
         telegram: telegramSuccess ? "Success" : telegramResponse.statusText
       })
 
