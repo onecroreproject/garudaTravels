@@ -224,7 +224,7 @@ export async function POST(request) {
     }
 
     // Send Telegram Message
-    const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN
+    const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN 
     const telegramChatId = process.env.TELEGRAM_CHAT_ID
 
     const telegramMessage = `
@@ -290,12 +290,18 @@ ${formData.selectedOption ? `🎫 *Option:* ${formData.selectedOption}` : ""}
       'Access-Control-Allow-Headers': 'Content-Type',
     }
 
-    if (emailSuccess && telegramSuccess) {
+    // Return 200 if email succeeded (primary notification method)
+    if (emailSuccess) {
+      const message = telegramSuccess 
+        ? 'Booking request submitted successfully. You will receive a confirmation email shortly.'
+        : 'Booking request submitted successfully. You will receive a confirmation email shortly.';
+      
       return new NextResponse(
         JSON.stringify({ 
           success: true, 
-          message: 'Booking request submitted successfully. You will receive a confirmation email shortly.',
-          firestoreSaveSuccess
+          message,
+          firestoreSaveSuccess,
+          telegramSent: telegramSuccess
         }), 
         { 
           status: 200, 
@@ -303,15 +309,16 @@ ${formData.selectedOption ? `🎫 *Option:* ${formData.selectedOption}` : ""}
         }
       )
     } else {
-      console.error("Some notification services failed:", {
-        email: emailSuccess ? "Success" : emailResult.data?.error,
-        telegram: telegramSuccess ? "Success" : telegramResponse.statusText
+      // Only return 500 if email (primary notification) failed
+      console.error("Email notification failed:", {
+        email: emailResult.data?.error,
+        telegram: telegramSuccess ? "Success" : "Failed/Skipped"
       })
 
       return new NextResponse(
         JSON.stringify({ 
           success: false, 
-          message: 'Your booking was saved but some notifications failed. We will contact you soon.',
+          message: 'Your booking was saved but email notification failed. We will contact you soon.',
           failedServices,
           firestoreSaveSuccess
         }), 
