@@ -83,7 +83,7 @@ export function Header() {
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <a href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity duration-200">
-             <img src="/header-logo.png" alt="Garuda Tours Logo" className="h-20 md:h-12 lg:h-20 w-auto" />
+             <img src="/header-logo.png" alt="Garuda Tours Logo" className="h-20 md:h-12 lg:h-32 w-auto" />
             </a>
           </div>
 
