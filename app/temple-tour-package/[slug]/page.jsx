@@ -218,6 +218,7 @@ export default async function TemplePackagePage({ params }) {
   return (
     <div className="min-h-screen bg-gray-50 overflow-hidden">
       <Header />
+      <div className="pt-16 md:pt-20 lg:pt-24">
 
       {/* Breadcrumb Section */}
       {/* <section className="bg-white py-4 border-b">
@@ -913,6 +914,7 @@ export default async function TemplePackagePage({ params }) {
           </section>
         )}
 
+      </div>
       <Footer />
     </div>
   );

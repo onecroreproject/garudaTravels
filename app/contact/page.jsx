@@ -11,6 +11,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen flex flex-col overflow-hidden">
         <Header />
+        <div className="pt-16 md:pt-20 lg:pt-24">
 
       <main className="flex-1">
         <section className="bg-red-100 text-black py-12">
@@ -158,6 +159,7 @@ export default function ContactPage() {
         </section>
       </main>
       <Footer />
+      </div>
 
     </div>
   )

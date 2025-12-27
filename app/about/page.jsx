@@ -41,6 +41,7 @@ export default function AboutUs() {
     <>
     <div className="min-h-screen overflow-hidden">
       <Header />
+      <div className="pt-16 md:pt-20 lg:pt-24">
       <section className="bg-red-100 py-12">
                 <div className="container mx-auto text-center">
                     {/* Title */}
@@ -197,6 +198,7 @@ export default function AboutUs() {
       <StatsCounter />
       <CustomerReviews />
       <Footer />
+      </div>
       </div>
     </>
   )

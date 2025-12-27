@@ -78,12 +78,12 @@ export function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white/95 shadow-md backdrop-blur">
-      <div className="max-w-[1470px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+      <div className="max-w-[1470px] mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-15 md:h-20 lg:h-28">
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <a href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity duration-200">
-              <img src="/footer-logo.webp" alt="Garuda Tours Logo" className="h-6 md:h-8 lg:h-10 w-auto" />
+             <img src="/header-logo.png" alt="Garuda Tours Logo" className="h-20 md:h-12 lg:h-20 w-auto" />
             </a>
           </div>
 
@@ -366,30 +366,31 @@ export function Header() {
             {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
+      </div>
 
-        {/* Mobile Navigation Menu */}
-        {mounted && (
+      {/* Mobile Navigation Menu */}
+      {mounted && (
+        <div
+          className={`lg:hidden fixed inset-0 z-[60] ${isMobileMenuOpen ? "pointer-events-auto" : "pointer-events-none"}`}
+          aria-hidden={!isMobileMenuOpen}
+        >
+          {/* Backdrop */}
+          <button
+            type="button"
+            onClick={toggleMobileMenu}
+            className={`absolute inset-0 bg-black/40 transition-opacity duration-300 ${isMobileMenuOpen ? "opacity-100" : "opacity-0"}`}
+            aria-label="Close menu backdrop"
+          />
+
+          {/* Panel */}
           <div
-            className={`lg:hidden fixed inset-0 z-[60] ${isMobileMenuOpen ? "pointer-events-auto" : "pointer-events-none"}`}
-            aria-hidden={!isMobileMenuOpen}
+            className={`absolute right-0 top-24 h-[calc(100vh-6rem)] w-80 max-w-[85vw] sm:w-80 bg-white shadow-xl transition-transform duration-300 ease-in-out ${
+              isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+            }`}
+            role="dialog"
+            aria-modal="true"
           >
-            {/* Backdrop */}
-            <button
-              type="button"
-              onClick={toggleMobileMenu}
-              className={`absolute inset-0 bg-black/40 transition-opacity duration-300 ${isMobileMenuOpen ? "opacity-100" : "opacity-0"}`}
-              aria-label="Close menu backdrop"
-            />
-
-            {/* Panel */}
-            <div
-              className={`absolute right-0 top-0 h-full w-80 max-w-[85vw] sm:w-80 bg-white shadow-xl transition-transform duration-300 ease-in-out ${
-                isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
-              }`}
-              role="dialog"
-              aria-modal="true"
-            >
-              <nav className="py-4 space-y-2 border-t border-gray-100 h-full overflow-y-auto">
+            <nav className="py-4 space-y-2 h-full overflow-y-auto">
                 {/* Mobile Navigation Links */}
                 <a
                   href="/"
@@ -606,11 +607,10 @@ export function Header() {
                 >
                   Contact Us
                 </a>
-              </nav>
-            </div>
+            </nav>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </header>
   )
 }

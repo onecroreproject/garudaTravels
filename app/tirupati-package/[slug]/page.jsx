@@ -228,6 +228,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
   return (
     <div className="min-h-screen bg-white overflow-hidden">
       <Header />
+      <div className="pt-16 md:pt-20 lg:pt-24">
 
       <main>
         <TirupatiPackageHero packageData={packageData || {}} />
@@ -1421,6 +1422,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
           )}
         </div>
       </main>
+      </div>
 
       <Footer />
     </div>
