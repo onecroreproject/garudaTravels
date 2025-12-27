@@ -120,8 +120,10 @@ export default function HomePage() {
 
       <Header />
 
-      {/* Hero Slider with high priority */}
-      <HeroSlider fetchPriority="high" />
+      {/* Spacing for fixed header */}
+      <div className="pt-16 md:pt-20 lg:pt-24">
+        {/* Hero Slider with high priority */}
+        <HeroSlider fetchPriority="high" />
       
       {/* Enhanced Booking Section */}
       <section id="booking" className="py-20 px-4 bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 relative overflow-hidden">
@@ -726,6 +728,7 @@ export default function HomePage() {
       <CustomerReviews />
       <Counter />
       <Footer />
+      </div>
     </div>
   )
 }

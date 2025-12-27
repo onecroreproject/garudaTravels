@@ -116,6 +116,7 @@ export default async function CarRentalPage({ params }) {
   return (
     <div className="min-h-screen bg-white overflow-hidden">
       <Header />
+      <div className="pt-16 md:pt-20 lg:pt-24">
       
       {/* Hero Section */}
       <section className="bg-red-100 py-12">
@@ -536,6 +537,7 @@ export default async function CarRentalPage({ params }) {
       {/* Permit Fee Section */}
       {/* <PermitFeeSection /> */}
       
+      </div>
       <Footer />
     </div>
   )

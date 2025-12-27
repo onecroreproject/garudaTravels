@@ -31,6 +31,7 @@ export default function PrivacyPolicyPage() {
 
   return (
     <main className="min-h-screen overflow-hidden">
+      <div className="pt-16 md:pt-20 lg:pt-24">
       {/* Header */}
       <section className="w-full border-b bg-gray-50">
         <div className="mx-auto max-w-6xl px-4 py-10 md:py-12">
@@ -302,6 +303,7 @@ export default function PrivacyPolicyPage() {
           </aside>
         </div>
       </section>
+      </div>
     </main>
   )
 }
