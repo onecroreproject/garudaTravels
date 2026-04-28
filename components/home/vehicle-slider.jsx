@@ -3,11 +3,11 @@
 import Image from "next/image"
 
 const initialVehicleImages = [
-  { id: 1, src: "/cars/swift.webp?height=300&width=450", alt: "Dzire or Etios" },
-  { id: 2, src: "/cars/ertiga.webp?height=300&width=450", alt: "Ertiga" },
-  { id: 3, src: "/cars/innova.webp?height=300&width=450", alt: "Innova" },
-  { id: 4, src: "/cars/crysta.webp?height=300&width=450", alt: "Innova Crysta" },
-  { id: 5, src: "/cars/tempo.webp?height=300&width=450", alt: "Tempo Traveller" },
+  { id: 1, src: "/cars/swift.png?height=300&width=450", alt: "Dzire or Etios" },
+  { id: 2, src: "/cars/ertiga.png?height=300&width=450", alt: "Ertiga" },
+  { id: 3, src: "/cars/innova.png?height=300&width=450", alt: "Innova" },
+  { id: 4, src: "/cars/crysta.png?height=300&width=450", alt: "Innova Crysta" },
+  { id: 5, src: "/cars/tempo.png?height=300&width=450", alt: "Tempo Traveller" },
 ]
 
 const initialWhyChooseUsItems = [
@@ -33,7 +33,7 @@ export default function VehicleFeatures() {
             <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-4 sm:mb-6 text-center">
               Our Premium Fleet
             </h3>
-            
+
             {/* Marquee Container */}
             <div className="marquee-viewport relative h-full">
               <ul className="marquee-track-h">
@@ -42,12 +42,12 @@ export default function VehicleFeatures() {
                   <li key={`vh-a-${vehicle.id}`} className="marquee-item flex-shrink-0 w-56 sm:w-64 lg:w-72 mr-3 sm:mr-4 group">
                     <div className="vehicle-card bg-white rounded-xl lg:rounded-2xl p-3 sm:p-4 lg:p-6 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 border border-gray-200 relative overflow-hidden">
                       <div className="image-wrapper relative overflow-hidden rounded-lg lg:rounded-xl bg-gradient-to-br from-blue-50 to-gray-50 p-2 sm:p-3 lg:p-4 mb-3 sm:mb-4">
-                        <Image 
-                          src={vehicle.src || "/placeholder.webp"} 
-                          alt={vehicle.alt} 
-                          width={450} 
-                          height={300} 
-                          className="w-full h-24 sm:h-32 lg:h-40 object-contain transition-transform duration-500 group-hover:scale-110" 
+                        <Image
+                          src={vehicle.src || "/placeholder.webp"}
+                          alt={vehicle.alt}
+                          width={450}
+                          height={300}
+                          className="w-full h-24 sm:h-32 lg:h-40 object-cover transition-transform duration-500 group-hover:scale-110"
                         />
                         <div className="absolute top-1 right-1 sm:top-2 sm:right-2 bg-blue-600 text-white px-2 py-1 lg:px-3 rounded-full text-xs sm:text-sm font-semibold shadow-lg">
                           Available
@@ -82,12 +82,12 @@ export default function VehicleFeatures() {
                   <li key={`vh-b-${vehicle.id}`} className="marquee-item flex-shrink-0 w-56 sm:w-64 lg:w-72 mr-3 sm:mr-4 group">
                     <div className="vehicle-card bg-white rounded-xl lg:rounded-2xl p-3 sm:p-4 lg:p-6 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 border border-gray-200 relative overflow-hidden">
                       <div className="image-wrapper relative overflow-hidden rounded-lg lg:rounded-xl bg-gradient-to-br from-blue-50 to-gray-50 p-2 sm:p-3 lg:p-4 mb-3 sm:mb-4">
-                        <Image 
-                          src={vehicle.src || "/placeholder.webp"} 
-                          alt={vehicle.alt} 
-                          width={450} 
-                          height={300} 
-                          className="w-full h-24 sm:h-32 lg:h-40 object-contain transition-transform duration-500 group-hover:scale-110" 
+                        <Image
+                          src={vehicle.src || "/placeholder.webp"}
+                          alt={vehicle.alt}
+                          width={450}
+                          height={300}
+                          className="w-full h-24 sm:h-32 lg:h-40 object-cover transition-transform duration-500 group-hover:scale-110"
                         />
                         <div className="absolute top-1 right-1 sm:top-2 sm:right-2 bg-blue-600 text-white px-2 py-1 lg:px-3 rounded-full text-xs sm:text-sm font-semibold shadow-lg">
                           Available
@@ -127,7 +127,7 @@ export default function VehicleFeatures() {
             <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 mb-4 sm:mb-6 text-center">
               Why Choose Garuda?
             </h3>
-            
+
             {/* Vertical Marquee Container */}
             <div className="marquee-viewport-v flex items-center justify-center overflow-hidden">
               <ul className="marquee-track-v">

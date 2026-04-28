@@ -1,12 +1,12 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { Car , Users, CheckCircle, Handshake } from "lucide-react" // Using Lucide React for icons
+import { Car, Users, CheckCircle, Handshake } from "lucide-react" // Using Lucide React for icons
 
 const stats = [
   {
     id: 1,
-    icon: Car ,
+    icon: Car,
     value: "30+",
     label: "Vehicles",
     endValue: 30,
@@ -93,28 +93,25 @@ export default function StatsCounter() {
     })
 
     return () => {
-      // Disconnect observer on unmount
+      //Disconnect observer on unmount
       refs.current.forEach((ref) => {
         if (ref) {
           observer.unobserve(ref)
         }
       })
     }
-  }, []) // Empty dependency array means this runs once on mount
+  }, []) //Empty dependency array means this runs once on mount
 
   return (
     <section
-      className="relative py-10 px-4 bg-gray-100 overflow-hidden"
-      style={{
-        backgroundImage: `url(/placeholder.webp?height=800&width=1600)`, // Placeholder for background image
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed", // Parallax effect
-      }}
+      className="relative py-8 sm:py-12 px-4 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 overflow-hidden"
     >
-      <div className="absolute inset-0 bg-white bg-opacity-80" /> {/* Semi-transparent overlay */}
+      {/* Animated Background Elements */}
+      <div className="absolute top-0 right-0 w-64 md:w-96 h-64 md:h-96 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-0 left-0 w-56 md:w-80 h-56 md:h-80 bg-blue-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+
       <div className="container mx-auto relative z-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 text-center">
           {stats.map((stat, index) => {
             const Icon = stat.icon
             const count = counts[index]
@@ -133,13 +130,15 @@ export default function StatsCounter() {
                 key={stat.id}
                 data-index={index} // Add data-index to identify the element
                 ref={(el) => (refs.current[index] = el)} // Assign ref directly
-                className="flex flex-col items-center p-4"
+                className="flex flex-col items-center p-2"
               >
-                <div className="relative w-24 h-24 rounded-full bg-white border-2 border-blue-500 flex items-center justify-center mb-4 shadow-md transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                  <Icon className="h-12 w-12 text-blue-500" />
+                <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center mb-3 shadow-xl transition-all duration-300 hover:scale-110 hover:bg-white/20 group">
+                  <span className="text-white group-hover:animate-bounce">
+                    <Icon className="h-8 w-8 sm:h-10 sm:w-10" />
+                  </span>
                 </div>
-                <h3 className="text-5xl font-bold text-gray-800 mb-2">{displayValue}</h3>
-                <p className="text-lg text-gray-600">{stat.label}</p>
+                <h3 className="text-3xl sm:text-4xl font-extrabold text-white mb-1 tracking-tight">{displayValue}</h3>
+                <p className="text-xs sm:text-sm text-blue-100 font-medium uppercase tracking-wider">{stat.label}</p>
               </div>
             )
           })}

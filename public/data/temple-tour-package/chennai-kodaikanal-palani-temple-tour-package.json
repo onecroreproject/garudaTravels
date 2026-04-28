@@ -1,0 +1,25 @@
+{
+    "heroImage": "/images/tourpakege/hero/chennai-to-kodaikanal-palani-temple.png",
+    "images": [
+        "/data/temple-tour-package/templ-hero-image/Chennai-To-Kodaikanal---Palani-Temple-Tour-Package-1.png"
+    ],
+    "templeList": [
+        {
+            "id": "7obtko6b3ir",
+            "imageUrl": "/images/tourpakege/hero/chen-kodai-palani/arulmigu-dhandayudhapani-swamy-temple.jpg"
+        },
+        {
+            "id": "1x8jjzfk827",
+            "imageUrl": "/images/tourpakege/hero/chen-kodai-palani/arulmiku-periya-nayaki-amman-temple.jpg"
+        },
+        {
+            "id": "u0nq7sbh2ts",
+            "imageUrl": "/images/tourpakege/hero/chen-kodai-palani/kurinji-andavar-temple.png"
+        },
+        {
+            "id": "3c2825fy3he",
+            "imageUrl": "/images/tourpakege/hero/chen-kodai-palani/arulmigu-kuzhandhai-velappar-thirukkovil.jpg"
+        }
+    ]
+}
+

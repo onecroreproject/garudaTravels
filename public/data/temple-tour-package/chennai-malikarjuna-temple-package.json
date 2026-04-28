@@ -1,0 +1,29 @@
+{
+    "heroImage": "/images/tourpakege/hero/chennai-to-malikarjuna-temple-tour-package.png",
+    "images": [
+        "/data/temple-tour-package/templ-hero-image/Chennai-to-Malikarjuna-Temple-Tour-Package1.png"
+    ],
+    "templeList": [
+        {
+            "id": "vqj05ndphke",
+            "imageUrl": "/images/tourpakege/hero/mallikarjuna/malikarjuna-temple.jpg"
+        },
+        {
+            "id": "plq8d1sm3c",
+            "imageUrl": "/images/tourpakege/hero/mallikarjuna/bhramaramba-devi-temple.jpg"
+        },
+        {
+            "id": "exkw8t3qvwk",
+            "imageUrl": "/images/tourpakege/hero/mallikarjuna/srisailam-wildlife-sanctuary.jpg"
+        },
+        {
+            "id": "dh7zys5hlxc",
+            "imageUrl": "/images/tourpakege/hero/mallikarjuna/srisailam-dam.jpg"
+        },
+        {
+            "id": "of823smizy",
+            "imageUrl": "/images/tourpakege/hero/mallikarjuna/panchamukhi-hanuman-temple.png"
+        }
+    ]
+}
+

@@ -1,0 +1,28 @@
+{
+    "sightseeingPlaces": [],
+    "maleDressCodeImages": [
+        "/gender/male.png"
+    ],
+    "sections": [
+        {
+            "id": "caegbh59g7",
+            "imageUrl": "/images/trupathi/chennai-tirupati.png"
+        },
+        {
+            "id": "xqqujudzlkj",
+            "imageUrl": "/images/trupathi/tirupati-package-with-guide.png"
+        },
+        {
+            "id": "l8bu6y6rzo",
+            "imageUrl": "/images/trupathi/darshan-sightseeing-&-stay.png"
+        }
+    ],
+    "femaleDressCodeImages": [
+        "/gender/female.png"
+    ],
+    "carPrices": [],
+    "images": [
+        "/images/trupathi/chennai-tirupati.png"
+    ]
+}
+

@@ -1,0 +1,102 @@
+{
+    "sightseeingPlaces": [
+        {
+            "id": "024bzzc7zegv",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Ftirumala-tirupati-darshan-one-day-package%2Fplaces%2FUntitled%20design.png?alt=media&token=77496ee4-1f76-4a59-abce-afa55ab5b422"
+        },
+        {
+            "id": "cql57mbt1t6",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Ftirumala-tirupati-darshan-one-day-package%2Fplaces%2FUntitled%20design%20(2).png?alt=media&token=f12a82ba-8fe4-4b86-8a51-c54be12ba3f0"
+        },
+        {
+            "id": "nxre8y7tm5k",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Ftirumala-tirupati-darshan-one-day-package%2Fplaces%2FUntitled%20design%20(12).png?alt=media&token=07444026-f4da-46f3-89b5-6c41ca4c10b9"
+        },
+        {
+            "id": "pxg0hzlpowe",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Ftirumala-tirupati-darshan-one-day-package%2Fplaces%2FUntitled%20design%20(4).png?alt=media&token=c6b736ef-adad-44ee-b101-04d6443e4012"
+        },
+        {
+            "id": "kr1t33cuglk",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Ftirumala-tirupati-darshan-one-day-package%2Fplaces%2FUntitled%20design%20(6).png?alt=media&token=caf70ebc-e46f-40f9-bf3c-8dfe629a6ac9"
+        },
+        {
+            "id": "md7cj4c253",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Ftirumala-tirupati-darshan-one-day-package%2Fplaces%2FUntitled%20design%20(7).png?alt=media&token=08d0a7d5-f041-4836-9bbd-17a180753740"
+        },
+        {
+            "id": "zqf3l2j2s1",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Ftirumala-tirupati-darshan-one-day-package%2Fplaces%2FUntitled%20design%20(8).png?alt=media&token=31a53ca4-0216-4009-9054-ce0595ebe0a2"
+        },
+        {
+            "id": "do3fwrnt2k",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Ftirumala-tirupati-darshan-one-day-package%2Fplaces%2FUntitled%20design%20(15).png?alt=media&token=f0b2a208-7448-4cc0-ae04-f343ba241f6b"
+        },
+        {
+            "id": "z98ik3rvc8m",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Ftirumala-tirupati-darshan-one-day-package%2Fplaces%2FUntitled%20design%20(10).png?alt=media&token=a7c498ba-d48f-4255-934f-3b8ebf8622f6"
+        },
+        {
+            "id": "ucg7xbkqy1r",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Ftirumala-tirupati-darshan-one-day-package%2Fplaces%2FUntitled%20design%20(11).png?alt=media&token=c3a33964-490f-4ca6-9cff-8299920bdbbf"
+        },
+        {
+            "id": "4qsc1ycnssx",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Ftirumala-tirupati-darshan-one-day-package%2Fplaces%2FUntitled%20design%20(12).png?alt=media&token=07444026-f4da-46f3-89b5-6c41ca4c10b9"
+        },
+        {
+            "id": "ctutfyrx17t",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Ftirumala-tirupati-darshan-one-day-package%2Fplaces%2FUntitled%20design%20(13).png?alt=media&token=5fb4529e-f315-45ef-9b93-e5c5ef1666a7"
+        },
+        {
+            "id": "v3m4i4gdzvs",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Ftirumala-tirupati-darshan-one-day-package%2Fplaces%2Fwild-animal-wallpaper-preview.jpg?alt=media&token=7810d96e-55d0-4e27-ba87-9215b785d8b6"
+        }
+    ],
+    "maleDressCodeImages": [
+        "/gender/male.png"
+    ],
+    "sections": [
+        {
+            "id": "bsxpwq63rsh",
+            "imageUrl": "/images/trupathi/oneday/chennai-to-tirupati-one-day-car-package-vip-darshan.png"
+        },
+        {
+            "id": "zfauqphwot",
+            "imageUrl": "/images/trupathi/oneday/spiritual-journey-to-tirumala-one-day-balaji-darshan.png"
+        }
+    ],
+    "femaleDressCodeImages": [
+        "/gender/female.png"
+    ],
+    "carPrices": [
+        {
+            "id": "hupnq5u260l",
+            "imageUrl": "/cars/etios.webp.png",
+            "carName": "Dezire / Etios A/C"
+        },
+        {
+            "id": "y36dvytgjoe",
+            "imageUrl": "/cars/ertiga.png",
+            "carName": "Ertiga"
+        },
+        {
+            "id": "ow2awnhoafq",
+            "imageUrl": "/cars/innova.png",
+            "carName": "Innova A/C"
+        },
+        {
+            "id": "v1y0quh9jb",
+            "imageUrl": "/cars/crysta.png",
+            "carName": "Innova Crysta A/C"
+        },
+        {
+            "id": "0qwqshs1tjme",
+            "imageUrl": "/cars/tempo.png",
+            "carName": "Tempo Traveller A/C"
+        }
+    ],
+    "images": [
+        "/images/trupathi/oneday/spiritual-journey-to-tirumala-one-day-balaji-darshan.png"
+    ]
+}

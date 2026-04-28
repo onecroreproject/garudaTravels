@@ -27,7 +27,7 @@
 //           Call to Confirm Your Tirupati Package
 //         </button>
 //         </a>
-        
+
 //       </div>
 //     </div>
 //   );
@@ -38,7 +38,7 @@ import Image from "next/image";
 
 export default function PassengerNoteBox() {
   return (
-    <div className="max-w-6xl mx-auto mb-8 p-6 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-2xl flex flex-col sm:flex-row items-center gap-6">
+    <div className="max-w-6xl mx-auto mb-8 p-4 sm:p-6 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-2xl flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
       {/* Icon */}
       <div className="flex-shrink-0">
         <div className="relative w-28 h-28 bg-white rounded-full shadow-lg overflow-hidden">
@@ -47,7 +47,7 @@ export default function PassengerNoteBox() {
             alt="Passenger Note Icon"
             width={112}
             height={112}
-            className="object-contain w-full h-full"
+            className="object-cover w-full h-full"
             priority
           />
         </div>
@@ -55,7 +55,7 @@ export default function PassengerNoteBox() {
 
       {/* Content */}
       <div className="flex-1 text-center sm:text-left">
-        <h3 className="text-2xl font-bold text-white mb-2">
+        <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
           Important: Chennai to Tirupati Package Booking Info
         </h3>
         <p className="text-white/90 mb-4 leading-relaxed">

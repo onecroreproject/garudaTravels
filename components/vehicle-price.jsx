@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -14,7 +14,7 @@ import {
 const vehicleList = [
   {
     id: 1,
-    image: "/cars/innova.webp",
+    image: "/cars/innova.png",
     name: "Innova ",
     rating: 4.5,
     hasAC: true,
@@ -25,7 +25,7 @@ const vehicleList = [
   },
   {
     id: 2,
-    image: "/cars/ertiga.webp",
+    image: "/cars/ertiga.png",
     name: "Ertiga",
     rating: 4.2,
     hasAC: true,
@@ -36,7 +36,7 @@ const vehicleList = [
   },
   {
     id: 3,
-    image: "/cars/swift.webp",
+    image: "/cars/swift.png",
     name: "Dzire or Etios",
     rating: 4.0,
     hasAC: true,
@@ -47,7 +47,7 @@ const vehicleList = [
   },
   {
     id: 4,
-    image: "/cars/crysta.webp",
+    image: "/cars/crysta.png",
     name: "Innova Crysta ",
     rating: 4.3,
     hasAC: true,
@@ -58,7 +58,7 @@ const vehicleList = [
   },
   {
     id: 5,
-    image: "/cars/tempo.webp",
+    image: "/cars/tempo.png",
     name: "Tempo Traveller",
     rating: 4.7,
     hasAC: true,
@@ -67,7 +67,7 @@ const vehicleList = [
     driverBeta: 700,
     perKmRate: 25,
   },
- 
+
 ];
 
 function chunkArray(array, size) {
@@ -81,9 +81,9 @@ function chunkArray(array, size) {
 export default function VehiclePricing() {
   const rows = chunkArray(vehicleList, 3);
   return (
-    <section className="py-12 px-4 bg-gray-100">
+    <section className="py-8 sm:py-12 px-4 bg-gray-100">
       <div className="container mx-auto">
-        <h2 className="text-4xl font-bold text-center text-gray-800 mb-8">
+        <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">
           Vehicle Price List
         </h2>
 
@@ -91,9 +91,8 @@ export default function VehiclePricing() {
         {rows.map((row, index) => (
           <div
             key={index}
-            className={`flex flex-wrap justify-center md:justify-${
-              row.length === 3 ? "between" : "center"
-            } gap-8 mb-8`}
+            className={`flex flex-wrap justify-center md:justify-${row.length === 3 ? "between" : "center"
+              } gap-8 mb-8`}
           >
             {row.map((vehicle) => (
               <div key={vehicle.id} className="w-full md:w-[30%]">
@@ -110,17 +109,17 @@ export default function VehiclePricing() {
 function VehicleCard({ vehicle }) {
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-      <div className="relative w-full h-64">
+      <div className="relative w-full h-48 sm:h-64">
         <Image
           src={vehicle.image}
           alt={vehicle.name}
           fill
-          className="object-cover transition-transform duration-300 hover:scale-105"
+          className="object-cover rounded-lg transition-transform duration-300 hover:scale-105"
           priority
         />
       </div>
 
-      <div className="p-6 space-y-3">
+      <div className="p-4 sm:p-6 space-y-3">
         <div className="flex justify-between items-center">
           <h3 className="text-xl font-semibold">{vehicle.name}</h3>
           <div className="flex items-center gap-1 text-yellow-500">
@@ -158,12 +157,13 @@ function VehicleCard({ vehicle }) {
           </div>
           <a href="#booking">
             <Button className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 text-sm">
-            Book
-          </Button>
+              Book
+            </Button>
           </a>
-          
+
         </div>
       </div>
     </div>
   );
 }
+

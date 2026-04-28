@@ -11,9 +11,9 @@ export default function FAQAccordion({ faqs, sectionTitle }) {
   }
 
   return (
-    <section className="py-12 px-4 bg-gray-50">
+    <section className="py-8 sm:py-12 px-4 bg-gray-50">
       <div className="container mx-auto">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-10">
+        <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6 sm:mb-10">
           {sectionTitle || "Frequently Asked Questions"}
         </h2>
 
@@ -30,14 +30,13 @@ export default function FAQAccordion({ faqs, sectionTitle }) {
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                   className="w-full flex justify-between items-center p-5 text-left focus:outline-none hover:bg-gray-100 transition"
                 >
-                  <div 
-                    className="text-lg font-medium text-gray-800 prose prose-sm max-w-none"
+                  <div
+                    className="text-base sm:text-lg font-medium text-gray-800 prose prose-sm max-w-none"
                     dangerouslySetInnerHTML={{ __html: faq.question }}
                   />
                   <svg
-                    className={`w-5 h-5 transform transition-transform ${
-                      isOpen ? 'rotate-180' : ''
-                    }`}
+                    className={`w-5 h-5 transform transition-transform ${isOpen ? 'rotate-180' : ''
+                      }`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -60,7 +59,7 @@ export default function FAQAccordion({ faqs, sectionTitle }) {
                       transition={{ duration: 0.3 }}
                     >
                       <div className="px-5 pb-5 text-gray-700 text-sm">
-                        <div 
+                        <div
                           className="prose prose-sm max-w-none"
                           dangerouslySetInnerHTML={{ __html: faq.answer }}
                         />

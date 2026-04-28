@@ -1,0 +1,25 @@
+{
+    "id": "chennai-navagraha-temple-tour-package",
+    "heroImage": "/images/tourpakege/hero/chennai-to-navagraha.png",
+    "images": [
+        "/data/temple-tour-package/templ-hero-image/Chennai-to-Navagraha-Tour-Package1.png"    ],
+    "templeList": [
+        {
+            "id": "9uptwwg5v8",
+            "imageUrl": "/images/tourpakege/hero/che-navagraga/vaitheswaran-koil.jpg"
+        },
+        {
+            "id": "jbab9gj8de",
+            "imageUrl": "/images/tourpakege/hero/che-navagraga/keelaperumpallam.jpg"
+        },
+        {
+            "id": "tjgkigugsb",
+            "imageUrl": "/images/tourpakege/hero/che-navagraga/thiruvengadu.jpg"
+        },
+        {
+            "id": "s0a2yc4f1",
+            "imageUrl": "/images/tourpakege/hero/che-navagraga/thirunallar.jpg"
+        }
+    ]
+}
+

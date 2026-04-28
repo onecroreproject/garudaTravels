@@ -1,0 +1,57 @@
+{
+    "heroImage": "/images/tourpakege/hero/chennai-to-kanchipuram-mahabalipuram-and-pondicherry.png",
+    "images": [
+        "/data/temple-tour-package/templ-hero-image/Chennai-To-Kanchipuram,-Mahabalipuram-and-Pondicherry-Tour-Package1.png"
+    ],
+    "templeList": [
+        {
+            "id": "pgb2nhltcr",
+            "imageUrl": "/images/tourpakege/hero/che-pondy-mahapalipuram/kanchi-kamakshi-amman-temple-1.png"
+        },
+        {
+            "id": "0isvn0tl3mbv",
+            "imageUrl": "/images/tourpakege/hero/che-pondy-mahapalipuram/ekambareswarar-temple-1.png"
+        },
+        {
+            "id": "k2dqdcj1uo",
+            "imageUrl": "/images/tourpakege/hero/che-pondy-mahapalipuram/varadharaja-perumal-temple-1.png"
+        },
+        {
+            "id": "bog8lsgwfyf",
+            "imageUrl": "/images/tourpakege/hero/che-pondy-mahapalipuram/kailasanathar-temple-1.png"
+        },
+        {
+            "id": "8yjgp6ssv6i",
+            "imageUrl": "/images/tourpakege/hero/che-pondy-mahapalipuram/mahabalipuram-shore-temple-1.jpg"
+        },
+        {
+            "id": "fdqdt3u5yks",
+            "imageUrl": "/images/tourpakege/hero/che-pondy-mahapalipuram/pancha-rathas.jpg"
+        },
+        {
+            "id": "auhceio6oyi",
+            "imageUrl": "/images/tourpakege/hero/che-pondy-mahapalipuram/arjuna’s-penance.jpg"
+        },
+        {
+            "id": "uzaj1uvev5",
+            "imageUrl": "/images/tourpakege/hero/che-maha/krishnabutterball.jpg"
+        },
+        {
+            "id": "diiaqc5yalj",
+            "imageUrl": "/images/tourpakege/hero/che-pondy-mahapalipuram/manakula-vinayagar-temple.png"
+        },
+        {
+            "id": "4kg63o7pfsg",
+            "imageUrl": "/images/tourpakege/hero/che-pondy-mahapalipuram/sri-aurobindo-ashram.jpg"
+        },
+        {
+            "id": "1clm3jh65t4",
+            "imageUrl": "/images/tourpakege/hero/che-pondy-mahapalipuram/vedapureeswarar-temple.jpg"
+        },
+        {
+            "id": "r17d55ylol",
+            "imageUrl": "/images/tourpakege/hero/che-pondy-mahapalipuram/sri-varadaraja-perumal-temple-1.jpg"
+        }
+    ]
+}
+

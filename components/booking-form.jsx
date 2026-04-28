@@ -81,24 +81,13 @@ export default function BookingForm() {
 
   return (
     <>
-      <style jsx>{`
-        .form input, .form select, .form textarea {
-          box-sizing: border-box !important;
-          width: 100% !important;
-        }
-        .form .relative.group {
-          width: 100% !important;
-          padding: 0 !important;
-          margin: 0 !important;
-        }
-      `}</style>
       <section className="py-4 px-2 sm:py-6 sm:px-6 lg:px-8 flex flex-col items-center justify-center" id="booking">
         {/* Status Messages */}
         {submitStatus && (
           <div
             className={`max-w-4xl w-full mb-6 p-4 rounded-md ${submitStatus.type === "success"
-                ? "bg-green-100 border border-green-400 text-green-700"
-                : "bg-red-100 border border-red-400 text-red-700"
+              ? "bg-green-100 border border-green-400 text-green-700"
+              : "bg-red-100 border border-red-400 text-red-700"
               }`}
           >
             {submitStatus.message}
@@ -113,8 +102,8 @@ export default function BookingForm() {
               {/* Tirupati Package */}
               <label
                 className={`flex-1 bg-white/80 backdrop-blur-sm font-semibold px-4 sm:px-6 py-3 sm:py-4 text-center cursor-pointer transition-all duration-300 ease-in-out rounded-xl shadow-lg border-2 ${selectedPackage === "Tirupati Package"
-                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white border-blue-500 transform scale-105 shadow-xl"
-                    : "bg-white/80 text-gray-700 hover:bg-blue-50 border-gray-200 hover:border-blue-300 hover:shadow-md"
+                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white border-blue-500 transform scale-105 shadow-xl"
+                  : "bg-white/80 text-gray-700 hover:bg-blue-50 border-gray-200 hover:border-blue-300 hover:shadow-md"
                   }`}
               >
                 <input
@@ -133,8 +122,8 @@ export default function BookingForm() {
               {/* Car Rental Package */}
               <label
                 className={`flex-1 bg-white/80 backdrop-blur-sm font-semibold px-4 sm:px-6 py-3 sm:py-4 text-center cursor-pointer transition-all duration-300 ease-in-out rounded-xl shadow-lg border-2 ${selectedPackage === "Car Rental Package"
-                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white border-blue-500 transform scale-105 shadow-xl"
-                    : "bg-white/80 text-gray-700 hover:bg-blue-50 border-gray-200 hover:border-blue-300 hover:shadow-md"
+                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white border-blue-500 transform scale-105 shadow-xl"
+                  : "bg-white/80 text-gray-700 hover:bg-blue-50 border-gray-200 hover:border-blue-300 hover:shadow-md"
                   }`}
               >
                 <input
@@ -146,15 +135,15 @@ export default function BookingForm() {
                   className="sr-only"
                 />
                 <span className="flex items-center justify-center gap-2 text-sm sm:text-base">
-                  Car Rental Package
+                  Outstation Car Rental Package
                 </span>
               </label>
 
               {/* Temple Tour Package */}
               <label
                 className={`flex-1 bg-white/80 backdrop-blur-sm font-semibold px-4 sm:px-6 py-3 sm:py-4 text-center cursor-pointer transition-all duration-300 ease-in-out rounded-xl shadow-lg border-2 ${selectedPackage === "Temple Tour Package"
-                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white border-blue-500 transform scale-105 shadow-xl"
-                    : "bg-white/80 text-gray-700 hover:bg-blue-50 border-gray-200 hover:border-blue-300 hover:shadow-md"
+                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white border-blue-500 transform scale-105 shadow-xl"
+                  : "bg-white/80 text-gray-700 hover:bg-blue-50 border-gray-200 hover:border-blue-300 hover:shadow-md"
                   }`}
               >
                 <input
@@ -184,7 +173,6 @@ export default function BookingForm() {
                     placeholder="Your Name"
                     required
                     className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
-                    style={{ boxSizing: 'border-box' }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
@@ -197,7 +185,6 @@ export default function BookingForm() {
                     placeholder="Email"
                     required
                     className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
-                    style={{ boxSizing: 'border-box' }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
@@ -210,7 +197,6 @@ export default function BookingForm() {
                     placeholder="Phone Number"
                     required
                     className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
-                    style={{ boxSizing: 'border-box' }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
@@ -228,7 +214,6 @@ export default function BookingForm() {
                     required
                     min="1"
                     className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
-                    style={{ boxSizing: 'border-box' }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
@@ -240,7 +225,6 @@ export default function BookingForm() {
                     onChange={handleInputChange}
                     required
                     className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
-                    style={{ boxSizing: 'border-box' }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
@@ -252,7 +236,6 @@ export default function BookingForm() {
                     onChange={handleInputChange}
                     required
                     className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
-                    style={{ boxSizing: 'border-box' }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
@@ -267,7 +250,6 @@ export default function BookingForm() {
                     onChange={handleInputChange}
                     required
                     className="w-full px-4 sm:px-6 py-3 sm:py-4 pr-10 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl text-gray-700 text-sm sm:text-base appearance-none cursor-pointer"
-                    style={{ width: '100%', minWidth: '100%', maxWidth: '100%', boxSizing: 'border-box' }}
                   >
                     {selectedPackage === "Car Rental Package" ? (
                       <>
@@ -352,7 +334,6 @@ export default function BookingForm() {
                     placeholder="Your Message"
                     rows={4}
                     className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl resize-y text-sm sm:text-base min-w-0"
-                    style={{ boxSizing: 'border-box' }}
                   ></textarea>
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                 </div>

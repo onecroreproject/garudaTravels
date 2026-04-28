@@ -1,0 +1,29 @@
+{
+    "heroImage": "/images/tourpakege/hero/chennai-to-vellore-one-day-package.png",
+    "images": [
+        "/data/temple-tour-package/templ-hero-image/Chennai-to-Vellore-One-Day-Package1.png"
+    ],
+    "templeList": [
+        {
+            "id": "dtbo5meh0ei",
+            "imageUrl": "/images/tourpakege/hero/che-vellore/ratnagiri-murugan-temple.png"
+        },
+        {
+            "id": "r4w71jfu4x",
+            "imageUrl": "/images/tourpakege/hero/che-vellore/jalakandeswarar-temple.jpg"
+        },
+        {
+            "id": "tv6nir2a0d8",
+            "imageUrl": "/images/tourpakege/hero/che-vellore/vellore-museum.png"
+        },
+        {
+            "id": "vdcpyt2xgop",
+            "imageUrl": "/images/tourpakege/hero/che-vellore/vellore-fort.png"
+        },
+        {
+            "id": "o6ym1frc55r",
+            "imageUrl": "/images/tourpakege/hero/che-vellore/sripuram-golden-temple.png"
+        }
+    ]
+}
+

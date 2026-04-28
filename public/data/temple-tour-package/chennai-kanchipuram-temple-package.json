@@ -1,0 +1,33 @@
+{
+    "heroImage": "/images/tourpakege/hero/chennai-to-kanchipuram-one-day-package.png",
+    "images": [
+        "/data/temple-tour-package/templ-hero-image/Chennai-to-Kanchipuram-One-Day-Package-1.png"
+    ],
+    "templeList": [
+        {
+            "id": "2l4569b0i3a",
+            "imageUrl": "/images/tourpakege/hero/che-kan/kanchi-kamakshi-amman-temple.png"
+        },
+        {
+            "id": "qg2q0v6tx7n",
+            "imageUrl": "/images/tourpakege/hero/che-kan/varadharaja-perumal-temple.png"
+        },
+        {
+            "id": "as83gfq058p",
+            "imageUrl": "/images/tourpakege/hero/che-kan/vaikunta-perumal-temple.png"
+        },
+        {
+            "id": "b603rojsypi",
+            "imageUrl": "/images/tourpakege/hero/che-kan/kailasanathar-temple.png"
+        },
+        {
+            "id": "ph96bj8dnw",
+            "imageUrl": "/images/tourpakege/hero/che-kan/ekambareswarar-temple.png"
+        },
+        {
+            "id": "anp87dpxyi",
+            "imageUrl": "/images/tourpakege/hero/che-kan/kanchipuram-silk-saree.png"
+        }
+    ]
+}
+

@@ -1,0 +1,42 @@
+{
+    "carTypes": [
+        {
+            "id": "xl787hh1ovr",
+            "imageUrl": "/cars/etios.webp.png",
+            "name": "Etios A/C"
+        },
+        {
+            "id": "e07jv5f4ibd",
+            "imageUrl": "/cars/ertiga.png",
+            "name": "Ertiga A/C"
+        },
+        {
+            "id": "jnzc2y4jsai",
+            "imageUrl": "/cars/innova.png",
+            "name": "Innova A/C"
+        },
+        {
+            "id": "684oyy98ew8",
+            "imageUrl": "/cars/innova.png",
+            "name": "Innova A/C"
+        },
+        {
+            "id": "n2fggqmolb8",
+            "imageUrl": "/cars/crysta.png",
+            "name": "Innova Crysta A/C"
+        },
+        {
+            "id": "q2viti8eqnp",
+            "imageUrl": "/cars/crysta.png",
+            "name": "Innova Crysta A/C"
+        },
+        {
+            "id": "jwtobd3fzok",
+            "imageUrl": "/cars/tempo.png",
+            "name": "Tempo Traveller"
+        }
+    ],
+    "images": [
+        "/images/best-car-rentals-in-chennai-kilometer-based-car-rental.png"
+    ]
+}

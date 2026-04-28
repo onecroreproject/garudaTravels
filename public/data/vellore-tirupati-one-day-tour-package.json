@@ -1,0 +1,106 @@
+{
+    "sightseeingPlaces": [
+        {
+            "id": "aui9352v597",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fvellore-tirupati-one-day-tour-package%2Fplaces%2FSilothoram.jpg?alt=media&token=cea4ff32-3b02-4097-8c39-3547aa310094"
+        },
+        {
+            "id": "6xqinr17l0h",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fvellore-tirupati-one-day-tour-package%2Fplaces%2FRock%20Garden.jpg?alt=media&token=6c1e9a7a-04c2-44e8-9054-c78aadee5c6e"
+        },
+        {
+            "id": "nv14dz2uxc",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fvellore-tirupati-one-day-tour-package%2Fplaces%2FDeer%20Park.png?alt=media&token=2d07c19a-755f-42c3-87af-62e3d020a3e3"
+        },
+        {
+            "id": "yoehb7dozr",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fvellore-tirupati-one-day-tour-package%2Fplaces%2FJabila%20Theertham.png?alt=media&token=4e6b4722-f30b-424f-960b-a283e0efda76"
+        },
+        {
+            "id": "nmqkqotbauf",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fvellore-tirupati-one-day-tour-package%2Fplaces%2FSri%20Varahaswami%20Temple.png?alt=media&token=9f9bdaec-dfb6-422e-a6a4-2dd7244241a9"
+        },
+        {
+            "id": "krrcs5kuq6l",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fvellore-tirupati-one-day-tour-package%2Fplaces%2FSri%20Bedi%20Anjaneya%20Swamy%20Temple.png?alt=media&token=ec167c75-c76d-41f9-8540-2c4f9d538931"
+        },
+        {
+            "id": "1tfkacly6h9",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fvellore-tirupati-one-day-tour-package%2Fplaces%2FPapa%20Vinasanam%20Dam.png?alt=media&token=75817566-7fa6-4120-851c-590ee1ce3f1f"
+        },
+        {
+            "id": "q3y66ifeu7n",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fvellore-tirupati-one-day-tour-package%2Fplaces%2FLord%20Balaji%20Foot%20Prints.png?alt=media&token=3ba2b74b-876a-470a-8127-77a4f18c9035"
+        },
+        {
+            "id": "wa5fettxmwa",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fvellore-tirupati-one-day-tour-package%2Fplaces%2Fvenkat%20museum.png?alt=media&token=00171e36-57e2-41c1-a592-43097d787830"
+        },
+        {
+            "id": "ph7wia7zz68",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fvellore-tirupati-one-day-tour-package%2Fplaces%2FGeetopadesam%20Park.png?alt=media&token=7abf26ca-77a6-4dd8-b7fb-7c9f55bbd6f3"
+        },
+        {
+            "id": "h2nzphlz4d4",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fvellore-tirupati-one-day-tour-package%2Fplaces%2FPapavinasanam%20Theertham.png?alt=media&token=56a6e244-8657-4514-9c59-8d21ee712cd8"
+        },
+        {
+            "id": "ygkem70onpj",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fvellore-tirupati-one-day-tour-package%2Fplaces%2Fakasa%20ganga.png?alt=media&token=7a006cd4-102c-430c-a938-be32a6bae76b"
+        }
+    ],
+    "maleDressCodeImages": [
+        "/gender/male.png"
+    ],
+    "sections": [
+        {
+            "id": "gph20iz40ml",
+            "imageUrl": "/images/vellore/oneday/tirupati-darshan-ticket-booking-with-vellore-to-tirupati-tour-package.png"
+        },
+        {
+            "id": "2avcsfjzpb",
+            "imageUrl": "/images/vellore/oneday/book-your-vellore-to-tirupati-one-day-packages.png"
+        },
+        {
+            "id": "ntehafb06g",
+            "imageUrl": "/images/vellore/oneday/vellore-to-tirupati-one-day-spiritual-tour-easy-&-hassle-free.png"
+        },
+        {
+            "id": "lpq5qb5ey6",
+            "imageUrl": "/images/vellore/oneday/why-choose-our-vellore-to-tirupati-darshan-package.png"
+        }
+    ],
+    "femaleDressCodeImages": [
+        "/gender/female.png"
+    ],
+    "carPrices": [
+        {
+            "id": "mwlhajcsiak",
+            "imageUrl": "/cars/etios.webp.png",
+            "carName": "Dezire / Etios A/C"
+        },
+        {
+            "id": "xtm3ql056ma",
+            "imageUrl": "/cars/ertiga.png",
+            "carName": "Ertiga"
+        },
+        {
+            "id": "uxe2y24c777",
+            "imageUrl": "/cars/innova.png",
+            "carName": "Innova A/C"
+        },
+        {
+            "id": "m3hucdsu08j",
+            "imageUrl": "/cars/crysta.png",
+            "carName": "Innova Crysta A/C"
+        },
+        {
+            "id": "7ut2noss04g",
+            "imageUrl": "/cars/tempo.png",
+            "carName": "Tempo Traveller A/C"
+        }
+    ],
+    "images": [
+        "/images/vellore/oneday/book-your-vellore-to-tirupati-one-day-packages.png"
+    ]
+}

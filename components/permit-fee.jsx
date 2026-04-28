@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import Image from "next/image"
 import { Check, X } from "lucide-react"
@@ -70,7 +70,7 @@ export default function PermitFeeSection() {
                 alt={vehiclePermits[0].title}
                 width={150}
                 height={100}
-                className="rounded-md object-cover flex-shrink-0"
+                className="rounded-lg object-cover flex-shrink-0"
                 priority
               />
               <div className="text-center sm:text-left w-full">
@@ -92,7 +92,7 @@ export default function PermitFeeSection() {
                 alt={vehiclePermits[1].title}
                 width={150}
                 height={100}
-                className="rounded-md object-cover flex-shrink-0"
+                className="rounded-lg object-cover flex-shrink-0"
                 priority
               />
               <div className="text-center sm:text-left w-full">
@@ -130,7 +130,7 @@ export default function PermitFeeSection() {
                 alt={vehiclePermits[2].title}
                 width={150}
                 height={100}
-                className="rounded-md object-cover flex-shrink-0"
+                className="rounded-lg object-cover flex-shrink-0"
                 priority
               />
               <div className="text-center sm:text-left w-full">
@@ -152,7 +152,7 @@ export default function PermitFeeSection() {
                 alt={vehiclePermits[3].title}
                 width={150}
                 height={100}
-                className="rounded-md object-cover flex-shrink-0"
+                className="rounded-lg object-cover flex-shrink-0"
                 priority
               />
               <div className="text-center sm:text-left w-full">
@@ -185,3 +185,4 @@ export default function PermitFeeSection() {
     </section>
   )
 }
+

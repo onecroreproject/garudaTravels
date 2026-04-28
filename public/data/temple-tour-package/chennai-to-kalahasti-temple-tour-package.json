@@ -1,0 +1,17 @@
+{
+    "heroImage": "/images/tourpakege/hero/chennai-to-kalahasti-temple-one-day-package.png",
+    "images": [
+        "/data/temple-tour-package/templ-hero-image/Chennai-to-Kalahasti-Temple-One-Day-Package1.png"
+    ],
+    "templeList": [
+        {
+            "id": "hgogqyarldu",
+            "imageUrl": "/images/tourpakege/hero/che-kalahasti/sri-kalahasteeswara-temple.jpg"
+        },
+        {
+            "id": "msvdxrg4ae",
+            "imageUrl": "/images/tourpakege/hero/che-kalahasti/veyilingala-kona-waterfalls.jpg"
+        }
+    ]
+}
+

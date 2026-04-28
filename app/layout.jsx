@@ -1,5 +1,6 @@
 import './globals.css'
 import { Montserrat, Poppins } from 'next/font/google'
+import Script from 'next/script'
 import PreloadLinks from '@/components/PreloadLinks'
 
 const montserrat = Montserrat({
@@ -20,12 +21,13 @@ const poppins = Poppins({
 
 export const metadata = {
   title: 'Chennai to Tirupati Packages | Tirupati Packages | Temple Tour Packages - Garuda Tours & Travels',
-  description: 'Explore affordable Chennai to Tirupati tour packages with Garuda Tours & Travels. Hassle-free temple visits, VIP darshan, and customized itineraries. Book your Tirupati package from chennai today!',
+  description:
+    'Explore affordable Chennai to Tirupati tour packages with Garuda Tours & Travels. Hassle-free temple visits, VIP darshan, and customized itineraries. Book your Tirupati package from chennai today!',
   verification: {
-    google: "K7ewXgKXvbit-3awn54q3G0xI8ESfogL5ljIuwXoJDQ"
+    google: 'Nfags19ti-cL6zIaPs3sbTnY2XNHjkQ-igEgEz8XafI',
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: '/app/favicon.ico',
   },
 }
 
@@ -33,10 +35,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        {/* Favicon */}
+        <link rel="icon" href="/icon.png" sizes="any" />
+
         {/* Preload hero image for better LCP */}
-
-        <link rel="icon" href="/icon.png" sizes='any'/>
-
         <link
           rel="preload"
           href="/images/slider3.webp"
@@ -44,16 +46,36 @@ export default function RootLayout({ children }) {
           type="image/webp"
           fetchPriority="high"
         />
-        {/* Preconnect to CDN (faster FA load) */}
-        {/* <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" /> */}
 
-        {/* Load PreloadLinks */}
+
+
+        {/* Optional: Preload links */}
         {/* <PreloadLinks /> */}
       </head>
-      <body className={`${montserrat.variable} ${poppins.variable}`} suppressHydrationWarning>
+
+      <body
+        className={`${montserrat.variable} ${poppins.variable}`}
+        suppressHydrationWarning
+      >
         {children}
+
+        {/* ================= GOOGLE TRACKING ================= */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-0JSPK1NDNK"
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-0JSPK1NDNK');
+            gtag('config', 'AW-11108388784');
+          `}
+        </Script>
       </body>
     </html>
   )
 }
+

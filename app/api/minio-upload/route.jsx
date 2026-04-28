@@ -54,17 +54,16 @@ export async function POST(request) {
       // Upload to MinIO
       await minioClient.fPutObject(bucket, objectName, tempFilePath);
 
-      const url = `http://${
-        process.env.MINIO_ENDPOINT || "minio.thereciprocalsolutions.com"
-      }/${bucket}/${objectName}`;
+      const url = `http://${process.env.MINIO_ENDPOINT || "minio.thereciprocalsolutions.com"
+        }/${bucket}/${objectName}`;
 
       // Clean up temp file
-      await unlink(tempFilePath).catch(() => {});
+      await unlink(tempFilePath).catch(() => { });
 
       return NextResponse.json({ url });
     } catch (uploadError) {
       // Clean up temp file on error
-      await unlink(tempFilePath).catch(() => {});
+      await unlink(tempFilePath).catch(() => { });
       throw uploadError;
     }
   } catch (err) {

@@ -39,7 +39,7 @@ function CarRentalPage() {
                     {/* Left - */}
                     <div className="w-full">
                         <img
-                            src="/images/6.webp"
+                            src="/images/6.png"
                             alt="Car Booking"
                             className="rounded-lg shadow-lg w-full h-auto object-cover"
                         />

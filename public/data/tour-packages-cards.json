@@ -1,0 +1,17 @@
+[
+    {
+        "id": "chennai-tirupati-one-day-tour-package",
+        "name": "Chennai to Tirupati",
+        "image": "/images/ct.webp"
+    },
+    {
+        "id": "vellore-tirupati-one-day-tour-package",
+        "name": "Vellore to Tirupati",
+        "image": "/images/vt.webp"
+    },
+    {
+        "id": "bangalore-tirupati-darshan-tour-package",
+        "name": "Bangalore to Tirupati",
+        "image": "/images/bt.webp"
+    }
+]

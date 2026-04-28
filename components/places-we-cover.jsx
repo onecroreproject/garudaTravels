@@ -1,4 +1,4 @@
-// components/PlacesCoverage.jsx
+﻿// components/PlacesCoverage.jsx
 import Image from "next/image";
 
 const places = [
@@ -36,7 +36,7 @@ function Card({ name, image, extra }) {
         alt={name}
         width={400}
         height={250}
-        className="w-full h-48 object-cover"
+        className="w-full h-48 object-cover rounded-lg"
         priority
       />
       {extra && (
@@ -76,3 +76,4 @@ export default function PlacesCoverage() {
     </section>
   );
 }
+

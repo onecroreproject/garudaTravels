@@ -1,0 +1,110 @@
+{
+    "sightseeingPlaces": [
+        {
+            "imageUrl": "1.webp",
+            "id": "m0kxlka5g1p"
+        },
+        {
+            "id": "wfibahr8ybr",
+            "imageUrl": "2.webp"
+        },
+        {
+            "imageUrl": "3.webp",
+            "id": "ht0ezkxf4wf"
+        },
+        {
+            "imageUrl": "4.png",
+            "id": "re7kfxdl2h"
+        },
+        {
+            "id": "ni2tcvxt0gc",
+            "imageUrl": "5.png"
+        },
+        {
+            "id": "13fsxbs8xxu9",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fchennai-tirupati-one-day-tour-package%2Fplaces%2FUntitled%20design%20(7).png?alt=media&token=fe1779bf-ddf2-4258-939b-11aa7dba6bc3"
+        },
+        {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fchennai-tirupati-one-day-tour-package%2Fplaces%2FUntitled%20design%20(8).png?alt=media&token=96bb38e6-dfd0-4bd6-9815-65655e27e5a7",
+            "id": "nl500kxyxmr"
+        },
+        {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fchennai-tirupati-one-day-tour-package%2Fplaces%2FUntitled%20design%20(15).png?alt=media&token=bfc04b12-2fa5-45ac-be0b-f85f00ddb959",
+            "id": "gqz9yln9eed"
+        },
+        {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fchennai-tirupati-one-day-tour-package%2Fplaces%2FUntitled%20design%20(10).png?alt=media&token=cbc1e18c-042d-4e31-a430-b162dc60ba2e",
+            "id": "pps84hvihs"
+        },
+        {
+            "id": "v7ubko65fk",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fchennai-tirupati-one-day-tour-package%2Fplaces%2FUntitled%20design%20(11).png?alt=media&token=42235316-59ba-473a-83fc-3d0c767d1baa"
+        },
+        {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fchennai-tirupati-one-day-tour-package%2Fplaces%2FUntitled%20design%20(12).png?alt=media&token=51a43bb4-722e-4f30-bdb7-74a028aaf4a0",
+            "id": "f8rf59i0s9t"
+        },
+        {
+            "id": "0c0n3uzmadxf",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fchennai-tirupati-one-day-tour-package%2Fplaces%2FUntitled%20design%20(23).png?alt=media&token=0d92be83-7b9a-4af6-8c53-dc7ea58bf8f0"
+        },
+        {
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fchennai-tirupati-one-day-tour-package%2Fplaces%2FUntitled%20design%20(14).png?alt=media&token=6c45f94d-b2aa-4974-9c81-6cdeb54cb3f3",
+            "id": "v9lfnhrymjq"
+        }
+    ],
+    "maleDressCodeImages": [
+        "/gender/male.png"
+    ],
+    "sections": [
+        {
+            "id": "krqokyeu9yn",
+            "imageUrl": "/images/trupathi/best-tirupati-package-from-chennai-stress-free-darshan-experience.png"
+        },
+        {
+            "imageUrl": "/images/trupathi/chennai-to-tirupati-package-comfort-devotion-&-reliability.png",
+            "id": "t7ze59d4zik"
+        },
+        {
+            "id": "gqihhmuheq4",
+            "imageUrl": "/images/trupathi/experience-the-best-chennai-to-tirupati-package-with-vip-comfort.png"
+        },
+        {
+            "imageUrl": "/images/trupathi/best-chennai-to-tirupati-package-a-peaceful-pilgrimage-perfectly-planned.png",
+            "id": "9lgj6zmw4w4"
+        }
+    ],
+    "femaleDressCodeImages": [
+        "/gender/female.png"
+    ],
+    "carPrices": [
+        {
+            "id": "y7bupeph6m",
+            "carName": "Dezire / Etios A/C",
+            "imageUrl": "/cars/etios.webp.png"
+        },
+        {
+            "carName": "Ertiga",
+            "imageUrl": "/cars/ertiga.png",
+            "id": "o98oyzk6l7m"
+        },
+        {
+            "id": "raf1aef0vdd",
+            "carName": "Innova A/C",
+            "imageUrl": "/cars/innova.png"
+        },
+        {
+            "imageUrl": "/cars/crysta.png",
+            "carName": "Innova Crysta A/C",
+            "id": "0mpjvyvrkbp"
+        },
+        {
+            "id": "5d1rl49e8u2",
+            "imageUrl": "/cars/tempo.png",
+            "carName": "Tempo Traveller A/C"
+        }
+    ],
+    "images": [
+        "/images/trupathi/best-tirupati-package-from-chennai-stress-free-darshan-experience.png"
+    ]
+}

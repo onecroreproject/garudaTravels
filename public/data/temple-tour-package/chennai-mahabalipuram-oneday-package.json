@@ -1,0 +1,24 @@
+{
+    "heroImage": "/images/tourpakege/hero/chennai-to-mahabalipuram-one-day-package.png",
+    "images": [
+        "/data/temple-tour-package/templ-hero-image/Chennai-to-Mahabalipuram-One-Day-Package-1.png"
+    ],
+    "templeList": [
+        {
+            "id": "m9hsbb5oeog",
+            "imageUrl": "/images/tourpakege/hero/che-maha/mahabalipuram-shore-temple.jpg"
+        },
+        {
+            "id": "hu2tmsq1le",
+            "imageUrl": "/images/tourpakege/hero/che-maha/arulmigu-sri-sthala-sayana-perumal-temple.png"
+        },
+        {
+            "id": "ohvp4q4k38",
+            "imageUrl": "/images/tourpakege/hero/che-maha/krishnabutterball.jpg"
+        },
+        {
+            "id": "3x83sho4qsj",
+            "imageUrl": "/images/tourpakege/hero/che-maha/ganesha-ratha.png"
+        }
+    ]
+}

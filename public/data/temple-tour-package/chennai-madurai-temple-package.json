@@ -1,0 +1,61 @@
+{
+    "heroImage": "/images/tourpakege/hero/chennai-to-madurai-two-days.png",
+    "images": [
+        "/data/temple-tour-package/templ-hero-image/chennai-to-madurai-2days-tour-packakges-1.png"
+    ],
+    "templeList": [
+        {
+            "id": "3kjxja1iwdl",
+            "imageUrl": "/images/tourpakege/hero/madurai-two-way/sri-ranganathaswamy-temple-(srirangam).png"
+        },
+        {
+            "id": "jo8ysiq00o",
+            "imageUrl": "/images/tourpakege/hero/madurai-two-way/rockfort-temple.jpg"
+        },
+        {
+            "id": "osmpeshb8dl",
+            "imageUrl": "/images/tourpakege/hero/madurai-two-way/samayapuram-mariamman-temple.jpg"
+        },
+        {
+            "id": "cs1dq6iz3wn",
+            "imageUrl": "/images/tourpakege/hero/madurai-two-way/brahmapureeswarar-temple.jpg"
+        },
+        {
+            "id": "683qqfte5bw",
+            "imageUrl": "/images/tourpakege/hero/madurai-two-way/trichy-to-rameswaram.jpg"
+        },
+        {
+            "id": "8iq7lzvsqbq",
+            "imageUrl": "/images/tourpakege/hero/madurai-two-way/pillaiyarpatti-karpaga-vinayagar-temple.jpg"
+        },
+        {
+            "id": "qq308oum8i",
+            "imageUrl": "/images/tourpakege/hero/madurai-two-way/tamil-thai-temple.jpg"
+        },
+        {
+            "id": "8ip2gdyc2ua",
+            "imageUrl": "/images/tourpakege/hero/madurai-two-way/thiru-uthirakosamangai-shivan-temple.jpg"
+        },
+        {
+            "id": "6dda0fxpi69",
+            "imageUrl": "/images/tourpakege/hero/madurai-two-way/ramanathaswamy-temple.jpg"
+        },
+        {
+            "id": "1nkuibhhs8z",
+            "imageUrl": "/images/tourpakege/hero/madurai-two-way/rameshwaram-to-madurai.png"
+        },
+        {
+            "id": "huzucs01lk",
+            "imageUrl": "/images/tourpakege/hero/madurai-two-way/madurai-meenakshi-amman-temple-1.jpg"
+        },
+        {
+            "id": "a8fgsh12rp8",
+            "imageUrl": "/images/tourpakege/hero/madurai-two-way/thiruparankundram-murugan-temple-1.jpg"
+        },
+        {
+            "id": "mul8x4webqm",
+            "imageUrl": "/images/tourpakege/hero/madurai-two-way/pazhamuthircholai-murugan-temple-1.png"
+        }
+    ]
+}
+

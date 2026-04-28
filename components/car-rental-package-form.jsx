@@ -19,6 +19,14 @@ import { uploadToMinIO } from "@/lib/fileUpload"
 // Helper to generate unique IDs for dynamic fields
 const generateUniqueId = () => Math.random().toString(36).substring(2, 15)
 
+const STATIC_CAR_IMAGES = [
+  { key: "swift", name: "Swift / Dzire / Etios", path: "/cars/swift.png" },
+  { key: "ertiga", name: "Ertiga", path: "/cars/ertiga.png" },
+  { key: "innova", name: "Innova", path: "/cars/innova.png" },
+  { key: "crysta", name: "Innova Crysta", path: "/cars/crysta.png" },
+  { key: "tempo", name: "Tempo Traveller", path: "/cars/tempo.png" },
+];
+
 export default function CarRentalPackageForm({ packageId }) {
   const router = useRouter()
   const { toast } = useToast()
@@ -160,11 +168,11 @@ export default function CarRentalPackageForm({ packageId }) {
             setCarTypes(
               data.carTypes?.map((car) => ({
                 ...car,
-                imageFile: null,
-                rating: car.rating || "",
-                pricePerKm: car.pricePerKm || "",
-                minKm: car.minKm || "",
-                driverBeta: car.driverBeta || "",
+                image: (car.image || car.imageUrl)?.startsWith("/cars/") ? (car.image || car.imageUrl) : "",
+                useStaticImage: !!(car.image || car.imageUrl) && (car.image || car.imageUrl).startsWith("/cars/"),
+                staticImageKey: (car.image || car.imageUrl) && (car.image || car.imageUrl).startsWith("/cars/")
+                  ? STATIC_CAR_IMAGES.find(img => img.path === (car.image || car.imageUrl))?.key || ""
+                  : "",
               })) || [],
             )
             setServiceFeatures(data.serviceFeatures || [])
@@ -256,19 +264,20 @@ export default function CarRentalPackageForm({ packageId }) {
 
   // Car Types handlers
   const addCarType = () => {
-    setCarTypes((prev) => [...prev, { 
-      id: generateUniqueId(), 
-      name: "", 
-      seating: "", 
-      fuelType: "", 
-      transmission: "", 
-      features: "", 
-      imageUrl: "", 
-      imageFile: null,
+    setCarTypes((prev) => [...prev, {
+      id: generateUniqueId(),
+      name: "",
+      seating: "",
+      fuelType: "",
+      transmission: "",
+      features: "",
+      image: "",
       rating: "",
       pricePerKm: "",
       minKm: "",
-      driverBeta: ""
+      driverBeta: "",
+      useStaticImage: true,
+      staticImageKey: ""
     }])
     setIsDirty(true)
   }
@@ -278,13 +287,18 @@ export default function CarRentalPackageForm({ packageId }) {
     setIsDirty(true)
   }
 
-  const handleCarTypeImageFileChange = (carId, file) => {
-    setCarTypes((prev) => prev.map((car) => (car.id === carId ? { ...car, imageFile: file } : car)))
-    setIsDirty(true)
-  }
+  // handleCarTypeImageFileChange removed as car image upload is disabled
+
+  const handleStaticImageChange = (carId, key) => {
+    const selectedImage = STATIC_CAR_IMAGES.find(img => img.key === key);
+    setCarTypes((prev) =>
+      prev.map((car) => (car.id === carId ? { ...car, useStaticImage: true, staticImageKey: key, image: selectedImage ? selectedImage.path : "" } : car))
+    );
+    setIsDirty(true);
+  };
 
   const removeCarTypeImage = (carId) => {
-    setCarTypes((prev) => prev.map((car) => (car.id === carId ? { ...car, imageUrl: "", imageFile: null } : car)))
+    setCarTypes((prev) => prev.map((car) => (car.id === carId ? { ...car, image: "", useStaticImage: true, staticImageKey: "" } : car)))
     setIsDirty(true)
   }
 
@@ -295,11 +309,11 @@ export default function CarRentalPackageForm({ packageId }) {
 
   // Pricing Plans handlers
   const addPricingPlan = () => {
-    setPricingPlans((prev) => [...prev, { 
-      id: generateUniqueId(), 
-      duration: "", 
-      price: "", 
-      features: [] 
+    setPricingPlans((prev) => [...prev, {
+      id: generateUniqueId(),
+      duration: "",
+      price: "",
+      features: []
     }])
     setIsDirty(true)
   }
@@ -325,9 +339,9 @@ export default function CarRentalPackageForm({ packageId }) {
       prev.map((plan) =>
         plan.id === planId
           ? {
-              ...plan,
-              features: plan.features.map((feature) => (feature.id === featureId ? { ...feature, text: newText } : feature)),
-            }
+            ...plan,
+            features: plan.features.map((feature) => (feature.id === featureId ? { ...feature, text: newText } : feature)),
+          }
           : plan,
       ),
     )
@@ -402,9 +416,9 @@ export default function CarRentalPackageForm({ packageId }) {
       prev.map((section) =>
         section.id === sectionId
           ? {
-              ...section,
-              listInfo: section.listInfo.map((item) => (item.id === listInfoId ? { ...item, text: newText } : item)),
-            }
+            ...section,
+            listInfo: section.listInfo.map((item) => (item.id === listInfoId ? { ...item, text: newText } : item)),
+          }
           : section,
       ),
     )
@@ -472,7 +486,7 @@ export default function CarRentalPackageForm({ packageId }) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    
+
     console.log("Form submission started...")
     console.log("Package URL:", packageUrl)
     console.log("Car Types:", carTypes)
@@ -509,31 +523,21 @@ export default function CarRentalPackageForm({ packageId }) {
       const allImageUrls = [...images, ...uploadedImageUrls]
 
       // Process car types, including image uploads for each car
-      const processedCarTypes = await Promise.all(
-        carTypes.map(async (car) => {
-          let carImageUrl = car.imageUrl
-          if (car.imageFile) {
-            const url = await uploadToMinIO(car.imageFile, `${storagePathPrefix}/cars`)
-            if (!url) {
-              throw new Error(`Failed to upload ${car.imageFile.name}`)
-            }
-            carImageUrl = url
-          }
-          return {
-            id: car.id,
-            name: car.name,
-            seating: car.seating,
-            fuelType: car.fuelType,
-            transmission: car.transmission,
-            features: car.features,
-            imageUrl: carImageUrl,
-            rating: car.rating,
-            pricePerKm: car.pricePerKm,
-            minKm: car.minKm,
-            driverBeta: car.driverBeta,
-          }
-        }),
-      )
+      const processedCarTypes = carTypes.map((car) => {
+        return {
+          id: car.id,
+          name: car.name,
+          seating: car.seating,
+          fuelType: car.fuelType,
+          transmission: car.transmission,
+          features: car.features,
+          image: car.image,
+          rating: car.rating,
+          pricePerKm: car.pricePerKm,
+          minKm: car.minKm,
+          driverBeta: car.driverBeta,
+        }
+      })
 
       // Process sections, including image uploads for each section (same as Tirupati)
       const processedSections = await Promise.all(
@@ -582,7 +586,7 @@ export default function CarRentalPackageForm({ packageId }) {
         createdAt: isEditMode ? (await getDoc(doc(db, "carRentalPackages", packageId))).data().createdAt : Timestamp.now(),
         updatedAt: Timestamp.now(),
       }
-      
+
       console.log("Processed Car Types:", processedCarTypes)
       console.log("Package Data to be saved:", packageData)
 
@@ -628,911 +632,871 @@ export default function CarRentalPackageForm({ packageId }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <Card className="w-full max-w-4xl mx-auto">
-        <CardHeader>
-          <CardTitle className="text-center">
-            {isEditMode ? "Edit Car Rental Package" : "Add New Car Rental Package"}
-          </CardTitle>
-          {isDirty && (
-            <div className="text-center">
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                ● Unsaved Changes
-              </span>
+<div className="min-h-screen bg-gray-100 p-4 sm:p-6 md:p-8">
+  <Card className="w-full max-w-4xl mx-auto">
+    <CardHeader className="p-4 sm:p-6">
+      <CardTitle className="text-lg sm:text-xl md:text-2xl text-center font-semibold">
+        {isEditMode ? "Edit Car Rental Package" : "Add New Car Rental Package"}
+      </CardTitle>
+      {isDirty && (
+        <div className="text-center mt-2">
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+            ● Unsaved Changes
+          </span>
+        </div>
+      )}
+    </CardHeader>
+    <CardContent className="p-4 sm:p-6">
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+        {/* Package URL */}
+        <div className="space-y-1.5">
+          <Label htmlFor="packageUrl" className="text-sm font-medium">
+            Package URL<span className="text-red-500">*</span>
+          </Label>
+          <Input
+            id="packageUrl"
+            type="text"
+            value={packageUrl}
+            onChange={(e) => {
+              setPackageUrl(e.target.value)
+              setIsDirty(true)
+            }}
+            required
+            placeholder="Eg: premium-car-rental"
+            disabled={isEditMode}
+            className="text-sm h-9 sm:h-10"
+          />
+          {isEditMode && <p className="text-xs text-gray-500 mt-1">URL cannot be changed after creation.</p>}
+        </div>
+
+        {/* Package Title */}
+        <EditableTitle
+          title={title}
+          onTitleChange={(newTitle) => {
+            setTitle(newTitle)
+            setIsDirty(true)
+          }}
+          placeholder="Eg: Premium Car Rental Service"
+          required={true}
+          className="text-base sm:text-lg"
+        />
+
+        {/* Package Order */}
+        <div className="space-y-1.5">
+          <Label htmlFor="packageOrder" className="text-sm font-medium">
+            Package Order<span className="text-red-500">*</span>
+          </Label>
+          <Input
+            id="packageOrder"
+            type="number"
+            min="1"
+            value={packageOrder}
+            onChange={(e) => {
+              setPackageOrder(Number(e.target.value))
+              setIsDirty(true)
+            }}
+            required
+            placeholder="Enter Package Order"
+            className="text-sm h-9 sm:h-10"
+          />
+        </div>
+
+        {/* Subtitle */}
+        <div className="space-y-1.5">
+          <Label htmlFor="subtitle" className="text-sm font-medium">Package Subtitle</Label>
+          <Input
+            id="subtitle"
+            type="text"
+            value={subtitle}
+            onChange={(e) => {
+              setSubtitle(e.target.value)
+              setIsDirty(true)
+            }}
+            placeholder="Brief description of the car rental service"
+            className="text-sm h-9 sm:h-10"
+          />
+        </div>
+
+        {/* Content */}
+        <div className="space-y-1.5">
+          <Label htmlFor="content" className="text-sm font-medium">Package Description</Label>
+          <RichTextEditor
+            value={content}
+            onChange={(content) => {
+              setContent(content)
+              setIsDirty(true)
+            }}
+            placeholder="Detailed description of the car rental service..."
+            rows={4}
+            className="text-sm"
+          />
+        </div>
+
+        {/* Package Images */}
+        <div className="space-y-1.5">
+          <Label htmlFor="images" className="text-sm font-medium">
+            Package Images<span className="text-red-500">*</span>
+          </Label>
+          <Input 
+            id="images" 
+            type="file" 
+            multiple 
+            onChange={handleFileChange} 
+            className="cursor-pointer text-sm h-9 sm:h-10 file:text-sm file:font-medium" 
+          />
+          <p className="text-xs text-gray-500 mt-1">Upload multiple images for this car rental package.</p>
+
+          {/* Display existing images */}
+          {images.length > 0 && (
+            <div className="mt-3 sm:mt-4">
+              <h4 className="text-sm font-semibold mb-2">Existing Images:</h4>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3">
+                {images.map((url, index) => (
+                  <div key={index} className="relative group aspect-square">
+                    <img
+                      src={url || "/placeholder.webp"}
+                      alt={`Existing image ${index + 1}`}
+                      className="rounded-md object-cover w-full h-full"
+                    />
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      size="icon"
+                      className="absolute top-1 right-1 h-5 w-5 sm:h-6 sm:w-6 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      onClick={() => removeExistingImage(url)}
+                    >
+                      <X className="h-3 w-3 sm:h-4 sm:w-4" />
+                      <span className="sr-only">Remove image</span>
+                    </Button>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Package URL */}
-            <div>
-              <Label htmlFor="packageUrl">
-                Package URL<span className="text-red-500">*</span>
-              </Label>
-              <Input
-                id="packageUrl"
-                type="text"
-                value={packageUrl}
-                onChange={(e) => {
-                  setPackageUrl(e.target.value)
-                  setIsDirty(true)
-                }}
-                required
-                placeholder="Eg: premium-car-rental"
-                disabled={isEditMode}
-              />
-              {isEditMode && <p className="text-sm text-gray-500 mt-1">URL cannot be changed after creation.</p>}
+
+          {/* Display new image files to be uploaded */}
+          {newImageFiles.length > 0 && (
+            <div className="mt-3 sm:mt-4">
+              <h4 className="text-sm font-semibold mb-2">New Images to Upload:</h4>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3">
+                {newImageFiles.map((file, index) => (
+                  <div key={index} className="relative group aspect-square">
+                    <img
+                      src={URL.createObjectURL(file) || "/placeholder.webp"}
+                      alt={`New image ${index + 1}`}
+                      className="rounded-md object-cover w-full h-full"
+                    />
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      size="icon"
+                      className="absolute top-1 right-1 h-5 w-5 sm:h-6 sm:w-6 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      onClick={() => removeNewImage(index)}
+                    >
+                      <X className="h-3 w-3 sm:h-4 sm:w-4" />
+                      <span className="sr-only">Remove new image</span>
+                    </Button>
+                  </div>
+                ))}
+              </div>
             </div>
+          )}
+        </div>
 
-            {/* Package Title */}
-            <EditableTitle
-              title={title}
-              onTitleChange={(newTitle) => {
-                setTitle(newTitle)
-                setIsDirty(true)
-              }}
-              placeholder="Eg: Premium Car Rental Service"
-              required={true}
-            />
-
-            {/* Package Order */}
-            <div>
-              <Label htmlFor="packageOrder">
-                Package Order<span className="text-red-500">*</span>
-              </Label>
-              <Input
-                id="packageOrder"
-                type="number"
-                min="1"
-                value={packageOrder}
-                onChange={(e) => {
-                  setPackageOrder(Number(e.target.value))
-                  setIsDirty(true)
-                }}
-                required
-                placeholder="Enter Package Order"
-              />
+        {/* SEO Settings */}
+        <div className="space-y-2">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-800">SEO Settings</h3>
+          <div className="space-y-3 sm:space-y-4 p-3 sm:p-4 bg-gray-50 rounded-md border border-gray-200">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <div className="space-y-1.5">
+                <Label htmlFor="pageTitle" className="text-sm font-medium">Page Title</Label>
+                <Input
+                  id="pageTitle"
+                  type="text"
+                  value={seoData.pageTitle}
+                  onChange={(e) => {
+                    setSeoData(prev => ({ ...prev, pageTitle: e.target.value }))
+                    setIsDirty(true)
+                  }}
+                  placeholder="Custom page title for SEO"
+                  className="text-sm h-9 sm:h-10"
+                />
+                <p className="text-xs text-gray-500">Appears in browser tab and search results</p>
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="metaKeywords" className="text-sm font-medium">Meta Keywords</Label>
+                <Input
+                  id="metaKeywords"
+                  type="text"
+                  value={seoData.metaKeywords}
+                  onChange={(e) => {
+                    setSeoData(prev => ({ ...prev, metaKeywords: e.target.value }))
+                    setIsDirty(true)
+                  }}
+                  placeholder="car rental, vehicle, hire, transport"
+                  className="text-sm h-9 sm:h-10"
+                />
+                <p className="text-xs text-gray-500">Comma-separated keywords</p>
+              </div>
             </div>
-
-            {/* Subtitle */}
-            <div>
-              <Label htmlFor="subtitle">Package Subtitle</Label>
-              <Input
-                id="subtitle"
-                type="text"
-                value={subtitle}
-                onChange={(e) => {
-                  setSubtitle(e.target.value)
-                  setIsDirty(true)
-                }}
-                placeholder="Brief description of the car rental service"
-              />
-            </div>
-
-            {/* Content */}
-            <div>
-              <Label htmlFor="content">Package Description</Label>
+            
+            <div className="space-y-1.5">
+              <Label htmlFor="metaDescription" className="text-sm font-medium">Meta Description</Label>
               <RichTextEditor
-                value={content}
+                value={seoData.metaDescription}
                 onChange={(content) => {
-                  setContent(content)
+                  setSeoData(prev => ({ ...prev, metaDescription: content }))
                   setIsDirty(true)
                 }}
-                placeholder="Detailed description of the car rental service..."
-                rows={4}
+                placeholder="Brief description of the car rental service for search engines"
+                rows={3}
+                className="text-sm"
+              />
+              <p className="text-xs text-gray-500">Recommended: 150-160 characters</p>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <div className="space-y-1.5">
+                <Label htmlFor="ogTitle" className="text-sm font-medium">Open Graph Title</Label>
+                <Input
+                  id="ogTitle"
+                  type="text"
+                  value={seoData.ogTitle}
+                  onChange={(e) => {
+                    setSeoData(prev => ({ ...prev, ogTitle: e.target.value }))
+                    setIsDirty(true)
+                  }}
+                  placeholder="Title for social media sharing"
+                  className="text-sm h-9 sm:h-10"
+                />
+                <p className="text-xs text-gray-500">For Facebook, WhatsApp sharing</p>
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="ogImage" className="text-sm font-medium">Open Graph Image URL</Label>
+                <Input
+                  id="ogImage"
+                  type="url"
+                  value={seoData.ogImage}
+                  onChange={(e) => {
+                    setSeoData(prev => ({ ...prev, ogImage: e.target.value }))
+                    setIsDirty(true)
+                  }}
+                  placeholder="https://example.com/image.webp"
+                  className="text-sm h-9 sm:h-10"
+                />
+                <p className="text-xs text-gray-500">Image for social media sharing</p>
+              </div>
+            </div>
+            
+            <div className="space-y-1.5">
+              <Label htmlFor="ogDescription" className="text-sm font-medium">Open Graph Description</Label>
+              <RichTextEditor
+                value={seoData.ogDescription}
+                onChange={(content) => {
+                  setSeoData(prev => ({ ...prev, ogDescription: content }))
+                  setIsDirty(true)
+                }}
+                placeholder="Description for social media sharing"
+                rows={2}
+                className="text-sm"
               />
             </div>
+          </div>
+        </div>
 
-            {/* Package Images */}
-            <div>
-              <Label htmlFor="images">
-                Package Images<span className="text-red-500">*</span>
-              </Label>
-              <Input id="images" type="file" multiple onChange={handleFileChange} className="cursor-pointer" />
-              <p className="text-sm text-gray-500 mt-1">Upload multiple images for this car rental package.</p>
+        {/* Car Types */}
+        <div className="space-y-2">
+          <EditableTitle
+            title={sectionTitles.carTypes}
+            onTitleChange={(newTitle) => updateSectionTitle('carTypes', newTitle)}
+            placeholder="Enter section title"
+            showEditIcon={true}
+            required={false}
+            className="text-base sm:text-lg font-medium"
+          />
+          <div className="space-y-4 p-3 sm:p-4 bg-gray-50 rounded-md border border-gray-200">
+            {carTypes.map((car) => (
+              <div key={car.id} className="border border-gray-300 p-3 sm:p-4 rounded-md bg-white relative">
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="icon"
+                  className="absolute top-2 right-2 h-5 w-5 sm:h-6 sm:w-6 rounded-full"
+                  onClick={() => removeCarType(car.id)}
+                >
+                  <X className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="sr-only">Remove car type</span>
+                </Button>
 
-              {/* Display existing images */}
-              {images.length > 0 && (
-                <div className="mt-4">
-                  <h4 className="text-md font-semibold mb-2">Existing Images:</h4>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                    {images.map((url, index) => (
-                      <div key={index} className="relative group">
-                        <img
-                          src={url || "/placeholder.webp"}
-                          alt={`Existing image ${index + 1}`}
-                          width={150}
-                          height={100}
-                          className="rounded-md object-cover w-full h-24"
-                        />
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          size="icon"
-                          className="absolute top-1 right-1 h-6 w-6 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                          onClick={() => removeExistingImage(url)}
-                        >
-                          <X className="h-4 w-4" />
-                          <span className="sr-only">Remove image</span>
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Display new image files to be uploaded */}
-              {newImageFiles.length > 0 && (
-                <div className="mt-4">
-                  <h4 className="text-md font-semibold mb-2">New Images to Upload:</h4>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                    {newImageFiles.map((file, index) => (
-                      <div key={index} className="relative group">
-                        <img
-                          src={URL.createObjectURL(file) || "/placeholder.webp"}
-                          alt={`New image ${index + 1}`}
-                          width={150}
-                          height={100}
-                          className="rounded-md object-cover w-full h-24"
-                        />
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          size="icon"
-                          className="absolute top-1 right-1 h-6 w-6 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                          onClick={() => removeNewImage(index)}
-                        >
-                          <X className="h-4 w-4" />
-                          <span className="sr-only">Remove new image</span>
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* SEO Settings */}
-            <div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">SEO Settings</h3>
-              <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="pageTitle">Page Title</Label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-3 sm:mb-4">
+                  <div className="space-y-1.5">
+                    <Label htmlFor={`car-name-${car.id}`} className="text-sm font-medium">Car Name</Label>
                     <Input
-                      id="pageTitle"
+                      id={`car-name-${car.id}`}
                       type="text"
-                      value={seoData.pageTitle}
-                      onChange={(e) => {
-                        setSeoData(prev => ({ ...prev, pageTitle: e.target.value }))
-                        setIsDirty(true)
-                      }}
-                      placeholder="Custom page title for SEO"
+                      value={car.name}
+                      onChange={(e) => updateCarTypeField(car.id, "name", e.target.value)}
+                      placeholder="Eg: Swift Dzire"
+                      className="text-sm h-9 sm:h-10"
                     />
-                    <p className="text-xs text-gray-500 mt-1">Appears in browser tab and search results</p>
                   </div>
-                  <div>
-                    <Label htmlFor="metaKeywords">Meta Keywords</Label>
+                  <div className="space-y-1.5">
+                    <Label htmlFor={`car-seating-${car.id}`} className="text-sm font-medium">Seating Capacity</Label>
                     <Input
-                      id="metaKeywords"
+                      id={`car-seating-${car.id}`}
                       type="text"
-                      value={seoData.metaKeywords}
-                      onChange={(e) => {
-                        setSeoData(prev => ({ ...prev, metaKeywords: e.target.value }))
-                        setIsDirty(true)
-                      }}
-                      placeholder="car rental, vehicle, hire, transport"
+                      value={car.seating}
+                      onChange={(e) => updateCarTypeField(car.id, "seating", e.target.value)}
+                      placeholder="Eg: 4+1"
+                      className="text-sm h-9 sm:h-10"
                     />
-                    <p className="text-xs text-gray-500 mt-1">Comma-separated keywords</p>
                   </div>
                 </div>
-                <div>
-                  <Label htmlFor="metaDescription">Meta Description</Label>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-3 sm:mb-4">
+                  <div className="space-y-1.5">
+                    <Label htmlFor={`car-fuel-${car.id}`} className="text-sm font-medium">Fuel Type</Label>
+                    <select
+                      id={`car-fuel-${car.id}`}
+                      value={car.fuelType}
+                      onChange={(e) => updateCarTypeField(car.id, "fuelType", e.target.value)}
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 h-9 sm:h-10"
+                    >
+                      <option value="">Select Fuel Type</option>
+                      <option value="Petrol">Petrol</option>
+                      <option value="Diesel">Diesel</option>
+                      <option value="CNG">CNG</option>
+                      <option value="Electric">Electric</option>
+                    </select>
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor={`car-transmission-${car.id}`} className="text-sm font-medium">Transmission</Label>
+                    <select
+                      id={`car-transmission-${car.id}`}
+                      value={car.transmission}
+                      onChange={(e) => updateCarTypeField(car.id, "transmission", e.target.value)}
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 h-9 sm:h-10"
+                    >
+                      <option value="">Select Transmission</option>
+                      <option value="Manual">Manual</option>
+                      <option value="Automatic">Automatic</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 mb-3 sm:mb-4">
+                  <div className="space-y-1.5 col-span-1">
+                    <Label htmlFor={`car-rating-${car.id}`} className="text-xs sm:text-sm font-medium">Rating</Label>
+                    <Input
+                      id={`car-rating-${car.id}`}
+                      type="number"
+                      step="0.1"
+                      min="0"
+                      max="5"
+                      value={car.rating || ""}
+                      onChange={(e) => updateCarTypeField(car.id, "rating", e.target.value)}
+                      placeholder="4.5"
+                      className="text-sm h-8 sm:h-10"
+                    />
+                  </div>
+                  <div className="space-y-1.5 col-span-1">
+                    <Label htmlFor={`car-price-per-km-${car.id}`} className="text-xs sm:text-sm font-medium">Price/KM (₹)</Label>
+                    <Input
+                      id={`car-price-per-km-${car.id}`}
+                      type="number"
+                      value={car.pricePerKm || ""}
+                      onChange={(e) => updateCarTypeField(car.id, "pricePerKm", e.target.value)}
+                      placeholder="12"
+                      className="text-sm h-8 sm:h-10"
+                    />
+                  </div>
+                  <div className="space-y-1.5 col-span-1">
+                    <Label htmlFor={`car-min-km-${car.id}`} className="text-xs sm:text-sm font-medium">Min KM</Label>
+                    <Input
+                      id={`car-min-km-${car.id}`}
+                      type="number"
+                      value={car.minKm || ""}
+                      onChange={(e) => updateCarTypeField(car.id, "minKm", e.target.value)}
+                      placeholder="100"
+                      className="text-sm h-8 sm:h-10"
+                    />
+                  </div>
+                  <div className="space-y-1.5 col-span-1">
+                    <Label htmlFor={`car-driver-beta-${car.id}`} className="text-xs sm:text-sm font-medium">Driver Beta (₹)</Label>
+                    <Input
+                      id={`car-driver-beta-${car.id}`}
+                      type="number"
+                      value={car.driverBeta || ""}
+                      onChange={(e) => updateCarTypeField(car.id, "driverBeta", e.target.value)}
+                      placeholder="500"
+                      className="text-sm h-8 sm:h-10"
+                    />
+                  </div>
+                </div>
+
+                <div className="mb-3 sm:mb-4 space-y-1.5">
+                  <Label htmlFor={`static-image-${car.id}`} className="text-sm font-medium">Select Car Image</Label>
+                  <select
+                    id={`static-image-${car.id}`}
+                    value={car.staticImageKey}
+                    onChange={(e) => handleStaticImageChange(car.id, e.target.value)}
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 h-9 sm:h-10"
+                  >
+                    <option value="">Select an image</option>
+                    {STATIC_CAR_IMAGES.map((img) => (
+                      <option key={img.key} value={img.key}>
+                        {img.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Display car image */}
+                {car.image && (
+                  <div className="mb-3 sm:mb-4">
+                    <img
+                      src={car.image}
+                      alt={`${car.name} image`}
+                      className="rounded-md object-cover w-32 h-24 sm:w-40 sm:h-32"
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => removeCarTypeImage(car.id)}
+                      className="mt-2 text-xs sm:text-sm h-8"
+                    >
+                      Remove Image
+                    </Button>
+                  </div>
+                )}
+
+                {/* Car Features */}
+                <div className="space-y-1.5">
+                  <Label htmlFor={`car-features-${car.id}`} className="text-sm font-medium">Features</Label>
                   <RichTextEditor
-                    value={seoData.metaDescription}
+                    value={car.features}
                     onChange={(content) => {
-                      setSeoData(prev => ({ ...prev, metaDescription: content }))
+                      updateCarTypeField(car.id, "features", content)
                       setIsDirty(true)
                     }}
-                    placeholder="Brief description of the car rental service for search engines"
                     rows={3}
-                  />
-                  <p className="text-xs text-gray-500 mt-1">Recommended: 150-160 characters</p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="ogTitle">Open Graph Title</Label>
-                    <Input
-                      id="ogTitle"
-                      type="text"
-                      value={seoData.ogTitle}
-                      onChange={(e) => {
-                        setSeoData(prev => ({ ...prev, ogTitle: e.target.value }))
-                        setIsDirty(true)
-                      }}
-                      placeholder="Title for social media sharing"
-                    />
-                    <p className="text-xs text-gray-500 mt-1">For Facebook, WhatsApp sharing</p>
-                  </div>
-                  <div>
-                    <Label htmlFor="ogImage">Open Graph Image URL</Label>
-                    <Input
-                      id="ogImage"
-                      type="url"
-                      value={seoData.ogImage}
-                      onChange={(e) => {
-                        setSeoData(prev => ({ ...prev, ogImage: e.target.value }))
-                        setIsDirty(true)
-                      }}
-                      placeholder="https://example.com/image.webp"
-                    />
-                    <p className="text-xs text-gray-500 mt-1">Image for social media sharing</p>
-                  </div>
-                </div>
-                <div>
-                  <Label htmlFor="ogDescription">Open Graph Description</Label>
-                  <RichTextEditor
-                    value={seoData.ogDescription}
-                    onChange={(content) => {
-                      setSeoData(prev => ({ ...prev, ogDescription: content }))
-                      setIsDirty(true)
-                    }}
-                    placeholder="Description for social media sharing"
-                    rows={2}
+                    placeholder=""
+                    className="text-sm"
                   />
                 </div>
               </div>
-            </div>
+            ))}
+            <Button type="button" onClick={addCarType} className="text-sm h-9 sm:h-10">
+              Add Car Type
+            </Button>
+          </div>
+        </div>
 
-            {/* Car Types */}
-            <div>
-              <EditableTitle
-                title={sectionTitles.carTypes}
-                onTitleChange={(newTitle) => updateSectionTitle('carTypes', newTitle)}
-                placeholder="Enter section title"
-                showEditIcon={true}
-                required={false}
-                className="mb-2"
-              />
-              <div className="space-y-6 p-4 bg-gray-50 rounded-md border border-gray-200">
-                {carTypes.map((car) => (
-                  <div key={car.id} className="border border-gray-300 p-4 rounded-md bg-white relative">
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      size="icon"
-                      className="absolute top-2 right-2 h-6 w-6 rounded-full"
-                      onClick={() => removeCarType(car.id)}
-                    >
-                      <X className="h-4 w-4" />
-                      <span className="sr-only">Remove car type</span>
-                    </Button>
+        {/* Service Features */}
+        <div className="space-y-2">
+          <EditableTitle
+            title={sectionTitles.serviceFeatures}
+            onTitleChange={(newTitle) => updateSectionTitle('serviceFeatures', newTitle)}
+            placeholder="Enter section title"
+            showEditIcon={true}
+            required={false}
+            className="text-base sm:text-lg font-medium"
+          />
+          <div className="space-y-3 p-3 sm:p-4 bg-gray-50 rounded-md border border-gray-200">
+            {serviceFeatures.map((item) => (
+              <div key={item.id} className="space-y-2">
+                <RichTextEditor
+                  value={item.text}
+                  onChange={(content) => {
+                    updatePoint(setServiceFeatures, item.id, content)
+                    setIsDirty(true)
+                  }}
+                  placeholder="Eg: 24/7 Customer Support - Round the clock assistance"
+                  rows={2}
+                  className="text-sm"
+                />
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => removePoint(setServiceFeatures, item.id)}
+                  className="self-end text-xs h-8"
+                >
+                  Remove
+                </Button>
+              </div>
+            ))}
+            <Button type="button" onClick={() => addPoint(setServiceFeatures)} className="text-sm h-9 sm:h-10">
+              Add Service Feature
+            </Button>
+          </div>
+        </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                      <div>
-                        <Label htmlFor={`car-name-${car.id}`}>Car Name</Label>
-                        <Input
-                          id={`car-name-${car.id}`}
-                          type="text"
-                          value={car.name}
-                          onChange={(e) => updateCarTypeField(car.id, "name", e.target.value)}
-                          placeholder="Eg: Swift Dzire"
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor={`car-seating-${car.id}`}>Seating Capacity</Label>
-                        <Input
-                          id={`car-seating-${car.id}`}
-                          type="text"
-                          value={car.seating}
-                          onChange={(e) => updateCarTypeField(car.id, "seating", e.target.value)}
-                          placeholder="Eg: 4+1"
-                        />
-                      </div>
-                    </div>
+        {/* Terms and Conditions */}
+        <div className="space-y-2">
+          <EditableTitle
+            title={sectionTitles.termsAndConditions}
+            onTitleChange={(newTitle) => updateSectionTitle('termsAndConditions', newTitle)}
+            placeholder="Enter section title"
+            showEditIcon={true}
+            required={false}
+            className="text-base sm:text-lg font-medium"
+          />
+          <div className="space-y-3 p-3 sm:p-4 bg-gray-50 rounded-md border border-gray-200">
+            {termsAndConditions.map((item) => (
+              <div key={item.id} className="space-y-2">
+                <RichTextEditor
+                  value={item.text}
+                  onChange={(content) => {
+                    updatePoint(setTermsAndConditions, item.id, content)
+                    setIsDirty(true)
+                  }}
+                  placeholder="Eg: Valid driving license required - Must be at least 1 year old"
+                  rows={2}
+                  className="text-sm"
+                />
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => removePoint(setTermsAndConditions, item.id)}
+                  className="self-end text-xs h-8"
+                >
+                  Remove
+                </Button>
+              </div>
+            ))}
+            <Button type="button" onClick={() => addPoint(setTermsAndConditions)} className="text-sm h-9 sm:h-10">
+              Add Term
+            </Button>
+          </div>
+        </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                      <div>
-                        <Label htmlFor={`car-fuel-${car.id}`}>Fuel Type</Label>
-                        <select
-                          id={`car-fuel-${car.id}`}
-                          value={car.fuelType}
-                          onChange={(e) => updateCarTypeField(car.id, "fuelType", e.target.value)}
-                          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        >
-                          <option value="">Select Fuel Type</option>
-                          <option value="Petrol">Petrol</option>
-                          <option value="Diesel">Diesel</option>
-                          <option value="CNG">CNG</option>
-                          <option value="Electric">Electric</option>
-                        </select>
-                      </div>
-                      <div>
-                        <Label htmlFor={`car-transmission-${car.id}`}>Transmission</Label>
-                        <select
-                          id={`car-transmission-${car.id}`}
-                          value={car.transmission}
-                          onChange={(e) => updateCarTypeField(car.id, "transmission", e.target.value)}
-                          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        >
-                          <option value="">Select Transmission</option>
-                          <option value="Manual">Manual</option>
-                          <option value="Automatic">Automatic</option>
-                        </select>
-                      </div>
-                    </div>
+        {/* Sections (Updated Structure - Same as Tirupati) */}
+        <div className="space-y-2">
+          <EditableTitle
+            title={sectionTitles.sections}
+            onTitleChange={(newTitle) => updateSectionTitle('sections', newTitle)}
+            placeholder="Enter section title"
+            showEditIcon={true}
+            required={false}
+            className="text-base sm:text-lg font-medium"
+          />
+          <div className="space-y-4 p-3 sm:p-4 bg-gray-50 rounded-md border border-gray-200">
+            {sections.map((section) => (
+              <div key={section.id} className="border border-gray-300 p-3 sm:p-4 rounded-md bg-white relative">
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="icon"
+                  className="absolute top-2 right-2 h-5 w-5 sm:h-6 sm:w-6 rounded-full"
+                  onClick={() => removeSection(section.id)}
+                >
+                  <X className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="sr-only">Remove section</span>
+                </Button>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-                      <div>
-                        <Label htmlFor={`car-rating-${car.id}`}>Rating</Label>
-                        <Input
-                          id={`car-rating-${car.id}`}
-                          type="number"
-                          step="0.1"
-                          min="0"
-                          max="5"
-                          value={car.rating || ""}
-                          onChange={(e) => updateCarTypeField(car.id, "rating", e.target.value)}
-                          placeholder="Eg: 4.5"
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor={`car-price-per-km-${car.id}`}>Price per KM (₹)</Label>
-                        <Input
-                          id={`car-price-per-km-${car.id}`}
-                          type="number"
-                          value={car.pricePerKm || ""}
-                          onChange={(e) => updateCarTypeField(car.id, "pricePerKm", e.target.value)}
-                          placeholder="Eg: 12"
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor={`car-min-km-${car.id}`}>Minimum KM</Label>
-                        <Input
-                          id={`car-min-km-${car.id}`}
-                          type="number"
-                          value={car.minKm || ""}
-                          onChange={(e) => updateCarTypeField(car.id, "minKm", e.target.value)}
-                          placeholder="Eg: 100"
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor={`car-driver-beta-${car.id}`}>Driver Beta (₹)</Label>
-                        <Input
-                          id={`car-driver-beta-${car.id}`}
-                          type="number"
-                          value={car.driverBeta || ""}
-                          onChange={(e) => updateCarTypeField(car.id, "driverBeta", e.target.value)}
-                          placeholder="Eg: 500"
-                        />
-                      </div>
-                    </div>
+                {/* Content Title */}
+                <div className="mb-3 sm:mb-4">
+                  <EditableTitle
+                    title={section.contentTitle}
+                    onTitleChange={(newTitle) => {
+                      updateSectionField(section.id, "contentTitle", newTitle)
+                      setIsDirty(true)
+                    }}
+                    placeholder="Enter content title"
+                    showEditIcon={true}
+                    required={false}
+                    className="text-sm sm:text-base font-medium"
+                  />
+                </div>
 
-                    <div className="mb-4">
-                      <Label htmlFor={`car-image-${car.id}`}>Car Image</Label>
-                      <Input
-                        id={`car-image-${car.id}`}
-                        type="file"
-                        onChange={(e) => handleCarTypeImageFileChange(car.id, e.target.files[0])}
-                        className="cursor-pointer"
-                      />
-                    </div>
+                {/* Content Description */}
+                <div className="mb-3 sm:mb-4 space-y-1.5">
+                  <Label htmlFor={`section-description-${section.id}`} className="text-sm font-medium">Content Description</Label>
+                  <RichTextEditor
+                    value={section.contentDescription}
+                    onChange={(content) => {
+                      updateSectionField(section.id, "contentDescription", content)
+                      setIsDirty(true)
+                    }}
+                    rows={4}
+                    placeholder="Enter section content"
+                    className="text-sm"
+                  />
+                </div>
 
-                    {/* Display car image */}
-                    {(car.imageUrl || car.imageFile) && (
-                      <div className="mb-4">
+                {/* Want Update Image Checkbox */}
+                <div className="flex items-center mb-3 sm:mb-4">
+                  <input
+                    type="checkbox"
+                    id={`want-image-${section.id}`}
+                    checked={section.hasImage}
+                    onChange={(e) => {
+                      updateSectionField(section.id, "hasImage", e.target.checked)
+                      setIsDirty(true)
+                    }}
+                    className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  />
+                  <Label htmlFor={`want-image-${section.id}`} className="text-sm font-medium">Want to add/update Image?</Label>
+                </div>
+
+                {/* Image Upload and Preview (Conditional) */}
+                {section.hasImage && (
+                  <div className="mb-3 sm:mb-4 p-3 bg-gray-100 rounded-md border border-gray-200">
+                    <Label htmlFor={`section-image-${section.id}`} className="text-sm font-medium">Choose File</Label>
+                    <Input
+                      id={`section-image-${section.id}`}
+                      type="file"
+                      onChange={(e) => {
+                        handleSectionImageFileChange(section.id, e.target.files[0])
+                        setIsDirty(true)
+                      }}
+                      className="cursor-pointer text-sm h-9 sm:h-10 file:text-sm file:font-medium"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">Upload an image for this section.</p>
+
+                    {(section.imageUrl || section.imageFile) && (
+                      <div className="mt-3 relative group w-24 h-20 sm:w-28 sm:h-24">
                         <img
-                          src={car.imageFile ? URL.createObjectURL(car.imageFile) : car.imageUrl || "/placeholder.webp"}
-                          alt={`${car.name} image`}
-                          width={200}
-                          height={150}
-                          className="rounded-md object-cover w-48 h-32"
+                          src={section.imageFile ? URL.createObjectURL(section.imageFile) : section.imageUrl}
+                          alt="Section image preview"
+                          className="rounded-md object-cover w-full h-full"
                         />
                         <Button
                           type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={() => removeCarTypeImage(car.id)}
-                          className="mt-2"
+                          variant="destructive"
+                          size="icon"
+                          className="absolute top-1 right-1 h-5 w-5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                          onClick={() => removeSectionImage(section.id)}
                         >
-                          Remove Image
+                          <X className="h-3 w-3" />
+                          <span className="sr-only">Remove section image</span>
                         </Button>
                       </div>
                     )}
+                  </div>
+                )}
 
-                    {/* Car Features */}
-                    <div>
-                      <Label htmlFor={`car-features-${car.id}`}>Features</Label>
+                {/* List Information */}
+                <h5 className="text-sm font-semibold mb-2">List Information</h5>
+                <div className="space-y-3 mb-3 p-3 bg-gray-100 rounded-md border border-gray-200">
+                  {section.listInfo.map((item) => (
+                    <div key={item.id} className="space-y-2">
                       <RichTextEditor
-                        value={car.features}
+                        value={item.text}
                         onChange={(content) => {
-                          updateCarTypeField(car.id, "features", content)
+                          updateListInfoInSection(section.id, item.id, content)
                           setIsDirty(true)
                         }}
-                        rows={3}
-                        placeholder=""
+                        placeholder="Add info point"
+                        rows={2}
+                        className="text-sm"
                       />
-                    </div>
-                  </div>
-                ))}
-                <Button type="button" onClick={addCarType} className="mt-3">
-                  Add Car Type
-                </Button>
-              </div>
-            </div>
-
-            {/* Service Features */}
-            <div>
-              <EditableTitle
-                title={sectionTitles.serviceFeatures}
-                onTitleChange={(newTitle) => updateSectionTitle('serviceFeatures', newTitle)}
-                placeholder="Enter section title"
-                showEditIcon={true}
-                required={false}
-                className="mb-2"
-              />
-              <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
-                {serviceFeatures.map((item) => (
-                  <div key={item.id} className="space-y-2">
-                    <RichTextEditor
-                      value={item.text}
-                      onChange={(content) => {
-                        updatePoint(setServiceFeatures, item.id, content)
-                        setIsDirty(true)
-                      }}
-                      placeholder="Eg: 24/7 Customer Support - Round the clock assistance"
-                      rows={2}
-                    />
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      size="sm"
-                      onClick={() => removePoint(setServiceFeatures, item.id)}
-                      className="self-end"
-                    >
-                      Remove
-                    </Button>
-                  </div>
-                ))}
-                <Button type="button" onClick={() => addPoint(setServiceFeatures)} className="mt-3">
-                  Add Service Feature
-                </Button>
-              </div>
-            </div>
-
-            {/* Pricing Plans - Hidden */}
-            {/* <div>
-              <EditableTitle
-                title={sectionTitles.pricingPlans}
-                onTitleChange={(newTitle) => updateSectionTitle('pricingPlans', newTitle)}
-                placeholder="Enter section title"
-                showEditIcon={true}
-                required={false}
-                className="mb-2"
-              />
-              <div className="space-y-6 p-4 bg-gray-50 rounded-md border border-gray-200">
-                {pricingPlans.map((plan) => (
-                  <div key={plan.id} className="border border-gray-300 p-4 rounded-md bg-white relative">
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      size="icon"
-                      className="absolute top-2 right-2 h-6 w-6 rounded-full"
-                      onClick={() => removePricingPlan(plan.id)}
-                    >
-                      <X className="h-4 w-4" />
-                      <span className="sr-only">Remove pricing plan</span>
-                    </Button>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                      <div>
-                        <Label htmlFor={`plan-duration-${plan.id}`}>Duration</Label>
-                        <Input
-                          id={`plan-duration-${plan.id}`}
-                          type="text"
-                          value={plan.duration}
-                          onChange={(e) => updatePricingPlanField(plan.id, "duration", e.target.value)}
-                          placeholder="Eg: Per Day, Per Week"
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor={`plan-price-${plan.id}`}>Price</Label>
-                        <Input
-                          id={`plan-price-${plan.id}`}
-                          type="text"
-                          value={plan.price}
-                          onChange={(e) => updatePricingPlanField(plan.id, "price", e.target.value)}
-                          placeholder="Eg: ₹ 1500"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <Label>Plan Features</Label>
-                      <div className="space-y-2 mt-2">
-                        {plan.features.map((feature) => (
-                          <div key={feature.id} className="flex gap-2 items-end">
-                            <Input
-                              type="text"
-                              value={feature.text}
-                              onChange={(e) => updateFeatureInPlan(plan.id, feature.id, e.target.value)}
-                              placeholder="Eg: Free fuel"
-                              className="flex-grow"
-                            />
-                            <Button
-                              type="button"
-                              variant="destructive"
-                              size="sm"
-                              onClick={() => removeFeatureFromPlan(plan.id, feature.id)}
-                            >
-                              Remove
-                            </Button>
-                          </div>
-                        ))}
-                        <Button type="button" onClick={() => addFeatureToPlan(plan.id)} size="sm">
-                          Add Feature
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-                <Button type="button" onClick={addPricingPlan} className="mt-3">
-                  Add Pricing Plan
-                </Button>
-              </div>
-            </div> */}
-
-            {/* Terms and Conditions */}
-            <div>
-              <EditableTitle
-                title={sectionTitles.termsAndConditions}
-                onTitleChange={(newTitle) => updateSectionTitle('termsAndConditions', newTitle)}
-                placeholder="Enter section title"
-                showEditIcon={true}
-                required={false}
-                className="mb-2"
-              />
-              <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
-                {termsAndConditions.map((item) => (
-                  <div key={item.id} className="space-y-2">
-                    <RichTextEditor
-                      value={item.text}
-                      onChange={(content) => {
-                        updatePoint(setTermsAndConditions, item.id, content)
-                        setIsDirty(true)
-                      }}
-                      placeholder="Eg: Valid driving license required - Must be at least 1 year old"
-                      rows={2}
-                    />
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      size="sm"
-                      onClick={() => removePoint(setTermsAndConditions, item.id)}
-                      className="self-end"
-                    >
-                      Remove
-                    </Button>
-                  </div>
-                ))}
-                <Button type="button" onClick={() => addPoint(setTermsAndConditions)} className="mt-3">
-                  Add Term
-                </Button>
-              </div>
-            </div>
-
-            {/* Sections (Updated Structure - Same as Tirupati) */}
-            <div>
-              <EditableTitle
-                title={sectionTitles.sections}
-                onTitleChange={(newTitle) => updateSectionTitle('sections', newTitle)}
-                placeholder="Enter section title"
-                showEditIcon={true}
-                required={false}
-                className="mb-2"
-              />
-              <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
-                {sections.map((section) => (
-                  <div key={section.id} className="border border-gray-300 p-4 rounded-md bg-white relative">
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      size="icon"
-                      className="absolute top-2 right-2 h-6 w-6 rounded-full"
-                      onClick={() => removeSection(section.id)}
-                    >
-                      <X className="h-4 w-4" />
-                      <span className="sr-only">Remove section</span>
-                    </Button>
-
-                    {/* Content Title */}
-                    <div className="mb-4">
-                      <EditableTitle
-                        title={section.contentTitle}
-                        onTitleChange={(newTitle) => {
-                          updateSectionField(section.id, "contentTitle", newTitle)
-                          setIsDirty(true)
-                        }}
-                        placeholder="Enter content title"
-                        showEditIcon={true}
-                        required={false}
-                      />
-                    </div>
-
-                    {/* Content Description */}
-                    <div className="mb-4">
-                      <Label htmlFor={`section-description-${section.id}`}>Content Description</Label>
-                      <RichTextEditor
-                        value={section.contentDescription}
-                        onChange={(content) => {
-                          updateSectionField(section.id, "contentDescription", content)
-                          setIsDirty(true)
-                        }}
-                        rows={4}
-                        placeholder="Enter section content"
-                      />
-                    </div>
-
-                    {/* Want Update Image Checkbox */}
-                    <div className="flex items-center mb-4">
-                      <input
-                        type="checkbox"
-                        id={`want-image-${section.id}`}
-                        checked={section.hasImage}
-                        onChange={(e) => {
-                          updateSectionField(section.id, "hasImage", e.target.checked)
-                          setIsDirty(true)
-                        }}
-                        className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                      />
-                      <Label htmlFor={`want-image-${section.id}`}>Want to add/update Image?</Label>
-                    </div>
-
-                    {/* Image Upload and Preview (Conditional) */}
-                    {section.hasImage && (
-                      <div className="mb-4 p-3 bg-gray-100 rounded-md border border-gray-200">
-                        <Label htmlFor={`section-image-${section.id}`}>Choose File</Label>
-                        <Input
-                          id={`section-image-${section.id}`}
-                          type="file"
-                          onChange={(e) => {
-                            handleSectionImageFileChange(section.id, e.target.files[0])
-                            setIsDirty(true)
-                          }}
-                          className="cursor-pointer"
-                        />
-                        <p className="text-sm text-gray-500 mt-1">Upload an image for this section.</p>
-
-                        {(section.imageUrl || section.imageFile) && (
-                          <div className="mt-4 relative group w-32 h-24">
-                            <img
-                              src={section.imageFile ? URL.createObjectURL(section.imageFile) : section.imageUrl}
-                              alt="Section image preview"
-                              width={128}
-                              height={96}
-                              className="rounded-md object-cover w-full h-full"
-                            />
-                            <Button
-                              type="button"
-                              variant="destructive"
-                              size="icon"
-                              className="absolute top-1 right-1 h-6 w-6 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                              onClick={() => removeSectionImage(section.id)}
-                            >
-                              <X className="h-4 w-4" />
-                              <span className="sr-only">Remove section image</span>
-                            </Button>
-                          </div>
-                        )}
-                      </div>
-                    )}
-
-                    {/* List Information */}
-                    <h5 className="text-md font-semibold mb-2">List Information</h5>
-                    <div className="space-y-3 mb-4 p-3 bg-gray-100 rounded-md border border-gray-200">
-                      {section.listInfo.map((item) => (
-                        <div key={item.id} className="space-y-2">
-                          <RichTextEditor
-                            value={item.text}
-                            onChange={(content) => {
-                              updateListInfoInSection(section.id, item.id, content)
-                              setIsDirty(true)
-                            }}
-                            placeholder="Add info point"
-                            rows={2}
-                          />
-                          <Button
-                            type="button"
-                            variant="destructive"
-                            size="sm"
-                            onClick={() => removeListInfoFromSection(section.id, item.id)}
-                            className="self-end"
-                          >
-                            Remove
-                          </Button>
-                        </div>
-                      ))}
-                      <Button type="button" onClick={() => addListInfoToSection(section.id)} className="mt-2">
-                        Add Info
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        size="sm"
+                        onClick={() => removeListInfoFromSection(section.id, item.id)}
+                        className="self-end text-xs h-8"
+                      >
+                        Remove
                       </Button>
                     </div>
-                  </div>
-                ))}
-                <Button type="button" onClick={addSection} className="mt-3">
-                  Add Section
-                </Button>
+                  ))}
+                  <Button type="button" onClick={() => addListInfoToSection(section.id)} className="text-sm h-8">
+                    Add Info
+                  </Button>
+                </div>
               </div>
-            </div>
+            ))}
+            <Button type="button" onClick={addSection} className="text-sm h-9 sm:h-10">
+              Add Section
+            </Button>
+          </div>
+        </div>
 
-            {/* What's Included */}
-            <div>
-              <EditableTitle
-                title={sectionTitles.includes}
-                onTitleChange={(newTitle) => updateSectionTitle('includes', newTitle)}
-                placeholder="Enter section title"
-                showEditIcon={true}
-                required={false}
-              />
-              <div className="space-y-3">
-                {includes.map((item) => (
-                  <div key={item.id} className="relative">
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      size="icon"
-                      className="absolute top-2 right-2 h-6 w-6 rounded-full"
-                      onClick={() => removeInclude(item.id)}
-                    >
-                      <X className="h-4 w-4" />
-                      <span className="sr-only">Remove Include</span>
-                    </Button>
-                    <div className="pr-10">
-                      <RichTextEditor
-                        value={item.text}
-                        onChange={(content) => {
-                          updateInclude(item.id, content)
-                          setIsDirty(true)
-                        }}
-                        placeholder="Eg: Pickup and drop from your location"
-                        rows={2}
-                      />
-                    </div>
-                  </div>
-                ))}
-                <Button type="button" onClick={addInclude} className="mt-3">
-                  Add Include
+        {/* What's Included */}
+        <div className="space-y-2">
+          <EditableTitle
+            title={sectionTitles.includes}
+            onTitleChange={(newTitle) => updateSectionTitle('includes', newTitle)}
+            placeholder="Enter section title"
+            showEditIcon={true}
+            required={false}
+            className="text-base sm:text-lg font-medium"
+          />
+          <div className="space-y-2">
+            {includes.map((item) => (
+              <div key={item.id} className="relative">
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="icon"
+                  className="absolute top-2 right-2 h-5 w-5 sm:h-6 sm:w-6 rounded-full z-10"
+                  onClick={() => removeInclude(item.id)}
+                >
+                  <X className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="sr-only">Remove Include</span>
                 </Button>
+                <div className="pr-8 sm:pr-10">
+                  <RichTextEditor
+                    value={item.text}
+                    onChange={(content) => {
+                      updateInclude(item.id, content)
+                      setIsDirty(true)
+                    }}
+                    placeholder="Eg: Pickup and drop from your location"
+                    rows={2}
+                    className="text-sm"
+                  />
+                </div>
               </div>
-            </div>
+            ))}
+            <Button type="button" onClick={addInclude} className="text-sm h-9 sm:h-10">
+              Add Include
+            </Button>
+          </div>
+        </div>
 
-            {/* Important Passenger Notes */}
-            <div>
-              <EditableTitle
-                title={sectionTitles.passengerNotes}
-                onTitleChange={(newTitle) => updateSectionTitle('passengerNotes', newTitle)}
-                placeholder="Enter section title"
-                showEditIcon={true}
-                required={false}
-              />
-              <div className="space-y-3">
-                {passengerNotes.map((item) => (
-                  <div key={item.id} className="relative">
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      size="icon"
-                      className="absolute top-2 right-2 h-6 w-6 rounded-full"
-                      onClick={() => removePassengerNote(item.id)}
-                    >
-                      <X className="h-4 w-4" />
-                      <span className="sr-only">Remove Passenger Note</span>
-                    </Button>
-                    <div className="pr-10">
-                      <RichTextEditor
-                        value={item.text}
-                        onChange={(content) => {
-                          updatePassengerNote(item.id, content)
-                          setIsDirty(true)
-                        }}
-                        placeholder="Eg: Please carry valid ID proof"
-                        rows={2}
-                      />
-                    </div>
-                  </div>
-                ))}
-                <Button type="button" onClick={addPassengerNote} className="mt-3">
-                  Add Passenger Note
+        {/* Important Passenger Notes */}
+        <div className="space-y-2">
+          <EditableTitle
+            title={sectionTitles.passengerNotes}
+            onTitleChange={(newTitle) => updateSectionTitle('passengerNotes', newTitle)}
+            placeholder="Enter section title"
+            showEditIcon={true}
+            required={false}
+            className="text-base sm:text-lg font-medium"
+          />
+          <div className="space-y-2">
+            {passengerNotes.map((item) => (
+              <div key={item.id} className="relative">
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="icon"
+                  className="absolute top-2 right-2 h-5 w-5 sm:h-6 sm:w-6 rounded-full z-10"
+                  onClick={() => removePassengerNote(item.id)}
+                >
+                  <X className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="sr-only">Remove Passenger Note</span>
                 </Button>
+                <div className="pr-8 sm:pr-10">
+                  <RichTextEditor
+                    value={item.text}
+                    onChange={(content) => {
+                      updatePassengerNote(item.id, content)
+                      setIsDirty(true)
+                    }}
+                    placeholder="Eg: Please carry valid ID proof"
+                    rows={2}
+                    className="text-sm"
+                  />
+                </div>
               </div>
-            </div>
+            ))}
+            <Button type="button" onClick={addPassengerNote} className="text-sm h-9 sm:h-10">
+              Add Passenger Note
+            </Button>
+          </div>
+        </div>
 
-            {/* FAQs */}
-            <div>
-              <EditableTitle
-                title={sectionTitles.frequentlyAskedQuestions}
-                onTitleChange={(newTitle) => updateSectionTitle('frequentlyAskedQuestions', newTitle)}
-                placeholder="Enter section title"
-                showEditIcon={true}
-                required={false}
-                className="mb-2"
-              />
-              <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
-                {faqs.map((faq) => (
-                  <div key={faq.id} className="border border-gray-300 p-4 rounded-md bg-white relative">
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      size="icon"
-                      className="absolute top-2 right-2 h-6 w-6 rounded-full"
-                      onClick={() => removeFaq(faq.id)}
-                    >
-                      <X className="h-4 w-4" />
-                      <span className="sr-only">Remove FAQ</span>
-                    </Button>
-                    <div className="space-y-3">
-                      <div>
-                        <Label htmlFor={`faq-question-${faq.id}`}>Question</Label>
-                        <RichTextEditor
-                          value={faq.question}
-                          onChange={(content) => {
-                            updateFaq(faq.id, "question", content)
-                            setIsDirty(true)
-                          }}
-                          placeholder="Eg: What documents are required?"
-                          rows={2}
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor={`faq-answer-${faq.id}`}>Answer</Label>
-                        <RichTextEditor
-                          value={faq.answer}
-                          onChange={(content) => {
-                            updateFaq(faq.id, "answer", content)
-                            setIsDirty(true)
-                          }}
-                          rows={3}
-                          placeholder="Provide a detailed answer"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-                <Button type="button" onClick={addFaq} className="mt-3">
-                  Add FAQ
+        {/* FAQs */}
+        <div className="space-y-2">
+          <EditableTitle
+            title={sectionTitles.frequentlyAskedQuestions}
+            onTitleChange={(newTitle) => updateSectionTitle('frequentlyAskedQuestions', newTitle)}
+            placeholder="Enter section title"
+            showEditIcon={true}
+            required={false}
+            className="text-base sm:text-lg font-medium"
+          />
+          <div className="space-y-4 p-3 sm:p-4 bg-gray-50 rounded-md border border-gray-200">
+            {faqs.map((faq) => (
+              <div key={faq.id} className="border border-gray-300 p-3 sm:p-4 rounded-md bg-white relative">
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="icon"
+                  className="absolute top-2 right-2 h-5 w-5 sm:h-6 sm:w-6 rounded-full"
+                  onClick={() => removeFaq(faq.id)}
+                >
+                  <X className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="sr-only">Remove FAQ</span>
                 </Button>
+                <div className="space-y-3">
+                  <div className="space-y-1.5">
+                    <Label htmlFor={`faq-question-${faq.id}`} className="text-sm font-medium">Question</Label>
+                    <RichTextEditor
+                      value={faq.question}
+                      onChange={(content) => {
+                        updateFaq(faq.id, "question", content)
+                        setIsDirty(true)
+                      }}
+                      placeholder="Eg: What documents are required?"
+                      rows={2}
+                      className="text-sm"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor={`faq-answer-${faq.id}`} className="text-sm font-medium">Answer</Label>
+                    <RichTextEditor
+                      value={faq.answer}
+                      onChange={(content) => {
+                        updateFaq(faq.id, "answer", content)
+                        setIsDirty(true)
+                      }}
+                      rows={3}
+                      placeholder="Provide a detailed answer"
+                      className="text-sm"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
+            ))}
+            <Button type="button" onClick={addFaq} className="text-sm h-9 sm:h-10">
+              Add FAQ
+            </Button>
+          </div>
+        </div>
 
-            {/* Is Active */}
-            <div className="flex items-center space-x-2 mt-6">
-              <Switch
-                id="isActive"
-                checked={isActive}
-                onCheckedChange={(checked) => {
-                  setIsActive(checked)
-                  setIsDirty(true)
-                }}
-              />
-              <Label htmlFor="isActive">Package is Active</Label>
-            </div>
+        {/* Is Active */}
+        <div className="flex items-center space-x-2 mt-4 sm:mt-6">
+          <Switch
+            id="isActive"
+            checked={isActive}
+            onCheckedChange={(checked) => {
+              setIsActive(checked)
+              setIsDirty(true)
+            }}
+            className="scale-90 sm:scale-100"
+          />
+          <Label htmlFor="isActive" className="text-sm font-medium">Package is Active</Label>
+        </div>
 
-            {/* Submit and Cancel Buttons */}
-            <div className="flex gap-4">
-              <Button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-700 text-white" disabled={loading}>
-                {loading ? "Saving..." : isEditMode ? "Update Car Rental Package" : "Save Car Rental Package"}
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                className="flex-1"
-                onClick={() => handleNavigation(() => router.back())}
-              >
-                Cancel
-              </Button>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
+        {/* Submit and Cancel Buttons */}
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mt-4 sm:mt-6">
+          <Button 
+            type="submit" 
+            className="w-full sm:flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm sm:text-base h-10 sm:h-11" 
+            disabled={loading}
+          >
+            {loading ? "Saving..." : isEditMode ? "Update Car Rental Package" : "Save Car Rental Package"}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full sm:flex-1 text-sm sm:text-base h-10 sm:h-11"
+            onClick={() => handleNavigation(() => router.back())}
+          >
+            Cancel
+          </Button>
+        </div>
+      </form>
+    </CardContent>
+  </Card>
+</div>
   )
 }

@@ -1,0 +1,58 @@
+{
+    "sightseeingPlaces": [],
+    "maleDressCodeImages": [
+        "/gender/male.png"
+    ],
+    "sections": [
+        {
+            "id": "92fkq7iap3t",
+            "imageUrl": "/images/kanjipuram/twoday/kanchipuram-to-tirupati-two-days-package.png"
+        },
+        {
+            "id": "3h3zybo9b55",
+            "imageUrl": "/images/kanjipuram/twoday/two-days-kanchipuram-to-tirupati-package-hassle-free-darshan.png"
+        },
+        {
+            "id": "knnvsi9o0g7",
+            "imageUrl": "/images/kanjipuram/twoday/tirupati-package-from-kanchipuram-two-day-tour-for-devote.png"
+        },
+        {
+            "id": "pnqma4qhqjt",
+            "imageUrl": "/images/kanjipuram/twoday/why-choose-garuda-tours-&-travels-for-tirupati-package.png"
+        }
+    ],
+    "femaleDressCodeImages": [
+        "/gender/female.png"
+    ],
+    "carPrices": [
+        {
+            "id": "hupnq5u260l",
+            "imageUrl": "/cars/etios.webp.png",
+            "carName": "Dezire / Etios A/C"
+        },
+        {
+            "id": "y36dvytgjoe",
+            "imageUrl": "/cars/ertiga.png",
+            "carName": "Ertiga"
+        },
+        {
+            "id": "ow2awnhoafq",
+            "imageUrl": "/cars/innova.png",
+            "carName": "Innova A/C"
+        },
+        {
+            "id": "v1y0quh9jb",
+            "imageUrl": "/cars/crysta.png",
+            "carName": "Innova Crysta A/C"
+        },
+        {
+            "id": "0qwqshs1tjme",
+            "imageUrl": "/cars/tempo.png",
+            "carName": "Tempo Traveller A/C"
+        }
+    ],
+    "images": [
+        "/images/kanjipuram/twoday/kanchipuram-to-tirupati-two-days-package.png"
+    ]
+}
+

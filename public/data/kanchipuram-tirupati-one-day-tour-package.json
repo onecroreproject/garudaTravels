@@ -1,0 +1,107 @@
+{
+    "sightseeingPlaces": [
+        {
+            "id": "o68ndiy9f1j",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fkanchipuram-tirupati-one-day-tour-package%2Fplaces%2FUntitled%20design.jpg?alt=media&token=0358e508-2286-4112-8fca-8f2b800cf2fc"
+        },
+        {
+            "id": "0xbne3zj9hsa",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fkanchipuram-tirupati-one-day-tour-package%2Fplaces%2FUntitled%20design%20(1).png?alt=media&token=444deab4-3532-4839-9339-75904980dbeb"
+        },
+        {
+            "id": "y5j6hcnht0g",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fkanchipuram-tirupati-one-day-tour-package%2Fplaces%2FUntitled%20design%20(2).png?alt=media&token=0647e4a9-0a5e-4992-8bca-dd2b2ec28843"
+        },
+        {
+            "id": "epgl90nai2c",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fkanchipuram-tirupati-one-day-tour-package%2Fplaces%2FUntitled%20design%20(3).png?alt=media&token=98c9d661-5cf2-44e2-aac1-5d59d19f1057"
+        },
+        {
+            "id": "o04td7t12gb",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fkanchipuram-tirupati-one-day-tour-package%2Fplaces%2FUntitled%20design%20(4).png?alt=media&token=eb29a105-5478-4366-ae3a-0ed2df46ecc9"
+        },
+        {
+            "id": "s8snvzgxal",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fkanchipuram-tirupati-one-day-tour-package%2Fplaces%2FUntitled%20design%20(5).png?alt=media&token=ef094d45-0d6b-4a0a-827e-3f56d5969529"
+        },
+        {
+            "id": "q3dww751qzd",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fkanchipuram-tirupati-one-day-tour-package%2Fplaces%2FUntitled%20design%20(7).png?alt=media&token=62a27f9c-dfc4-4d2f-b13a-5724b0cc5502"
+        },
+        {
+            "id": "v4v7ycd5ad",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fkanchipuram-tirupati-one-day-tour-package%2Fplaces%2FUntitled%20design%20(8).png?alt=media&token=9b9ee3af-e7aa-4c15-81e9-5d096e41a07e"
+        },
+        {
+            "id": "mqrgyol0d2g",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fkanchipuram-tirupati-one-day-tour-package%2Fplaces%2FUntitled%20design%20(9).png?alt=media&token=84a1a6ab-a070-4dd1-b115-22b93d0a4600"
+        },
+        {
+            "id": "pvt67gsxj9",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fkanchipuram-tirupati-one-day-tour-package%2Fplaces%2FUntitled%20design%20(10).png?alt=media&token=c23ccb09-3b55-4e70-afa6-8328349712db"
+        },
+        {
+            "id": "i1ja5xs1ei",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fkanchipuram-tirupati-one-day-tour-package%2Fplaces%2FUntitled%20design%20(11).png?alt=media&token=a216c8cc-02c1-487d-9129-559fa53f4a2e"
+        },
+        {
+            "id": "qghrkun3mm8",
+            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/garuda-nextjs-98b70.firebasestorage.app/o/tirupati-package%2Fkanchipuram-tirupati-one-day-tour-package%2Fplaces%2FUntitled%20design%20(3).jpg?alt=media&token=379410d2-c399-4b6a-8b6d-dc64057e9784"
+        }
+    ],
+    "maleDressCodeImages": [
+        "/gender/male.png"
+    ],
+    "sections": [
+        {
+            "id": "7f43ei3fwks",
+            "imageUrl": "/images/kanjipuram/oneday/kanchipuram-to-tirupati-package-comfortable-cabs-&-hassle-free-darshan.png"
+        },
+        {
+            "id": "xr9ontjc3c",
+            "imageUrl": "/images/kanjipuram/oneday/experience-the-divine-journey-with-kanchipuram-to-tirupati-package-1.png"
+        },
+        {
+            "id": "f3v1lp08cgs",
+            "imageUrl": "/images/kanjipuram/oneday/why-choose-garuda-tours-&-travels-for-tirupati-package.png"
+        },
+        {
+            "id": "rm6mtruzrzh",
+            "imageUrl": "/images/kanjipuram/oneday/premium-experience-kanchipuram-to-tirupati-one-day-car-darshan.png"
+        }
+    ],
+    "femaleDressCodeImages": [
+        "/gender/female.png"
+    ],
+    "carPrices": [
+        {
+            "id": "hupnq5u260l",
+            "imageUrl": "/cars/etios.webp.png",
+            "carName": "Dezire / Etios A/C"
+        },
+        {
+            "id": "y36dvytgjoe",
+            "imageUrl": "/cars/ertiga.png",
+            "carName": "Ertiga"
+        },
+        {
+            "id": "ow2awnhoafq",
+            "imageUrl": "/cars/innova.png",
+            "carName": "Innova A/C"
+        },
+        {
+            "id": "v1y0quh9jb",
+            "imageUrl": "/cars/crysta.png",
+            "carName": "Innova Crysta A/C"
+        },
+        {
+            "id": "0qwqshs1tjme",
+            "imageUrl": "/cars/tempo.png",
+            "carName": "Tempo Traveller A/C"
+        }
+    ],
+    "images": [
+        "/images/book-your-kanchipuram-to-tirupati-package.png"
+    ]
+}
+

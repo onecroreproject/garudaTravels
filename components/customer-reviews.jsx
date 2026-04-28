@@ -10,7 +10,7 @@ const customerReviews = [
     name: "Priya Sharma",
     location: "Chennai, India",
     content:
-       "I booked the Chennai to Tirupati one-day package with Garuda Tours. The trip was smooth and well organized. VIP darshan was quick, and the staff were polite. Best experience I’ve had so far with a Tirupati package from Chennai.",
+      "I booked the Chennai to Tirupati one-day package with Garuda Tours. The trip was smooth and well organized. VIP darshan was quick, and the staff were polite. Best experience I’ve had so far with a Tirupati package from Chennai.",
   },
   {
     id: 2,
@@ -18,7 +18,7 @@ const customerReviews = [
     name: "P.Ramanujam",
     location: "Kumbakonam",
     content:
-       "We chose Garuda's Chennai to Tirupati two-day package for our family trip. The stay was neat, travel was comfortable, and the darshan was peaceful. A well-planned Tirupati tour package from Chennai that I’d recommend to others.",
+      "We chose Garuda's Chennai to Tirupati two-day package for our family trip. The stay was neat, travel was comfortable, and the darshan was peaceful. A well-planned Tirupati tour package from Chennai that I’d recommend to others.",
   },
   {
     id: 3,
@@ -26,7 +26,7 @@ const customerReviews = [
     name: "Karthikeyan",
     location: "Theni, Tamil Nadu",
     content:
-       "Tried Garuda's Tirupati darshan package from Chennai last weekend. Everything was on time, and we got hassle-free temple entry. They made the travel easy and peaceful. Good service and great value for the price.",
+      "Tried Garuda's Tirupati darshan package from Chennai last weekend. Everything was on time, and we got hassle-free temple entry. They made the travel easy and peaceful. Good service and great value for the price.",
   },
   {
     id: 4,
@@ -40,9 +40,21 @@ const customerReviews = [
 
 export default function CustomerReviews() {
   return (
-    <section className="py-16 px-4 bg-gray-50">
-      <div className="container mx-auto">
-        <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">What Our Customers Say</h2>
+    <section className="py-12 sm:py-20 px-4 bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute top-0 left-0 w-64 md:w-96 h-64 md:h-96 bg-gradient-to-r from-blue-200/20 to-purple-200/20 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 right-0 w-56 md:w-80 h-56 md:h-80 bg-gradient-to-l from-indigo-200/20 to-blue-200/20 rounded-full blur-3xl"></div>
+
+      <div className="container mx-auto relative z-10 text-center">
+        <div className="space-y-4 mb-12 text-center">
+          <div className="inline-block px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full text-sm font-semibold">
+            Testimonials
+          </div>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent leading-tight">
+            What Our <span className="text-blue-600">Customers Say</span>
+          </h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto"></div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {customerReviews.map((review) => (

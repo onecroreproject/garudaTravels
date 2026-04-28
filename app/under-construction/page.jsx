@@ -8,7 +8,7 @@ export default function UnderConstructionPage() {
       <div className="max-w-2xl w-full space-y-8 text-center bg-white p-8 rounded-lg shadow-lg border border-gray-200">
         <div className="relative w-48 h-48 mx-auto">
           <Image
-            src="/images/Balaji.webp?height=200&width=200"
+            src="/images/balaji.webp?height=200&width=200"
             alt="Under Construction"
             fill
             style={{ objectFit: "contain" }}

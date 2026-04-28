@@ -1,0 +1,36 @@
+{
+    "heroImage": "/images/tourpakege/hero/chennai-to-trichy-madurai-tiruchendur-kanyakumari.png",
+    "images": [
+        "/data/temple-tour-package/templ-hero-image/Chennai-To-Trichy-Madurai-Tiruchendur-Kanyakumari-Tour-Package-1.png"
+    ],
+    "templeList": [
+        {
+            "id": "5plzocngqvp",
+            "imageUrl": "/images/tourpakege/hero/che-kanyakumari-trichy/madurai-meenakshi-amman-temple.jpg"
+        },
+        {
+            "id": "nvuc21egylo",
+            "imageUrl": "/images/tourpakege/hero/che-kanyakumari-trichy/pazhamuthircholai-murugan-temple.png"
+        },
+        {
+            "id": "75l7461e6r",
+            "imageUrl": "/images/tourpakege/hero/che-kanyakumari-trichy/thiruparankundram-murugan-temple.jpg"
+        },
+        {
+            "id": "a5slla0797u",
+            "imageUrl": "/images/tourpakege/hero/che-kanyakumari-trichy/tiruchendur-murugan-temple.png"
+        },
+        {
+            "id": "1j58mos4212",
+            "imageUrl": "/images/tourpakege/hero/che-kanyakumari-trichy/panchmukhi-hanuman-temple.jpg"
+        },
+        {
+            "id": "o3nagune9dm",
+            "imageUrl": "/images/tourpakege/hero/che-kanyakumari-trichy/kanyakumari-temple.jpg"
+        },
+        {
+            "id": "rljskv1m4qm",
+            "imageUrl": "/images/tourpakege/hero/che-kanyakumari-trichy/vivekananda-rock-memorial.png"
+        } ]
+}
+

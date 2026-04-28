@@ -1,0 +1,33 @@
+{
+    "heroImage": "/images/tourpakege/hero/chennai-to-tiruvannamalai-one-day-package.png",
+    "images": [
+        "/data/temple-tour-package/templ-hero-image/Chennai-to-tiruvannamalai-One-Day-Package1.png"
+    ],
+    "templeList": [
+        {
+            "id": "0vtypbh6ehep",
+            "imageUrl": "/images/tourpakege/hero/che-thiruvannamanai/annamalaiyar-temple-(arunachalam-temple).png"
+        },
+        {
+            "id": "a10sk1jy92j",
+            "imageUrl": "/images/tourpakege/hero/che-thiruvannamanai/ramana-maharshi-ashram.jpg"
+        },
+        {
+            "id": "yuaul9oeub",
+            "imageUrl": "/images/tourpakege/hero/che-thiruvannamanai/skandashram-&-virupaksha-caves.jpg"
+        },
+        {
+            "id": "51xogeb5ddr",
+            "imageUrl": "/images/tourpakege/hero/che-thiruvannamanai/seshadri-swamigal-ashram.png"
+        },
+        {
+            "id": "2j40xo4juug",
+            "imageUrl": "/images/tourpakege/hero/che-thiruvannamanai/adi-annamalai-temple.jpg"
+        },
+        {
+            "id": "nnornnhko8",
+            "imageUrl": "/images/tourpakege/hero/che-thiruvannamanai/pachaiamman-temple.png"
+        }
+    ]
+}
+

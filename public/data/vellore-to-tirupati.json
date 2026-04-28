@@ -1,0 +1,64 @@
+{
+    "sightseeingPlaces": [],
+    "maleDressCodeImages": [
+        "/gender/male.png"
+    ],
+    "sections": [
+        {
+            "id": "monwyjl4utc",
+            "imageUrl": "/images/vellore/twoday/vellore-to-tirupati-two-day-tour-packagee.png"
+        },
+        {
+            "id": "vskyskbkp1j",
+            "imageUrl": "/images/vellore/twoday/tirupati-package-with-guide.png"
+        },
+        {
+            "id": "jvak4inze1c",
+            "imageUrl": "/images/vellore/twoday/the-best-choice.png"
+        }
+    ],
+    "femaleDressCodeImages": [
+        "/gender/female.png"
+    ],
+    "carPrices": [
+        {
+            "id": "o7f6exzgpl8",
+            "imageUrl": "/cars/etios.webp.png",
+            "carName": "DEZIRE / ETIOS A/C"
+        },
+        {
+            "id": "v6j4576k95m",
+            "imageUrl": "/cars/ertiga.png",
+            "carName": "ERTIGA A/C"
+        },
+        {
+            "id": "k5yzn6p68id",
+            "imageUrl": "/cars/innova.png",
+            "carName": "INNOVA / XYLO A/C\t"
+        },
+        {
+            "id": "suum22lzz2r",
+            "imageUrl": "/cars/innova.png",
+            "carName": "INNOVA A/C\t"
+        },
+        {
+            "id": "07ugzzjntkkr",
+            "imageUrl": "/cars/crysta.png",
+            "carName": "INNOVA CRYSTA A/C\t"
+        },
+        {
+            "id": "6x05azrenus",
+            "imageUrl": "/cars/crysta.png",
+            "carName": "INNOVA CRYSTA A/C"
+        },
+        {
+            "id": "7ejnrw67rsd",
+            "imageUrl": "/cars/tempo.png",
+            "carName": "TEMPO TRAVELLER A/C\t"
+        }
+    ],
+    "images": [
+        "/images/vellore/twoday/vellore-to-tirupati-two-day-tour-packagee.png"
+    ]
+}
+

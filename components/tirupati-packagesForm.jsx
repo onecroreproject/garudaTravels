@@ -19,6 +19,14 @@ import { uploadToMinIO } from "@/lib/fileUpload";
 // Helper to generate unique IDs for dynamic fields
 const generateUniqueId = () => Math.random().toString(36).substring(2, 15);
 
+const STATIC_CAR_IMAGES = [
+  { key: "swift", name: "Swift / Dzire / Etios", path: "/cars/swift.png" },
+  { key: "ertiga", name: "Ertiga", path: "/cars/ertiga.png" },
+  { key: "innova", name: "Innova", path: "/cars/innova.png" },
+  { key: "crysta", name: "Innova Crysta", path: "/cars/crysta.png" },
+  { key: "tempo", name: "Tempo Traveller", path: "/cars/tempo.png" },
+];
+
 export default function PackageForm({ packageType, packageId }) {
   const router = useRouter();
   const { toast } = useToast();
@@ -154,6 +162,11 @@ export default function PackageForm({ packageType, packageId }) {
                 prices: car.prices || [],
                 includes: car.includes || "", // Load new includes field
                 excludes: car.excludes || "", // Load new excludes field
+                image: (car.image || car.imageUrl)?.startsWith("/cars/") ? (car.image || car.imageUrl) : "",
+                useStaticImage: !!(car.image || car.imageUrl) && (car.image || car.imageUrl).startsWith("/cars/"),
+                staticImageKey: (car.image || car.imageUrl) && (car.image || car.imageUrl).startsWith("/cars/")
+                  ? STATIC_CAR_IMAGES.find(img => img.path === (car.image || car.imageUrl))?.key || ""
+                  : "",
               })) || []
             );
             // Map existing sections to include new image/listInfo fields
@@ -400,17 +413,17 @@ export default function PackageForm({ packageType, packageId }) {
       prev.map((pkg) =>
         pkg.id === packageIdToUpdate
           ? {
-              ...pkg,
-              cars: [
-                ...pkg.cars,
-                {
-                  id: generateUniqueId(),
-                  carName: "",
-                  seatCapacity: "",
-                  price: "",
-                },
-              ],
-            }
+            ...pkg,
+            cars: [
+              ...pkg.cars,
+              {
+                id: generateUniqueId(),
+                carName: "",
+                seatCapacity: "",
+                price: "",
+              },
+            ],
+          }
           : pkg
       )
     );
@@ -427,11 +440,11 @@ export default function PackageForm({ packageType, packageId }) {
       prev.map((pkg) =>
         pkg.id === packageIdToUpdate
           ? {
-              ...pkg,
-              cars: pkg.cars.map((car) =>
-                car.id === carIdToUpdate ? { ...car, [field]: value } : car
-              ),
-            }
+            ...pkg,
+            cars: pkg.cars.map((car) =>
+              car.id === carIdToUpdate ? { ...car, [field]: value } : car
+            ),
+          }
           : pkg
       )
     );
@@ -456,11 +469,12 @@ export default function PackageForm({ packageType, packageId }) {
       {
         id: generateUniqueId(),
         carName: "",
-        imageUrl: "",
-        imageFile: null,
+        image: "",
         prices: [{ id: generateUniqueId(), label: "1 person", value: "" }],
         includes: "", // Initialize new includes field
         excludes: "", // Initialize new excludes field
+        useStaticImage: true,
+        staticImageKey: "",
       },
     ]);
     setIsDirty(true);
@@ -473,9 +487,12 @@ export default function PackageForm({ packageType, packageId }) {
     setIsDirty(true);
   };
 
-  const handleCarImageFileChange = (carId, file) => {
+  // handleCarImageFileChange removed as car image upload is disabled
+
+  const handleStaticImageChange = (carId, key) => {
+    const selectedImage = STATIC_CAR_IMAGES.find(img => img.key === key);
     setCarPrices((prev) =>
-      prev.map((car) => (car.id === carId ? { ...car, imageFile: file } : car))
+      prev.map((car) => (car.id === carId ? { ...car, useStaticImage: true, staticImageKey: key, imageUrl: selectedImage ? selectedImage.path : "", imageFile: null } : car))
     );
     setIsDirty(true);
   };
@@ -483,7 +500,7 @@ export default function PackageForm({ packageType, packageId }) {
   const removeCarImage = (carId) => {
     setCarPrices((prev) =>
       prev.map((car) =>
-        car.id === carId ? { ...car, imageUrl: "", imageFile: null } : car
+        car.id === carId ? { ...car, imageUrl: "", imageFile: null, useStaticImage: false, staticImageKey: "" } : car
       )
     );
     setIsDirty(true);
@@ -494,12 +511,12 @@ export default function PackageForm({ packageType, packageId }) {
       prev.map((car) =>
         car.id === carId
           ? {
-              ...car,
-              prices: [
-                ...car.prices,
-                { id: generateUniqueId(), label: "", value: "" },
-              ],
-            }
+            ...car,
+            prices: [
+              ...car.prices,
+              { id: generateUniqueId(), label: "", value: "" },
+            ],
+          }
           : car
       )
     );
@@ -511,11 +528,11 @@ export default function PackageForm({ packageType, packageId }) {
       prev.map((car) =>
         car.id === carId
           ? {
-              ...car,
-              prices: car.prices.map((price) =>
-                price.id === priceId ? { ...price, [field]: value } : price
-              ),
-            }
+            ...car,
+            prices: car.prices.map((price) =>
+              price.id === priceId ? { ...price, [field]: value } : price
+            ),
+          }
           : car
       )
     );
@@ -527,9 +544,9 @@ export default function PackageForm({ packageType, packageId }) {
       prev.map((car) =>
         car.id === carId
           ? {
-              ...car,
-              prices: car.prices.filter((price) => price.id !== priceId),
-            }
+            ...car,
+            prices: car.prices.filter((price) => price.id !== priceId),
+          }
           : car
       )
     );
@@ -678,12 +695,12 @@ export default function PackageForm({ packageType, packageId }) {
       prev.map((section) =>
         section.id === sectionId
           ? {
-              ...section,
-              listInfo: [
-                ...section.listInfo,
-                { id: generateUniqueId(), text: "" },
-              ],
-            }
+            ...section,
+            listInfo: [
+              ...section.listInfo,
+              { id: generateUniqueId(), text: "" },
+            ],
+          }
           : section
       )
     );
@@ -695,11 +712,11 @@ export default function PackageForm({ packageType, packageId }) {
       prev.map((section) =>
         section.id === sectionId
           ? {
-              ...section,
-              listInfo: section.listInfo.map((item) =>
-                item.id === listInfoId ? { ...item, text: newText } : item
-              ),
-            }
+            ...section,
+            listInfo: section.listInfo.map((item) =>
+              item.id === listInfoId ? { ...item, text: newText } : item
+            ),
+          }
           : section
       )
     );
@@ -711,11 +728,11 @@ export default function PackageForm({ packageType, packageId }) {
       prev.map((section) =>
         section.id === sectionId
           ? {
-              ...section,
-              listInfo: section.listInfo.filter(
-                (item) => item.id !== listInfoId
-              ),
-            }
+            ...section,
+            listInfo: section.listInfo.filter(
+              (item) => item.id !== listInfoId
+            ),
+          }
           : section
       )
     );
@@ -810,32 +827,17 @@ export default function PackageForm({ packageType, packageId }) {
       const allImageUrls = [...images, ...uploadedImageUrls];
       console.log("All main image URLs:", allImageUrls);
 
-      // 2. Process Car Prices and Upload Images
-      const processedCarPrices = await Promise.all(
-        carPrices.map(async (car) => {
-          let carImageUrl = car.imageUrl;
-
-          if (car.imageFile) {
-            const url = await uploadToMinIO(
-              car.imageFile,
-              `${storagePathPrefix}/cars`
-            );
-            carImageUrl = url;
-            console.log(
-              `Uploaded car image ${car.imageFile.name}, URL: ${carImageUrl}`
-            );
-          }
-
-          return {
-            id: car.id,
-            carName: car.carName,
-            imageUrl: carImageUrl,
-            prices: car.prices,
-            includes: car.includes,
-            excludes: car.excludes,
-          };
-        })
-      );
+      // 2. Process Car Prices
+      const processedCarPrices = carPrices.map((car) => {
+        return {
+          id: car.id,
+          carName: car.carName,
+          imageUrl: car.imageUrl, // Will be the static path set via dropdown
+          prices: car.prices,
+          includes: car.includes,
+          excludes: car.excludes,
+        };
+      });
 
       // 3. Sightseeing Places
       const processedSightseeingPlaces = await Promise.all(
@@ -1655,9 +1657,8 @@ export default function PackageForm({ packageType, packageId }) {
                           <div key={index} className="relative group w-24 h-16">
                             <img
                               src={url || "/placeholder.webp"}
-                              alt={`Existing male dress code image ${
-                                index + 1
-                              }`}
+                              alt={`Existing male dress code image ${index + 1
+                                }`}
                               width={96}
                               height={64}
                               className="rounded-md object-cover w-full h-full"
@@ -1730,9 +1731,8 @@ export default function PackageForm({ packageType, packageId }) {
                           <div key={index} className="relative group w-24 h-16">
                             <img
                               src={url || "/placeholder.webp"}
-                              alt={`Existing female dress code image ${
-                                index + 1
-                              }`}
+                              alt={`Existing female dress code image ${index + 1
+                                }`}
                               width={96}
                               height={64}
                               className="rounded-md object-cover w-full h-full"
@@ -1810,26 +1810,27 @@ export default function PackageForm({ packageType, packageId }) {
                         />
                       </div>
                       <div className="flex-1">
-                        <Label htmlFor={`car-image-${car.id}`}>
-                          Choose Image
+                        <Label htmlFor={`static-image-${car.id}`}>
+                          Select Car Image
                         </Label>
-                        <Input
-                          id={`car-image-${car.id}`}
-                          type="file"
-                          onChange={(e) => {
-                            handleCarImageFileChange(car.id, e.target.files[0]);
-                            setIsDirty(true);
-                          }}
-                          className="cursor-pointer"
-                        />
-                        {(car.imageUrl || car.imageFile) && (
+                        <select
+                          id={`static-image-${car.id}`}
+                          value={car.staticImageKey}
+                          onChange={(e) => handleStaticImageChange(car.id, e.target.value)}
+                          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+                        >
+                          <option value="">Select an image</option>
+                          {STATIC_CAR_IMAGES.map((img) => (
+                            <option key={img.key} value={img.key}>
+                              {img.name}
+                            </option>
+                          ))}
+                        </select>
+
+                        {car.image && (
                           <div className="mt-2 relative group w-24 h-16">
                             <img
-                              src={
-                                car.imageFile
-                                  ? URL.createObjectURL(car.imageFile)
-                                  : car.imageUrl
-                              }
+                              src={car.image}
                               alt="Car image preview"
                               width={96}
                               height={64}
@@ -1840,7 +1841,11 @@ export default function PackageForm({ packageType, packageId }) {
                               variant="destructive"
                               size="icon"
                               className="absolute top-0 right-0 h-5 w-5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                              onClick={() => removeCarImage(car.id)}
+                              onClick={() => {
+                                updateCarPriceField(car.id, "image", "");
+                                updateCarPriceField(car.id, "staticImageKey", "");
+                                setIsDirty(true);
+                              }}
                             >
                               <X className="h-3 w-3" />
                               <span className="sr-only">Remove car image</span>
@@ -2357,8 +2362,8 @@ export default function PackageForm({ packageType, packageId }) {
               {loading
                 ? "Saving..."
                 : isEditMode
-                ? "Update Package"
-                : "Save Package"}
+                  ? "Update Package"
+                  : "Save Package"}
             </Button>
             <Button
               type="button"

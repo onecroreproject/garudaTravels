@@ -1,0 +1,25 @@
+{
+    "heroImage": "/images/tourpakege/hero/chennai-to-pondicherry-one-day-package.png",
+    "images": [
+        "/data/temple-tour-package/templ-hero-image/Chennai-to-Pondicherry-One-Day-Package1.png"
+    ],
+    "templeList": [
+        {
+            "id": "eeq90721j6b",
+            "imageUrl": "/images/tourpakege/hero/che-pondy/manakula-vinayagar-temple.png"
+        },
+        {
+            "id": "zyzfcufbjtm",
+            "imageUrl": "/images/tourpakege/hero/che-pondy/sri-varadaraja-perumal-temple.jpg"
+        },
+        {
+            "id": "7ozrqz95ufc",
+            "imageUrl": "/images/tourpakege/hero/che-pondy/sri-kokilambigai-udanurai-sri-thirukameswarar-temple.png"
+        },
+        {
+            "id": "igqgoajot9q",
+            "imageUrl": "/images/tourpakege/hero/che-pondy/sri-karaneswar-nataraja-temple-pyramid-temple.jpg"
+        }
+    ]
+}
+
