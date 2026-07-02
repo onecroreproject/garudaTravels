@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server"
 import { db } from "@/lib/firebase"
 import { collection, addDoc, Timestamp } from "firebase/firestore"
-import axios from "axios"
-import https from "https"
-import { encryptPayload } from "@/lib/encryption"
+import nodemailer from "nodemailer"
 import { companyInfo } from "@/config/credentials"
 
 // Handle CORS preflight requests
@@ -195,32 +193,27 @@ export async function POST(request) {
       `,
     }
 
-    // Send emails using encrypted microservice
-    const templates = [businessMailOptions, clientMailOptions]
-
-    const payload = encryptPayload({
-      templates,
-      data: {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        service: `Tour Booking - ${formData.packageType}`,
+    // Configure nodemailer transporter
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: process.env.SMTP_PORT === '465',
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
       },
-    })
+    });
 
-    const httpsAgent = new https.Agent({ rejectUnauthorized: false });
-    
-    let emailResult
+    let emailResult = { status: 200, data: {} };
     try {
-      emailResult = await axios.post(
-        'https://mail.service.thereciprocalsolutions.com/v1/mail/send',
-        { payload },
-        { httpsAgent }
-      )
-      console.log('Email sent successfully via microservice:', emailResult.data)
+      // Send business email
+      await transporter.sendMail(businessMailOptions);
+      // Send client email
+      await transporter.sendMail(clientMailOptions);
+      console.log('Emails sent successfully via SMTP');
     } catch (emailError) {
-      console.error('Email microservice error:', emailError)
-      emailResult = { status: 500, data: { error: emailError.message } }
+      console.error('SMTP email error:', emailError);
+      emailResult = { status: 500, data: { error: emailError.message } };
     }
 
     // Send Telegram Message
