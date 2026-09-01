@@ -1,4 +1,4 @@
-﻿import Link from "next/link"
+import Link from "next/link"
 import Image from "next/image"
 import { blogs } from "@/lib/blog-data"
 import Header from "@/components/header"
@@ -8,6 +8,9 @@ import { Calendar, ChevronRight } from 'lucide-react'
 export const metadata = {
     title: "Travel Blogs | Garuda Tours & Travels Chennai",
     description: "Read our latest travel blogs about Tirupati tours, Kanchipuram temple visits, and heritage trips from Chennai for expert travel tips and insights.",
+    alternates: {
+        canonical: "/blog",
+    },
 };
 
 export default function BlogListPage() {

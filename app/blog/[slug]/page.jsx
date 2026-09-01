@@ -14,6 +14,13 @@ export async function generateMetadata({ params }) {
     return {
         title: `${post.title} | Garuda Tours & Travels`,
         description: post.excerpt,
+        alternates: {
+            canonical: `/blog/${slug}`,
+        },
+        robots: {
+            index: true,
+            follow: true,
+        },
     }
 }
 

@@ -47,6 +47,22 @@ import Image from "next/image";
 // Generate dynamic metadata
 export async function generateMetadata({ params }) {
   const { slug } = await params;
+  const metadata = await getRawMetadata({ params });
+  
+  return {
+    ...metadata,
+    alternates: {
+      canonical: `/temple-tour-package/${slug}`,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
+
+async function getRawMetadata({ params }) {
+  const { slug } = await params;
 
   if (slug === "chennai-kanchipuram-temple-package") {
     return {

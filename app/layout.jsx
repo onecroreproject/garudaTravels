@@ -20,6 +20,7 @@ const poppins = Poppins({
 })
 
 export const metadata = {
+  metadataBase: new URL('https://www.garudatoursandtravels.com'),
   title: 'Chennai to Tirupati Packages | Tirupati Packages | Temple Tour Packages - Garuda Tours & Travels',
   description:
     'Explore affordable Chennai to Tirupati tour packages with Garuda Tours & Travels. Hassle-free temple visits, VIP darshan, and customized itineraries. Book your Tirupati package from chennai today!',
