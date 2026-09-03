@@ -29,27 +29,81 @@ const nextConfig = withBundleAnalyzer({
     ignoreBuildErrors: true
   },
 
-  // SEO: Redirect old URLs to the current URLs
   async redirects() {
     return [
       {
         source: '/vellore-tirupati-two-days-tour-package',
-        destination: '/vellore-tirupati-two-days-tour-package.php',
+        destination: '/tirupati-package/vellore-to-tirupati',
+        permanent: true,
+      },
+      {
+        source: '/vellore-tirupati-two-days-tour-package.php',
+        destination: '/tirupati-package/vellore-to-tirupati',
         permanent: true,
       },
       {
         source: '/chennai-tirupati-two-day-tour-package',
-        destination: '/chennai-tirupati-two-day-tour-package.php',
+        destination: '/tirupati-package/tirupati-two-days-package-from-chennai',
+        permanent: true,
+      },
+      {
+        source: '/chennai-tirupati-two-day-tour-package.php',
+        destination: '/tirupati-package/tirupati-two-days-package-from-chennai',
         permanent: true,
       },
       {
         source: '/chennai-tirupati-one-day-tour-package',
-        destination: '/CORRECT-NEW-URL',
+        destination: '/tirupati-package/chennai-tirupati-one-day-tour-package',
+        permanent: true,
+      },
+      {
+        source: '/chennai-tirupati-one-day-tour-package.php',
+        destination: '/tirupati-package/chennai-tirupati-one-day-tour-package',
         permanent: true,
       },
       {
         source: '/tirumala-tirupati-darshan-one-day-package',
-        destination: '/CORRECT-NEW-URL',
+        destination: '/tirupati-package/tirumala-tirupati-darshan-one-day-package',
+        permanent: true,
+      },
+      {
+        source: '/tirumala-tirupati-darshan-one-day-package.php',
+        destination: '/tirupati-package/tirumala-tirupati-darshan-one-day-package',
+        permanent: true,
+      },
+      {
+        source: '/bangalore-tirupati-darshan-tour-package',
+        destination: '/tirupati-package/bangalore-tirupati-darshan-tour-package',
+        permanent: true,
+      },
+      {
+        source: '/chennai-vellore-outstation-trip.php',
+        destination: '/temple-tour-package/chennai-vellore-temple-package',
+        permanent: true,
+      },
+      {
+        source: '/vellore-tirupati-one-day-tour-package.php',
+        destination: '/tirupati-package/vellore-tirupati-one-day-tour-package',
+        permanent: true,
+      },
+      {
+        source: '/kanchipuram-tirupati-one-day-tour-package',
+        destination: '/tirupati-package/kanchipuram-tirupati-one-day-tour-package',
+        permanent: true,
+      },
+      {
+        source: '/chennai-tirupati-car-rental-package',
+        destination: '/tirupati-package/chennai-tirupati-car-rental-package',
+        permanent: true,
+      },
+      {
+        source: '/chennai-kalahasti-one-day-tour-package.php',
+        destination: '/temple-tour-package/chennai-to-kalahasti-temple-tour-package',
+        permanent: true,
+      },
+      {
+        source: '/chennai-kanchipuram-temple-package.php',
+        destination: '/temple-tour-package/chennai-kanchipuram-temple-package',
         permanent: true,
       },
       {
