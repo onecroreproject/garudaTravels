@@ -553,6 +553,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
           <TirupatiPackageHero packageData={packageData || {}} />
 
           <div className="container mx-auto px-4 py-6">
+            <PassengerNoteBox />
 
             {/* Hardcoded SEO Content for Specific Package */}
             {SEO_CONTENT_MAP[slug] && (
@@ -1717,7 +1718,6 @@ export default async function TirupatiPackageDetailPage({ params }) {
                 </div>
               </section>
             )}
-            <PassengerNoteBox />
             {/* FAQs Section */}
             {packageData.faqs && packageData.faqs.length > 0 && (
               <section className="mb-12">

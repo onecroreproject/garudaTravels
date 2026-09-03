@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
@@ -125,6 +125,10 @@ export default function HomeClient() {
         {/* Hero Slider with high priority */}
         <HeroSlider fetchPriority="high" />
 
+        <div className="mt-8 px-4">
+          <PassengerNoteBox />
+        </div>
+
         {/* Enhanced Booking Section */}
         <section id="booking" className="py-12 sm:py-20 px-4 bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 relative overflow-hidden">
           {/* Background Elements */}
@@ -161,6 +165,7 @@ export default function HomeClient() {
         <Vehicle />
 
         {/* Quotes Section */}
+        {false && (
         <section className="py-12 sm:py-20 px-4 bg-gradient-to-br from-white via-gray-50 to-blue-50 relative overflow-hidden">
           <div className="container mx-auto relative z-10">
             {/* Quotes Grid */}
@@ -298,6 +303,7 @@ export default function HomeClient() {
           }
         `}</style>
         </section>
+        )}
 
         {/* Enhanced About Us Section */}
         <section className="py-12 sm:py-20 px-4 bg-gradient-to-br from-white via-blue-50 to-indigo-50 relative overflow-hidden">
@@ -369,8 +375,6 @@ export default function HomeClient() {
           </div>
         </section>
         <br />
-
-        <PassengerNoteBox />
 
         {/* Enhanced One-Day Package Section */}
         <section className="py-12 sm:py-20 px-4 bg-gradient-to-br from-orange-50 via-red-50 to-pink-50 relative overflow-hidden">

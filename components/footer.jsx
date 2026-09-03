@@ -18,7 +18,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
-              className="border border-gray-600 p-2 rounded-md hover:bg-gray-700 transition-colors"
+              className="border border-[#1877F2] bg-[#1877F2] p-2 rounded-md hover:bg-opacity-80 transition-all group"
             >
               <Facebook className="h-5 w-5 text-white" />
             </a>
@@ -27,7 +27,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="border border-gray-600 p-2 rounded-md hover:bg-gray-700 transition-colors"
+              className="border border-[#E4405F] bg-[#E4405F] p-2 rounded-md hover:bg-opacity-80 transition-all group"
             >
               <Instagram className="h-5 w-5 text-white" />
             </a>
@@ -36,7 +36,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="YouTube"
-              className="border border-gray-600 p-2 rounded-md hover:bg-gray-700 transition-colors"
+              className="border border-[#FF0000] bg-[#FF0000] p-2 rounded-md hover:bg-opacity-80 transition-all group"
             >
               <Youtube className="h-5 w-5 text-white" />
             </a>
@@ -45,7 +45,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="WhatsApp"
-              className="border border-gray-600 p-2 rounded-md hover:bg-gray-700 transition-colors"
+              className="border border-[#25D366] bg-[#25D366] p-2 rounded-md hover:bg-opacity-80 transition-all group"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 text-white">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.488-1.761-1.663-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118a3.136 3.136 0 0 0 2.059-1.446 3.13 3.13 0 0 0 .22-1.446c-.099-.149-.371-.248-.669-.398z" />
