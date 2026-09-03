@@ -7,25 +7,64 @@ const withBundleAnalyzer = bundleAnalyzer({
 /** @type {import('next').NextConfig} */
 const nextConfig = withBundleAnalyzer({
   reactStrictMode: true,
-  // Remove swcMinify as it's now the default in Next.js 15+
+
   experimental: {
     optimizeCss: true,
     scrollRestoration: true,
-    // Add missing critters configuration
     optimizePackageImports: ['critters']
   },
+
   images: {
     unoptimized: true,
     formats: ['image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
-  eslint: { 
-    ignoreDuringBuilds: true 
+
+  eslint: {
+    ignoreDuringBuilds: true
   },
-  typescript: { 
-    ignoreBuildErrors: true 
+
+  typescript: {
+    ignoreBuildErrors: true
   },
+
+  // SEO: Redirect old URLs to the current URLs
+  async redirects() {
+    return [
+      {
+        source: '/vellore-tirupati-two-days-tour-package',
+        destination: '/vellore-tirupati-two-days-tour-package.php',
+        permanent: true,
+      },
+      {
+        source: '/chennai-tirupati-two-day-tour-package',
+        destination: '/chennai-tirupati-two-day-tour-package.php',
+        permanent: true,
+      },
+      {
+        source: '/chennai-tirupati-one-day-tour-package',
+        destination: '/CORRECT-NEW-URL',
+        permanent: true,
+      },
+      {
+        source: '/tirumala-tirupati-darshan-one-day-package',
+        destination: '/CORRECT-NEW-URL',
+        permanent: true,
+      },
+      {
+        source: '/index.php',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/index',
+        destination: '/',
+        permanent: true,
+      },
+    ];
+  },
+
   async headers() {
     return [
       {
@@ -39,8 +78,8 @@ const nextConfig = withBundleAnalyzer({
       },
     ];
   },
+
   webpack: (config, { isServer }) => {
-    // Add a rule to handle source maps with error suppression
     config.module.rules.push({
       test: /\.(js|jsx|ts|tsx)$/,
       enforce: 'pre',
@@ -48,13 +87,11 @@ const nextConfig = withBundleAnalyzer({
       exclude: /node_modules/,
     });
 
-    // Suppress source map warnings from node_modules
     config.ignoreWarnings = [
       /Failed to parse source map/,
       /ENOENT: no such file or directory/,
     ];
 
-    // Handle critters module
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,

@@ -5,157 +5,65 @@ const BASE_URL = 'https://www.garudatoursandtravels.com'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
-    {
-      url: BASE_URL,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 1,
-    },
-    {
-      url: `${BASE_URL}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/bangalore-tirupati-darshan-tour-package.php`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/blog`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/car-rental`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/chennai-kanchipuram-temple-package.php`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/chennai-kanyakumari-temple-package`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/chennai-madurai-temple-package`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/chennai-mahabalipuram-outstation-package.php`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/chennai-palani-temple-package`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/chennai-pondicherry-outstation-tour`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/chennai-pondicherry-temple-package`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/chennai-tirupati-car-rental-package.php`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/chennai-tirupati-two-day-tour-package.php`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/chennai-tiruvannamalai-temple-package.php`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/chennai-vellore-temple-package`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/contact`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/kanchipuram-tirupati-one-day-tour-package.php`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/kilometer-basis-car-rental-from-chennai`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/privacy-policy`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.5,
-    },
-    {
-      url: `${BASE_URL}/temple-tour-package`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/tirupati-balaji-srivani-vip-break-darshan`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/tirupati-package`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/vellore-tirupati-one-day-tour-package`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/vellore-tirupati-two-days-tour-package.php`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
+    { url: BASE_URL, lastModified: new Date(), changeFrequency: 'yearly', priority: 1 },
+    { url: `${BASE_URL}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE_URL}/contact`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.8 },
+    { url: `${BASE_URL}/privacy-policy`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.5 },
+    { url: `${BASE_URL}/blog`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
   ]
+
+  const templeTours = [
+    "chennai-kanchipuram-temple-package",
+    "chennai-mahabalipuram-oneday-package",
+    "chennai-pondicherry-temple-tour-package",
+    "chennai-tiruvannamalai-temple-package",
+    "chennai-to-kalahasti-temple-tour-package",
+    "chennai-vellore-temple-package",
+    "chennai-kanyakumari-temple-tour-package",
+    "chennai-pondicherry-temple-package",
+    "chennai-kodaikanal-palani-temple-tour-package",
+    "chennai-madurai-temple-package",
+    "chennai-malikarjuna-temple-package",
+    "chennai-navagraha-temple-tour-package",
+  ]
+
+  const templeRoutes: MetadataRoute.Sitemap = templeTours.map((slug) => ({
+    url: `${BASE_URL}/temple-tour-package/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }))
+
+  const tirupatiTours = [
+    "chennai-tirupati-one-day-tour-package",
+    "tirupati-two-days-package-from-chennai",
+    "chennai-tirupati-car-rental-package",
+    "srivani-vip-break-darshan",
+    "vellore-tirupati-one-day-tour-package",
+    "vellore-to-tirupati",
+    "bangalore-tirupati-darshan-tour-package",
+    "kanchipuram-tirupati-one-day-tour-package",
+    "kanchipuram-tirupati-two-days-tour-package",
+    "tirumala-tirupati-darshan-one-day-package",
+  ]
+
+  const tirupatiRoutes: MetadataRoute.Sitemap = tirupatiTours.map((slug) => ({
+    url: `${BASE_URL}/tirupati-package/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }))
+
+  const carRentalTours = [
+    "kilometer-based-car-rental-from-chennai",
+  ]
+
+  const carRentalRoutes: MetadataRoute.Sitemap = carRentalTours.map((slug) => ({
+    url: `${BASE_URL}/car-rental/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }))
 
   const blogRoutes: MetadataRoute.Sitemap = blogs.map((blog) => ({
     url: `${BASE_URL}/blog/${blog.slug}`,
@@ -164,5 +72,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
-  return [...staticRoutes, ...blogRoutes]
+  return [
+    ...staticRoutes,
+    ...templeRoutes,
+    ...tirupatiRoutes,
+    ...carRentalRoutes,
+    ...blogRoutes,
+  ]
 }
