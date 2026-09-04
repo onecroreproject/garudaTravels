@@ -132,6 +132,7 @@ export function Header() {
     ],
     bangalore: [
       { href: "/tirupati-package/bangalore-tirupati-darshan-tour-package", label: "One Day Package", icon: Repeat1, desc: "From Bangalore" },
+      { href: "/tirupati-package/bangalore-to-tirupati-two-day", label: "Two Day Package", icon: Calendar, desc: "Relaxed spiritual journey" },
     ],
     kanchipuram: [
       { href: "/tirupati-package/kanchipuram-tirupati-one-day-tour-package", label: "One Day Package", icon: Repeat1, desc: "Via Kanchipuram" },

@@ -314,6 +314,12 @@ const SEO_CONTENT_MAP = {
       "The Tirumala to Tirupati One Day Package allows devotees to complete their temple visit without any stress, making it ideal for families, senior citizens, and working professionals. With organized darshan assistance and travel planning, this Tirumala to Tirupati One Day Package ensures you can focus entirely on seeking Lord Venkateswara’s blessings. Enjoy a smooth darshan experience, explore nearby temples, and return to Tirupati on the same day with ease.",
       "With transparent pricing, reliable service, and attention to comfort, the Tirumala to Tirupati One Day Package offers a memorable and stress-free pilgrimage. Whether for a personal vow, special pooja, or family spiritual trip, this Tirumala to Tirupati One Day Package guarantees a peaceful and divine journey. Book your Tirumala to Tirupati One Day Package today for a hassle-free and spiritually enriching experience."
     ]
+  },
+  "bangalore-to-tirupati-two-day": {
+    title: "Discover a Divine Escape: Bangalore to Tirupati Two-Day Package",
+    content: [
+      "Experience a peaceful and spiritually enriching journey with our two-day Bangalore to Tirupati package. Thoughtfully designed for devotees seeking a deeper connection with spirituality, this package gives you ample time to experience the sacred atmosphere of one of India's most revered pilgrimage destinations. With comfortable travel arrangements and a well-planned itinerary, your journey promises to be both relaxing and spiritually fulfilling."
+    ]
   }
 };
 
@@ -1135,6 +1141,19 @@ export default async function TirupatiPackageDetailPage({ params }) {
                         </span>
                       </div>
                     </li>
+                    {slug === "bangalore-to-tirupati-two-day" && (
+                      <li className="group flex items-start p-3 bg-white/60 rounded-lg hover:bg-white/80 transition-all duration-300 hover:shadow-md">
+                        <div className="w-2 h-2 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full mt-1.5 mr-3 flex-shrink-0 shadow-sm"></div>
+                        <div>
+                          <span className="font-bold text-gray-800 text-base">
+                            Important Note:
+                          </span>
+                          <span className="text-gray-700 ml-2 text-sm">
+                            <strong>AC will be switched off during the uphill and downhill journey through the hill roads.</strong>
+                          </span>
+                        </div>
+                      </li>
+                    )}
                   </ul>
                 </div>
               </div>
