@@ -27,7 +27,8 @@ import {
   ChevronRight,
   Bus,
   Hotel,
-  Ticket
+  Ticket,
+  Globe
 } from 'lucide-react'
 import { collection, getDocs } from "firebase/firestore"
 import { db } from "@/lib/firebase"
@@ -125,6 +126,7 @@ export function Header() {
       { href: "/tirupati-package/tirupati-two-days-package-from-chennai", label: "Two Days Package", icon: Calendar, desc: "Relaxed spiritual journey" },
       { href: "/tirupati-package/chennai-tirupati-car-rental-package", label: "Car Rental Package", icon: Car, desc: "Flexible travel options" },
       { href: "/tirupati-package/srivani-vip-break-darshan", label: "VIP Darshan", icon: Crown, desc: "Special VIP entry" },
+      { href: "/nri-darshan", label: "NRI Darshan", icon: Globe, desc: "Special entry for NRIs" },
     ],
     vellore: [
       { href: "/tirupati-package/vellore-tirupati-one-day-tour-package", label: "One Day Package", icon: Repeat1, desc: "Quick spiritual visit" },
