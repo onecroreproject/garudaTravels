@@ -177,6 +177,169 @@ export default function NRIDarshanPage() {
           </div>
         </section>
 
+        {/* Pricing Section */}
+        <section className="container mx-auto px-4 mb-12 md:mb-16">
+          <div className="text-center mb-8 md:mb-10">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4">Package Pricing</h2>
+            <p className="text-base sm:text-lg text-gray-600 text-center max-w-3xl mx-auto px-4 mb-6">
+              Transparent pricing based on your vehicle choice and group size.
+            </p>
+            <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 md:p-6 max-w-4xl mx-auto text-left shadow-sm">
+              <h4 className="font-bold text-blue-900 mb-2 text-lg">Package Inclusions:</h4>
+              <p className="text-blue-800 text-sm md:text-base leading-relaxed">
+                Breakfast, Lunch, Darshan Ticket, Driver Bata, Toll, Parking, and Permit charges are all included. <br/>
+                <span className="font-semibold inline-block mt-2">Temples Covered:</span> Padmavathi Temple and Balaji Temple. (Visiting other temples will incur additional charges).
+              </p>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Dzire / Etios */}
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col border border-gray-100">
+              <div className="relative w-full h-48 sm:h-56 bg-[#e9ebed]">
+                <Image src="/cars/etios.webp.png" alt="Dzire / Etios" fill className="object-cover transition-transform duration-300 hover:scale-105" />
+              </div>
+              <div className="p-6 flex flex-col flex-grow">
+                <h3 className="text-xl font-bold text-gray-800 text-center mb-6">Dezire / Etios A/C</h3>
+                
+                <div className="border border-gray-100 rounded-lg mb-6 overflow-hidden">
+                  <div className="flex justify-between items-center border-b border-gray-100 px-4 py-3 bg-white hover:bg-gray-50 transition-colors">
+                    <span className="text-gray-600 text-sm">1 person</span>
+                    <span className="font-bold text-blue-600">₹ 8,500</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-gray-100 px-4 py-3 bg-white hover:bg-gray-50 transition-colors">
+                    <span className="text-gray-600 text-sm">2 person</span>
+                    <span className="font-bold text-blue-600">₹ 9,500</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-gray-100 px-4 py-3 bg-white hover:bg-gray-50 transition-colors">
+                    <span className="text-gray-600 text-sm">3 person</span>
+                    <span className="font-bold text-blue-600">₹ 10,500</span>
+                  </div>
+                  <div className="flex justify-between items-center px-4 py-3 bg-white hover:bg-gray-50 transition-colors">
+                    <span className="text-gray-600 text-sm">4 person</span>
+                    <span className="font-bold text-blue-600">₹ 11,500</span>
+                  </div>
+                </div>
+
+                <div className="flex-grow"></div>
+
+                <div className="flex justify-center mt-auto">
+                  <a href="#booking" className="bg-[#2563eb] hover:bg-blue-700 text-white font-semibold py-2.5 px-10 rounded-full transition-colors text-sm shadow-md hover:shadow-lg">
+                    Book Now
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Innova */}
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col border border-gray-100">
+              <div className="relative w-full h-48 sm:h-56 bg-[#e9ebed]">
+                <Image src="/cars/innova.png" alt="Innova" fill className="object-cover transition-transform duration-300 hover:scale-105" />
+              </div>
+              <div className="p-6 flex flex-col flex-grow">
+                <h3 className="text-xl font-bold text-gray-800 text-center mb-6">Innova A/C</h3>
+                
+                <div className="border border-gray-100 rounded-lg mb-6 overflow-hidden">
+                  <div className="flex justify-between items-center border-b border-gray-100 px-4 py-3 bg-white hover:bg-gray-50 transition-colors">
+                    <span className="text-gray-600 text-sm">5 - Person</span>
+                    <span className="font-bold text-blue-600">₹ 14,500</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-gray-100 px-4 py-3 bg-white hover:bg-gray-50 transition-colors">
+                    <span className="text-gray-600 text-sm">6 - Person</span>
+                    <span className="font-bold text-blue-600">₹ 15,500</span>
+                  </div>
+                  <div className="flex justify-between items-center px-4 py-3 bg-white hover:bg-gray-50 transition-colors">
+                    <span className="text-gray-600 text-sm">7 - Person</span>
+                    <span className="font-bold text-blue-600">₹ 16,500</span>
+                  </div>
+                </div>
+
+                <div className="flex-grow"></div>
+
+                <div className="flex justify-center mt-auto">
+                  <a href="#booking" className="bg-[#2563eb] hover:bg-blue-700 text-white font-semibold py-2.5 px-10 rounded-full transition-colors text-sm shadow-md hover:shadow-lg">
+                    Book Now
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Innova Crysta */}
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col border border-gray-100 relative">
+              <div className="relative w-full h-48 sm:h-56 bg-[#e9ebed]">
+                <Image src="/cars/crysta.png" alt="Innova Crysta" fill className="object-cover transition-transform duration-300 hover:scale-105" />
+              </div>
+              <div className="p-6 flex flex-col flex-grow">
+                <h3 className="text-xl font-bold text-gray-800 text-center mb-6">Innova Crysta A/C</h3>
+                
+                <div className="border border-gray-100 rounded-lg mb-6 overflow-hidden">
+                  <div className="flex justify-between items-center border-b border-gray-100 px-4 py-3 bg-white hover:bg-gray-50 transition-colors">
+                    <span className="text-gray-600 text-sm">5 - Person</span>
+                    <span className="font-bold text-blue-600">₹ 15,500</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-gray-100 px-4 py-3 bg-white hover:bg-gray-50 transition-colors">
+                    <span className="text-gray-600 text-sm">6 - Person</span>
+                    <span className="font-bold text-blue-600">₹ 16,500</span>
+                  </div>
+                  <div className="flex justify-between items-center px-4 py-3 bg-white hover:bg-gray-50 transition-colors">
+                    <span className="text-gray-600 text-sm">7 - Person</span>
+                    <span className="font-bold text-blue-600">₹ 17,500</span>
+                  </div>
+                </div>
+
+                <div className="flex-grow"></div>
+
+                <div className="flex justify-center mt-auto">
+                  <a href="#booking" className="bg-[#2563eb] hover:bg-blue-700 text-white font-semibold py-2.5 px-10 rounded-full transition-colors text-sm shadow-md hover:shadow-lg">
+                    Book Now
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Tempo Traveller */}
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col border border-gray-100">
+              <div className="relative w-full h-48 sm:h-56 bg-[#e9ebed]">
+                <Image src="/cars/tempo.png" alt="Tempo Traveller" fill className="object-cover transition-transform duration-300 hover:scale-105" />
+              </div>
+              <div className="p-6 flex flex-col flex-grow">
+                <h3 className="text-xl font-bold text-gray-800 text-center mb-6">Tempo Traveller A/C</h3>
+                
+                <div className="border border-gray-100 rounded-lg mb-6 overflow-hidden">
+                  <div className="flex justify-between items-center border-b border-gray-100 px-4 py-3 bg-white hover:bg-gray-50 transition-colors">
+                    <span className="text-gray-600 text-sm">8 - Person</span>
+                    <span className="font-bold text-blue-600">₹ 24,500</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-gray-100 px-4 py-3 bg-white hover:bg-gray-50 transition-colors">
+                    <span className="text-gray-600 text-sm">9 - Person</span>
+                    <span className="font-bold text-blue-600">₹ 25,500</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-gray-100 px-4 py-3 bg-white hover:bg-gray-50 transition-colors">
+                    <span className="text-gray-600 text-sm">10 - Person</span>
+                    <span className="font-bold text-blue-600">₹ 26,500</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-gray-100 px-4 py-3 bg-white hover:bg-gray-50 transition-colors">
+                    <span className="text-gray-600 text-sm">11 - Person</span>
+                    <span className="font-bold text-blue-600">₹ 27,500</span>
+                  </div>
+                  <div className="flex justify-between items-center px-4 py-3 bg-white hover:bg-gray-50 transition-colors">
+                    <span className="text-gray-600 text-sm">12 - Person</span>
+                    <span className="font-bold text-blue-600">₹ 28,500</span>
+                  </div>
+                </div>
+
+                <div className="flex-grow"></div>
+
+                <div className="flex justify-center mt-auto">
+                  <a href="#booking" className="bg-[#2563eb] hover:bg-blue-700 text-white font-semibold py-2.5 px-10 rounded-full transition-colors text-sm shadow-md hover:shadow-lg">
+                    Book Now
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Why Choose Us */}
         <section className="bg-gradient-to-r from-blue-900 to-indigo-900 py-12 md:py-16 text-white mb-12 md:mb-16">
           <div className="container mx-auto px-4">
