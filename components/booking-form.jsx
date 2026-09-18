@@ -339,6 +339,13 @@ export default function BookingForm() {
                 </div>
               </div>
 
+              {/* Driver Bata Notice */}
+              <div className="flex justify-center mt-6 w-full">
+                <p className="text-yellow-700 bg-yellow-50 border border-yellow-200 px-4 py-3 rounded-xl text-sm sm:text-base font-medium shadow-sm w-full text-center">
+                  <span className="font-bold text-yellow-800">Important Note:</span> An additional driver bata of ₹500 is applicable for travel between 10:30 PM and 1:00 PM.
+                </p>
+              </div>
+
               {/* Submit Button */}
               <div className="flex justify-center mt-6 sm:mt-8">
                 <Button

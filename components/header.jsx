@@ -687,7 +687,7 @@ export function Header() {
                   <ChevronDown className={`h-5 w-5 text-blue-600 transition-transform duration-300 ${mobileDropdowns.tirupati ? "rotate-180" : ""}`} />
                 </button>
 
-                <div className={`transition-all duration-500 overflow-hidden ${mobileDropdowns.tirupati ? "max-h-[2000px] opacity-100 mt-3" : "max-h-0 opacity-0"}`}>
+                <div className={`transition-all duration-500 overflow-hidden ${mobileDropdowns.tirupati ? "max-h-[5000px] opacity-100 mt-3" : "max-h-0 opacity-0"}`}>
                   <div className="space-y-4">
                     {/* Chennai Section */}
                     <div className="bg-slate-50 rounded-xl p-3 border border-slate-200">
@@ -842,7 +842,7 @@ export function Header() {
                   <ChevronDown className={`h-5 w-5 text-blue-600 transition-transform duration-300 ${mobileDropdowns.carRental ? "rotate-180" : ""}`} />
                 </button>
 
-                <div className={`transition-all duration-500 overflow-hidden ${mobileDropdowns.carRental ? "max-h-[800px] opacity-100 mt-3" : "max-h-0 opacity-0"}`}>
+                <div className={`transition-all duration-500 overflow-hidden ${mobileDropdowns.carRental ? "max-h-[5000px] opacity-100 mt-3" : "max-h-0 opacity-0"}`}>
                   <div className="space-y-2">
                     {loading ? (
                       <div className="text-center py-6">
@@ -894,7 +894,7 @@ export function Header() {
                   <ChevronDown className={`h-5 w-5 text-blue-600 transition-transform duration-300 ${mobileDropdowns.templeTour ? "rotate-180" : ""}`} />
                 </button>
 
-                <div className={`transition-all duration-500 overflow-hidden ${mobileDropdowns.templeTour ? "max-h-[800px] opacity-100 mt-3" : "max-h-0 opacity-0"}`}>
+                <div className={`transition-all duration-500 overflow-hidden ${mobileDropdowns.templeTour ? "max-h-[5000px] opacity-100 mt-3" : "max-h-0 opacity-0"}`}>
                   <div className="space-y-2">
                     {loading ? (
                       <div className="text-center py-6">
@@ -949,7 +949,7 @@ export function Header() {
                   <ChevronDown className={`h-5 w-5 text-blue-600 transition-transform duration-300 ${mobileDropdowns.more ? "rotate-180" : ""}`} />
                 </button>
 
-                <div className={`transition-all duration-500 overflow-hidden ${mobileDropdowns.more ? "max-h-40 opacity-100 mt-3" : "max-h-0 opacity-0"}`}>
+                <div className={`transition-all duration-500 overflow-hidden ${mobileDropdowns.more ? "max-h-[1000px] opacity-100 mt-3" : "max-h-0 opacity-0"}`}>
                   <div className="space-y-2">
                     <a
                       href="/blog"
