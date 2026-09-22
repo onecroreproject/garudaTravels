@@ -9,8 +9,8 @@ const slides = [
   {
     id: 1,
     image: "/images/slider3.webp",
-    width: 1920,
-    height: 1000,
+    width: 1376,
+    height: 774,
     title: "Temple Tour Packages from Chennai – Book Now",
     description:"Explore divine temples like Tirupati, Rameswaram & Kanchipuram. Garuda offers trusted temple tour packages from Chennai with expert planning.",
     buttonText: "View Packages",
@@ -18,8 +18,8 @@ const slides = [
   {
     id: 2,
     image: "/images/hero2.webp",
-    width: 1920,
-    height: 1000,
+    width: 1376,
+    height: 774,
     title: "Chennai to Tirupati One Day Tour – Fast & Easy",
     description:"Book your Chennai to Tirupati one day package with VIP darshan, smooth travel & quick booking via Garuda.",
     buttonText:"Book 1-Day Trip"
@@ -27,8 +27,8 @@ const slides = [
   {
     id: 3,
     image: "/images/hero1.webp",
-    width: 1920,
-    height: 1000,
+    width: 1376,
+    height: 774,
     title: "Tirupati Darshan Package from Chennai – VIP & Quick",
     description:" Choose Garuda's VIP Tirupati darshan package from Chennai for a peaceful, guided temple visit with fast-track access.",
     buttonText: "Book VIP Darshan",
@@ -60,7 +60,7 @@ export default function HeroSlider() {
   }
   
   return (
-    <section className="relative h-[500px] md:h-[600px] lg:h-[1000px] overflow-hidden">
+    <section className="relative h-[420px] md:h-[520px] lg:h-[600px] overflow-hidden">
       {slides.map((slide, index) => (
         <div
           key={slide.id}
@@ -75,6 +75,7 @@ export default function HeroSlider() {
              fill
              priority   
              sizes="100vw"
+             style={{ objectFit: "cover", objectPosition: "center" }}
              className="object-cover object-center"
               quality={index === 0 ? 90 : 80}
              />
@@ -85,13 +86,12 @@ export default function HeroSlider() {
             <div className="relative z-10 flex items-center justify-center h-full">
               <div className="text-center text-white px-4 max-w-5xl">
           
-                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight drop-shadow-2xl">
-                  {/* <span className="block mb-2">{slide.title.split('–')[0]}</span> */}
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight drop-shadow-2xl">
                   <span className="bg-gradient-to-r from-yellow-300 via-orange-300 to-yellow-300 bg-clip-text text-transparent drop-shadow-lg">
                     { slide.title}
                   </span>
                 </h1>
-                <p className="text-xl md:text-2xl lg:text-3xl mb-10 leading-relaxed opacity-95 drop-shadow-md max-w-4xl mx-auto font-light">
+                <p className="text-base md:text-lg lg:text-xl mb-8 leading-relaxed opacity-95 drop-shadow-md max-w-3xl mx-auto font-light">
                   {slide.description}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

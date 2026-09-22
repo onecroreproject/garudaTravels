@@ -26,15 +26,17 @@ export default function TirupatiPackageHero({ packageData }) {
   }
 
   return (
-    <section className="relative h-[400px] sm:h-[450px] md:h-[500px] overflow-hidden mb-8 sm:mb-12">
+    <section className="relative h-[400px] sm:h-[500px] md:h-[560px] overflow-hidden mb-8 sm:mb-12">
       {/* Image Carousel Background */}
       {images.map((img, index) => (
         <div
           key={img}
-          className={`absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out ${index === currentImageIndex ? "opacity-100" : "opacity-0"
+          className={`absolute inset-0 w-full h-full bg-no-repeat transition-opacity duration-1000 ease-in-out ${index === currentImageIndex ? "opacity-100" : "opacity-0"
             }`}
           style={{
-            backgroundImage: `url("${img}")`
+            backgroundImage: `url("${img}")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center center",
           }}
         />
       ))}
