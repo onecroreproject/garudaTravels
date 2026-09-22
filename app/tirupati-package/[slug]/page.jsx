@@ -561,134 +561,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
           <div className="container mx-auto px-4 py-6">
             <PassengerNoteBox />
 
-            {/* Hardcoded SEO Content for Specific Package */}
-            {SEO_CONTENT_MAP[slug] && (
-              <section className="mb-12 p-4 sm:p-6 md:p-8 bg-blue-50 rounded-2xl border border-blue-100 shadow-sm transition-all hover:shadow-md">
-                <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 sm:mb-6 text-center lg:text-left">
-                  {SEO_CONTENT_MAP[slug].title}
-                </h2>
-                <div className="space-y-4 text-gray-700 leading-relaxed text-base sm:text-lg prose max-w-none">
-                  {SEO_CONTENT_MAP[slug].content.map((para, i) => (
-                    <p key={i} dangerouslySetInnerHTML={{ __html: para }} />
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* Booking Form and Why Choose Us Section - Always 75/25 Layout */}
-            <section id="booking" className="mb-10">
-              <div className="px-2">
-                <div className="flex flex-col lg:flex-row gap-8 items-stretch">
-                  {/* Left Side - Booking Form (75%) */}
-                  <div className="w-full lg:w-3/4 order-1 lg:order-1 border border-gray-200 rounded-lg shadow-lg p-6 bg-white">
-                    <BookingForm />
-                  </div>
-
-                  {/* Right Side - Why Choose Us (25%) */}
-                  <div className="w-full lg:w-1/4 order-2 lg:order-2">
-                    <div className="flex flex-col items-center lg:items-start w-full h-full">
-                      <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-6 text-center lg:text-left">
-                        Why Choose Us
-                      </h2>
-                      <div className="grid grid-cols-1 gap-4 w-full flex-1">
-                        <div className="group relative overflow-hidden bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-blue-300 h-20 flex items-center">
-                          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                          <div className="relative p-4 w-full">
-                            <div className="flex items-center">
-                              <div className="mr-4 flex-shrink-0">
-                                <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
-                                  <ShieldCheck className="h-5 w-5 text-white" />
-                                </div>
-                              </div>
-                              <div className="flex-1">
-                                <h3 className="text-sm lg:text-base font-semibold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 leading-tight">
-                                  Trusted Tirupati Travel Experts
-                                </h3>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="group relative overflow-hidden bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-blue-300 h-20 flex items-center">
-                          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                          <div className="relative p-4 w-full">
-                            <div className="flex items-center">
-                              <div className="mr-4 flex-shrink-0">
-                                <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
-                                  <MapPin className="h-5 w-5 text-white" />
-                                </div>
-                              </div>
-                              <div className="flex-1">
-                                <h3 className="text-sm lg:text-base font-semibold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 leading-tight">
-                                  Door-to-Door Pickup & Drop
-                                </h3>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="group relative overflow-hidden bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-blue-300 h-20 flex items-center">
-                          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                          <div className="relative p-4 w-full">
-                            <div className="flex items-center">
-                              <div className="mr-4 flex-shrink-0">
-                                <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
-                                  <Check className="h-5 w-5 text-white" />
-                                </div>
-                              </div>
-                              <div className="flex-1">
-                                <h3 className="text-sm lg:text-base font-semibold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 leading-tight">
-                                  Confirmed Darshan Tickets
-                                </h3>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="group relative overflow-hidden bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-blue-300 h-20 flex items-center">
-                          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                          <div className="relative p-4 w-full">
-                            <div className="flex items-center">
-                              <div className="mr-4 flex-shrink-0">
-                                <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
-                                  <Wallet className="h-5 w-5 text-white" />
-                                </div>
-                              </div>
-                              <div className="flex-1">
-                                <h3 className="text-sm lg:text-base font-semibold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 leading-tight">
-                                  Affordable & Transparent Pricing
-                                </h3>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* Overview Section */}
-            {packageData.content && (
-              <section className="mb-12 p-6 bg-gray-50 rounded-lg shadow-sm border border-gray-200 text-center">
-                <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">
-                  {packageData.sectionTitles?.overview || "Overview"}
-                </h2>
-                <div
-                  className="prose max-w-none text-gray-700 mx-auto mb-6"
-                  dangerouslySetInnerHTML={{ __html: packageData.content || "" }}
-                />
-                <Button
-                  size="lg"
-                  className="bg-blue-600 hover:bg-blue-700 text-white"
-                >
-                  Call to Book Now
-                </Button>
-              </section>
-            )}
-
-            {packageData.carPrices && packageData.carPrices.length > 0 && (
+                {packageData.carPrices && packageData.carPrices.length > 0 && (
               <section className="mb-12">
                 <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 sm:mb-8 text-center">
                   {packageData.sectionTitles?.carPrices ||
@@ -783,7 +656,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
               </section>
             )}
 
-            {packageData.packagesAndCars &&
+             {packageData.packagesAndCars &&
               packageData.packagesAndCars.length > 0 && (
                 <section className="mb-12">
                   <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-10 text-center">
@@ -1049,6 +922,135 @@ export default async function TirupatiPackageDetailPage({ params }) {
                   )}
                 </section>
               )}
+
+            {/* Hardcoded SEO Content for Specific Package */}
+            {SEO_CONTENT_MAP[slug] && (
+              <section className="mb-12 p-4 sm:p-6 md:p-8 bg-blue-50 rounded-2xl border border-blue-100 shadow-sm transition-all hover:shadow-md">
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 sm:mb-6 text-center lg:text-left">
+                  {SEO_CONTENT_MAP[slug].title}
+                </h2>
+                <div className="space-y-4 text-gray-700 leading-relaxed text-base sm:text-lg prose max-w-none">
+                  {SEO_CONTENT_MAP[slug].content.map((para, i) => (
+                    <p key={i} dangerouslySetInnerHTML={{ __html: para }} />
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Booking Form and Why Choose Us Section - Always 75/25 Layout */}
+            <section id="booking" className="mb-10">
+              <div className="px-2">
+                <div className="flex flex-col lg:flex-row gap-8 items-stretch">
+                  {/* Left Side - Booking Form (75%) */}
+                  <div className="w-full lg:w-3/4 order-1 lg:order-1 border border-gray-200 rounded-lg shadow-lg p-6 bg-white">
+                    <BookingForm />
+                  </div>
+
+                  {/* Right Side - Why Choose Us (25%) */}
+                  <div className="w-full lg:w-1/4 order-2 lg:order-2">
+                    <div className="flex flex-col items-center lg:items-start w-full h-full">
+                      <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-6 text-center lg:text-left">
+                        Why Choose Us
+                      </h2>
+                      <div className="grid grid-cols-1 gap-4 w-full flex-1">
+                        <div className="group relative overflow-hidden bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-blue-300 h-20 flex items-center">
+                          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                          <div className="relative p-4 w-full">
+                            <div className="flex items-center">
+                              <div className="mr-4 flex-shrink-0">
+                                <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                                  <ShieldCheck className="h-5 w-5 text-white" />
+                                </div>
+                              </div>
+                              <div className="flex-1">
+                                <h3 className="text-sm lg:text-base font-semibold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 leading-tight">
+                                  Trusted Tirupati Travel Experts
+                                </h3>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="group relative overflow-hidden bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-blue-300 h-20 flex items-center">
+                          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                          <div className="relative p-4 w-full">
+                            <div className="flex items-center">
+                              <div className="mr-4 flex-shrink-0">
+                                <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                                  <MapPin className="h-5 w-5 text-white" />
+                                </div>
+                              </div>
+                              <div className="flex-1">
+                                <h3 className="text-sm lg:text-base font-semibold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 leading-tight">
+                                  Door-to-Door Pickup & Drop
+                                </h3>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="group relative overflow-hidden bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-blue-300 h-20 flex items-center">
+                          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                          <div className="relative p-4 w-full">
+                            <div className="flex items-center">
+                              <div className="mr-4 flex-shrink-0">
+                                <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                                  <Check className="h-5 w-5 text-white" />
+                                </div>
+                              </div>
+                              <div className="flex-1">
+                                <h3 className="text-sm lg:text-base font-semibold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 leading-tight">
+                                  Confirmed Darshan Tickets
+                                </h3>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="group relative overflow-hidden bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg border border-blue-100 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-blue-300 h-20 flex items-center">
+                          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                          <div className="relative p-4 w-full">
+                            <div className="flex items-center">
+                              <div className="mr-4 flex-shrink-0">
+                                <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                                  <Wallet className="h-5 w-5 text-white" />
+                                </div>
+                              </div>
+                              <div className="flex-1">
+                                <h3 className="text-sm lg:text-base font-semibold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 leading-tight">
+                                  Affordable & Transparent Pricing
+                                </h3>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Overview Section */}
+            {packageData.content && (
+              <section className="mb-12 p-6 bg-gray-50 rounded-lg shadow-sm border border-gray-200 text-center">
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">
+                  {packageData.sectionTitles?.overview || "Overview"}
+                </h2>
+                <div
+                  className="prose max-w-none text-gray-700 mx-auto mb-6"
+                  dangerouslySetInnerHTML={{ __html: packageData.content || "" }}
+                />
+                <Button
+                  size="lg"
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  Call to Book Now
+                </Button>
+              </section>
+            )}
+
+           
 
             {/* Special Notes To the Pilgrim Section */}
             <section className="mb-8">

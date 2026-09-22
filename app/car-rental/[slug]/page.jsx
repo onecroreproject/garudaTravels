@@ -187,9 +187,9 @@ export default async function CarRentalPage({ params }) {
                 Home
               </Link>
               <ChevronRight className="w-4 h-4 text-gray-400" />
-              <Link href="/car-rental" className="hover:underline text-gray-700 font-medium">
+              <span className="text-gray-700 font-medium">
                 Car Rental
-              </Link>
+              </span>
               <ChevronRight className="w-4 h-4 text-gray-400" />
               <span className="text-gray-700 font-medium">{packageData.title}</span>
             </nav>
