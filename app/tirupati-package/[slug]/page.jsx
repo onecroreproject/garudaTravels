@@ -562,7 +562,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
             <PassengerNoteBox />
 
                 {packageData.carPrices && packageData.carPrices.length > 0 && (
-              <section className="mb-12">
+              <section className="mt-16 sm:mt-20 mb-12">
                 <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 sm:mb-8 text-center">
                   {packageData.sectionTitles?.carPrices ||
                     "Package Price Details"}
@@ -658,7 +658,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
 
              {packageData.packagesAndCars &&
               packageData.packagesAndCars.length > 0 && (
-                <section className="mb-12">
+                <section className="mt-16 sm:mt-20 mb-12">
                   <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-10 text-center">
                     {packageData.sectionTitles?.packagesAndCars ||
                       "Packages & Cars"}
@@ -735,7 +735,7 @@ export default async function TirupatiPackageDetailPage({ params }) {
               packageData.cars ||
               packageData.additionalPackages ||
               packageData.carTypes) && (
-                <section className="mb-12">
+                <section className="mt-16 sm:mt-20 mb-12">
                   <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-8 text-center">
                     {packageData.sectionTitles?.packagesAndCars ||
                       "Available Packages & Cars"}
