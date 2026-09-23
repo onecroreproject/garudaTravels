@@ -62,122 +62,7 @@ export default function NRIDarshanPage() {
           </div>
         </section>
 
-        {/* Mandatory Requirements Section */}
-        <section className="container mx-auto px-4 mb-12 md:mb-16">
-          <div className="text-center mb-8 md:mb-10">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4">Mandatory Requirements for NRIs</h2>
-            <p className="text-base sm:text-lg text-gray-600 text-center max-w-3xl mx-auto px-4">
-              Please ensure you have these essential documents ready before your visit to facilitate a smooth entry process.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <div className="bg-white rounded-2xl p-6 shadow-lg border-t-4 border-blue-500 hover:shadow-xl transition-shadow">
-              <div className="relative h-64 w-full mb-6 rounded-xl overflow-hidden">
-                <Image src="/images/nri-passport.jpg" alt="Valid Passport Requirement" fill className="object-cover" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-3 text-center">Valid Passport</h3>
-              <p className="text-gray-600 text-center leading-relaxed">
-                A current, valid passport is absolutely mandatory for all NRI citizens looking to utilize the special darshan privileges. Please verify that your passport remains valid throughout your entire trip to India.
-              </p>
-            </div>
-            
-            <div className="bg-white rounded-2xl p-6 shadow-lg border-t-4 border-purple-500 hover:shadow-xl transition-shadow">
-              <div className="relative h-64 w-full mb-6 rounded-xl overflow-hidden">
-                <Image src="/images/nri-ocr.jpg" alt="NRI Status Proof" fill className="object-cover" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-3 text-center">Proof of NRI Status</h3>
-              <p className="text-gray-600 text-center leading-relaxed">
-                You will be required to present official documentation validating your NRI or foreign national status. Ensure you carry your valid overseas visa, OCI (Overseas Citizen of India), or PIO card during the registration and entry process.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Dress Code Section */}
-        <section className="bg-white/80 py-12 md:py-16 mb-12 md:mb-16">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-8 md:mb-10">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4">Traditional Dress Code</h2>
-              <p className="text-base sm:text-lg text-gray-600 text-center max-w-3xl mx-auto px-4">
-                To preserve the sanctity and traditions of the Tirumala temple, TTD strictly enforces a traditional dress code for all devotees, including NRIs.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              <div className="bg-blue-50 rounded-2xl p-6 flex flex-col items-center text-center shadow-md">
-                <div className="relative h-48 w-48 mb-4 rounded-full overflow-hidden shadow-inner border-4 border-white">
-                  <Image src="/images/nri-male.jpg" alt="Male Dress Code" fill className="object-contain bg-white" />
-                </div>
-                <h3 className="text-xl font-bold text-blue-900 mb-2">Gentlemen</h3>
-                <p className="text-blue-800 font-medium">Dhoti, Kurta-Pajama, or Formal Shirt with Pancha.</p>
-                <p className="text-sm text-blue-600 mt-2">No jeans, shorts, or t-shirts permitted.</p>
-              </div>
-
-              <div className="bg-pink-50 rounded-2xl p-6 flex flex-col items-center text-center shadow-md">
-                <div className="relative h-48 w-48 mb-4 rounded-full overflow-hidden shadow-inner border-4 border-white">
-                  <Image src="/images/nri-female.jpg" alt="Female Dress Code" fill className="object-contain bg-white" />
-                </div>
-                <h3 className="text-xl font-bold text-pink-900 mb-2">Ladies</h3>
-                <p className="text-pink-800 font-medium">Saree, Half-Saree, or Chudidar/Salwar Kameez with Dupatta.</p>
-                <p className="text-sm text-pink-600 mt-2">Western wear is strictly prohibited.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Exclusive Privileges Section */}
-        <section className="container mx-auto px-4 mb-12 md:mb-16">
-          <div className="text-center mb-8 md:mb-10">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4">Special Privileges for Overseas Devotees</h2>
-            <p className="text-base sm:text-lg text-gray-600 text-center max-w-3xl mx-auto px-4">
-              Discover the dedicated arrangements made to ensure your spiritual journey is peaceful and accommodating.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                title: "Priority Entry Queue",
-                desc: "Bypass the general crowds through a specifically designated entry point (Supadam) reserved for NRIs and special ticket holders, dramatically reducing wait times.",
-                icon: "🚪",
-              },
-              {
-                title: "Dedicated Time Slots",
-                desc: "Specific, optimized darshan timings are allocated for NRI visitors, offering a more serene and unhurried experience with the deity.",
-                icon: "⏱️",
-              },
-              {
-                title: "Seva Opportunities",
-                desc: "Gain exclusive access to participate in unique temple rituals and sacred sevas, deepening your spiritual connection during your pilgrimage.",
-                icon: "🙏",
-              },
-              {
-                title: "Multilingual Support",
-                desc: "Overcome language barriers with assistance desks strategically placed to help you understand the rich history and traditions of the temple.",
-                icon: "🗣️",
-              },
-              {
-                title: "Guidance Kiosks",
-                desc: "Dedicated help desks are available to quickly resolve inquiries regarding accommodations, seva bookings, and darshan procedures.",
-                icon: "ℹ️",
-              },
-              {
-                title: "Accessible Facilities",
-                desc: "The temple infrastructure includes ramps, elevators, and battery cars to ensure a comfortable visit for elderly devotees and those with mobility challenges.",
-                icon: "♿",
-              },
-            ].map((feature, idx) => (
-              <div key={idx} className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100">
-                <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">{feature.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{feature.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Pricing Section */}
+  {/* Pricing Section */}
         <section className="container mx-auto px-4 mb-12 md:mb-16">
           <div className="text-center mb-8 md:mb-10">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4">Package Pricing</h2>
@@ -337,6 +222,121 @@ export default function NRIDarshanPage() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+        
+        {/* Mandatory Requirements Section */}
+        <section className="container mx-auto px-4 mb-12 md:mb-16">
+          <div className="text-center mb-8 md:mb-10">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4">Mandatory Requirements for NRIs</h2>
+            <p className="text-base sm:text-lg text-gray-600 text-center max-w-3xl mx-auto px-4">
+              Please ensure you have these essential documents ready before your visit to facilitate a smooth entry process.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div className="bg-white rounded-2xl p-6 shadow-lg border-t-4 border-blue-500 hover:shadow-xl transition-shadow">
+              <div className="relative h-64 w-full mb-6 rounded-xl overflow-hidden">
+                <Image src="/images/nri-passport.jpg" alt="Valid Passport Requirement" fill className="object-cover" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-3 text-center">Valid Passport</h3>
+              <p className="text-gray-600 text-center leading-relaxed">
+                A current, valid passport is absolutely mandatory for all NRI citizens looking to utilize the special darshan privileges. Please verify that your passport remains valid throughout your entire trip to India.
+              </p>
+            </div>
+            
+            <div className="bg-white rounded-2xl p-6 shadow-lg border-t-4 border-purple-500 hover:shadow-xl transition-shadow">
+              <div className="relative h-64 w-full mb-6 rounded-xl overflow-hidden">
+                <Image src="/images/nri-ocr.jpg" alt="NRI Status Proof" fill className="object-cover" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-3 text-center">Proof of NRI Status</h3>
+              <p className="text-gray-600 text-center leading-relaxed">
+                You will be required to present official documentation validating your NRI or foreign national status. Ensure you carry your valid overseas visa, OCI (Overseas Citizen of India), or PIO card during the registration and entry process.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Dress Code Section */}
+        <section className="bg-white/80 py-12 md:py-16 mb-12 md:mb-16">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-8 md:mb-10">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4">Traditional Dress Code</h2>
+              <p className="text-base sm:text-lg text-gray-600 text-center max-w-3xl mx-auto px-4">
+                To preserve the sanctity and traditions of the Tirumala temple, TTD strictly enforces a traditional dress code for all devotees, including NRIs.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              <div className="bg-blue-50 rounded-2xl p-6 flex flex-col items-center text-center shadow-md">
+                <div className="relative h-48 w-48 mb-4 rounded-full overflow-hidden shadow-inner border-4 border-white">
+                  <Image src="/images/nri-male.jpg" alt="Male Dress Code" fill className="object-contain bg-white" />
+                </div>
+                <h3 className="text-xl font-bold text-blue-900 mb-2">Gentlemen</h3>
+                <p className="text-blue-800 font-medium">Dhoti, Kurta-Pajama, or Formal Shirt with Pancha.</p>
+                <p className="text-sm text-blue-600 mt-2">No jeans, shorts, or t-shirts permitted.</p>
+              </div>
+
+              <div className="bg-pink-50 rounded-2xl p-6 flex flex-col items-center text-center shadow-md">
+                <div className="relative h-48 w-48 mb-4 rounded-full overflow-hidden shadow-inner border-4 border-white">
+                  <Image src="/images/nri-female.jpg" alt="Female Dress Code" fill className="object-contain bg-white" />
+                </div>
+                <h3 className="text-xl font-bold text-pink-900 mb-2">Ladies</h3>
+                <p className="text-pink-800 font-medium">Saree, Half-Saree, or Chudidar/Salwar Kameez with Dupatta.</p>
+                <p className="text-sm text-pink-600 mt-2">Western wear is strictly prohibited.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Exclusive Privileges Section */}
+        <section className="container mx-auto px-4 mb-12 md:mb-16">
+          <div className="text-center mb-8 md:mb-10">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4">Special Privileges for Overseas Devotees</h2>
+            <p className="text-base sm:text-lg text-gray-600 text-center max-w-3xl mx-auto px-4">
+              Discover the dedicated arrangements made to ensure your spiritual journey is peaceful and accommodating.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              {
+                title: "Priority Entry Queue",
+                desc: "Bypass the general crowds through a specifically designated entry point (Supadam) reserved for NRIs and special ticket holders, dramatically reducing wait times.",
+                icon: "🚪",
+              },
+              {
+                title: "Dedicated Time Slots",
+                desc: "Specific, optimized darshan timings are allocated for NRI visitors, offering a more serene and unhurried experience with the deity.",
+                icon: "⏱️",
+              },
+              {
+                title: "Seva Opportunities",
+                desc: "Gain exclusive access to participate in unique temple rituals and sacred sevas, deepening your spiritual connection during your pilgrimage.",
+                icon: "🙏",
+              },
+              {
+                title: "Multilingual Support",
+                desc: "Overcome language barriers with assistance desks strategically placed to help you understand the rich history and traditions of the temple.",
+                icon: "🗣️",
+              },
+              {
+                title: "Guidance Kiosks",
+                desc: "Dedicated help desks are available to quickly resolve inquiries regarding accommodations, seva bookings, and darshan procedures.",
+                icon: "ℹ️",
+              },
+              {
+                title: "Accessible Facilities",
+                desc: "The temple infrastructure includes ramps, elevators, and battery cars to ensure a comfortable visit for elderly devotees and those with mobility challenges.",
+                icon: "♿",
+              },
+            ].map((feature, idx) => (
+              <div key={idx} className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100">
+                <div className="text-4xl mb-4">{feature.icon}</div>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">{feature.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{feature.desc}</p>
+              </div>
+            ))}
           </div>
         </section>
 
