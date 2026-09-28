@@ -27,7 +27,7 @@ export default function NRIDarshanPage() {
 
       <main className="pt-20 md:pt-24 lg:pt-28 pb-16">
         {/* Hero Section */}
-        <section className="container mx-auto px-4 mb-12 md:mb-16 mt-4 md:mt-8">
+        <section className="container mx-auto px-4 mt-4 md:mt-8">
           <div className="bg-white/60 backdrop-blur-md rounded-3xl shadow-xl overflow-hidden border border-white">
             <div className="flex flex-col lg:flex-row items-center">
               <div className="p-8 md:p-12 lg:w-1/2">
@@ -48,19 +48,24 @@ export default function NRIDarshanPage() {
                   Book Your Darshan
                 </a>
               </div>
-              <div className="lg:w-1/2 p-4">
-                <div className="relative h-[400px] w-full rounded-2xl overflow-hidden shadow-2xl">
+              <div className="w-full lg:w-1/2 px-6 pb-8 md:p-12 lg:p-12 lg:pl-4">
+                <div className="relative h-[300px] sm:h-[400px] w-full">
                   <Image
-                    src="/images/nri-hero.jpg"
+                    src="/images/nri-hero.webp"
                     alt="NRI Darshan Tirumala"
                     fill
-                    className="object-cover"
+                    priority
+                    unoptimized
+                    className="object-contain drop-shadow-xl"
                   />
                 </div>
               </div>
             </div>
           </div>
         </section>
+
+        {/* Explicit Spacer */}
+        <div className="w-full h-8 md:h-12" aria-hidden="true"></div>
 
   {/* Pricing Section */}
         <section className="container mx-auto px-4 mb-12 md:mb-16">
@@ -73,7 +78,7 @@ export default function NRIDarshanPage() {
               <h4 className="font-bold text-blue-900 mb-2 text-lg">Package Inclusions:</h4>
               <p className="text-blue-800 text-sm md:text-base leading-relaxed">
                 Breakfast, Lunch, Darshan Ticket, Driver Bata, Toll, Parking, and Permit charges are all included. <br/>
-                <span className="font-semibold inline-block mt-2">Temples Covered:</span> Padmavathi Temple and Balaji Temple. (Visiting other temples will incur additional charges).
+                <span className="font-semibold inline-block mt-2">Temples Covered:</span> Padmavathi Temple and Balaji Temple. (Visiting other temples will include additional charges).
               </p>
             </div>
           </div>
@@ -237,7 +242,7 @@ export default function NRIDarshanPage() {
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             <div className="bg-white rounded-2xl p-6 shadow-lg border-t-4 border-blue-500 hover:shadow-xl transition-shadow">
               <div className="relative h-64 w-full mb-6 rounded-xl overflow-hidden">
-                <Image src="/images/nri-passport.jpg" alt="Valid Passport Requirement" fill className="object-cover" />
+                <Image src="/images/nri-passport.webp" alt="Valid Passport Requirement" fill className="object-cover" />
               </div>
               <h3 className="text-2xl font-bold text-gray-800 mb-3 text-center">Valid Passport</h3>
               <p className="text-gray-600 text-center leading-relaxed">
@@ -247,7 +252,7 @@ export default function NRIDarshanPage() {
             
             <div className="bg-white rounded-2xl p-6 shadow-lg border-t-4 border-purple-500 hover:shadow-xl transition-shadow">
               <div className="relative h-64 w-full mb-6 rounded-xl overflow-hidden">
-                <Image src="/images/nri-ocr.jpg" alt="NRI Status Proof" fill className="object-cover" />
+                <Image src="/images/nri-ocr.webp" alt="NRI Status Proof" fill className="object-cover" />
               </div>
               <h3 className="text-2xl font-bold text-gray-800 mb-3 text-center">Proof of NRI Status</h3>
               <p className="text-gray-600 text-center leading-relaxed">
@@ -270,7 +275,7 @@ export default function NRIDarshanPage() {
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               <div className="bg-blue-50 rounded-2xl p-6 flex flex-col items-center text-center shadow-md">
                 <div className="relative h-48 w-48 mb-4 rounded-full overflow-hidden shadow-inner border-4 border-white">
-                  <Image src="/images/nri-male.jpg" alt="Male Dress Code" fill className="object-contain bg-white" />
+                  <Image src="/images/nri-male.webp" alt="Male Dress Code" fill className="object-contain bg-white" />
                 </div>
                 <h3 className="text-xl font-bold text-blue-900 mb-2">Gentlemen</h3>
                 <p className="text-blue-800 font-medium">Dhoti, Kurta-Pajama, or Formal Shirt with Pancha.</p>
@@ -279,7 +284,7 @@ export default function NRIDarshanPage() {
 
               <div className="bg-pink-50 rounded-2xl p-6 flex flex-col items-center text-center shadow-md">
                 <div className="relative h-48 w-48 mb-4 rounded-full overflow-hidden shadow-inner border-4 border-white">
-                  <Image src="/images/nri-female.jpg" alt="Female Dress Code" fill className="object-contain bg-white" />
+                  <Image src="/images/nri-female.webp" alt="Female Dress Code" fill className="object-contain bg-white" />
                 </div>
                 <h3 className="text-xl font-bold text-pink-900 mb-2">Ladies</h3>
                 <p className="text-pink-800 font-medium">Saree, Half-Saree, or Chudidar/Salwar Kameez with Dupatta.</p>
