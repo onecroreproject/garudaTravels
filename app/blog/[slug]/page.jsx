@@ -12,8 +12,9 @@ export async function generateMetadata({ params }) {
     if (!post) return { title: "Blog Not Found" }
 
     return {
-        title: `${post.title} | Garuda Tours & Travels`,
-        description: post.excerpt,
+        title: post.metaTitle ? `${post.metaTitle} | Garuda Tours & Travels` : `${post.title} | Garuda Tours & Travels`,
+        description: post.metaDescription || post.excerpt,
+        keywords: post.keyword || undefined,
         alternates: {
             canonical: `/blog/${slug}`,
         },
@@ -53,8 +54,14 @@ export default async function BlogDetailPage({ params }) {
                             <div className="flex items-center space-x-6 text-sm text-gray-500">
                                 <div className="flex items-center">
                                     <MapPin className="h-3.5 w-3.5 mr-1.5" />
-                                    Kanchipuram, TN
+                                    {post.location || (post.slug.includes('bangalore') ? 'Bangalore / Tirupati' : 'Chennai / Tirupati')}
                                 </div>
+                                {post.date && (
+                                    <div className="flex items-center">
+                                        <Calendar className="h-3.5 w-3.5 mr-1.5" />
+                                        {post.date}
+                                    </div>
+                                )}
                             </div>
                         </header>
 

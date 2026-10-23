@@ -43,6 +43,10 @@ export default function BlogListPage() {
                                 </div>
 
                                 <div className="p-5">
+                                    <div className="flex items-center text-xs text-gray-400 mb-2 font-medium">
+                                        <Calendar className="h-3.5 w-3.5 mr-1 text-gray-400" />
+                                        {post.date || "February 2026"}
+                                    </div>
                                     <h2 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
                                         {post.title}
                                     </h2>
