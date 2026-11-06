@@ -88,6 +88,41 @@ const nextConfig = withBundleAnalyzer({
         permanent: true,
       },
       {
+        source: '/bangalore-tirupati-darshan-tour-package.php',
+        destination: '/tirupati-package/bangalore-tirupati-darshan-tour-package',
+        permanent: true,
+      },
+      {
+        source: '/chennai-tirupati-car-rental-package.php',
+        destination: '/tirupati-package/chennai-tirupati-car-rental-package',
+        permanent: true,
+      },
+      {
+        source: '/chennai-tiruvannamalai-temple-package.php',
+        destination: '/temple-tour-package/chennai-tiruvannamalai-temple-package',
+        permanent: true,
+      },
+      {
+        source: '/chennai-tiruvannamalai-temple-package',
+        destination: '/temple-tour-package/chennai-tiruvannamalai-temple-package',
+        permanent: true,
+      },
+      {
+        source: '/chennai-mahabalipuram-outstation-package.php',
+        destination: '/temple-tour-package/chennai-mahabalipuram-oneday-package',
+        permanent: true,
+      },
+      {
+        source: '/chennai-mahabalipuram-outstation-package',
+        destination: '/temple-tour-package/chennai-mahabalipuram-oneday-package',
+        permanent: true,
+      },
+      {
+        source: '/app/favicon.ico',
+        destination: '/favicon.ico',
+        permanent: true,
+      },
+      {
         source: '/chennai-vellore-outstation-trip.php',
         destination: '/temple-tour-package/chennai-vellore-temple-package',
         permanent: true,

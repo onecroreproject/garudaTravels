@@ -31,7 +31,7 @@ export const metadata = {
     google: 'Nfags19ti-cL6zIaPs3sbTnY2XNHjkQ-igEgEz8XafI',
   },
   icons: {
-    icon: '/app/favicon.ico',
+    icon: '/favicon.ico',
   },
 }
 
