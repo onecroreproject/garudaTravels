@@ -1,7 +1,11 @@
 User-agent: *
 Allow: /
 
+# Prevent search queries and unparsed parameter templates from wasting crawl budget
+Disallow: /*?s=*
+Disallow: /*?*search_term_string*
+
 Disallow: /private
 Disallow: /admin
 
-Sitemap: https://garudatoursandtravels.com/sitemap.xml
+Sitemap: https://www.garudatoursandtravels.com/sitemap.xml

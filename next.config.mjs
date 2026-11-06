@@ -32,6 +32,17 @@ const nextConfig = withBundleAnalyzer({
   async redirects() {
     return [
       {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'garudatoursandtravels.com',
+          },
+        ],
+        destination: 'https://www.garudatoursandtravels.com/:path*',
+        permanent: true,
+      },
+      {
         source: '/vellore-tirupati-two-days-tour-package',
         destination: '/tirupati-package/vellore-to-tirupati',
         permanent: true,
@@ -92,6 +103,41 @@ const nextConfig = withBundleAnalyzer({
         permanent: true,
       },
       {
+        source: '/kanchipuram-tirupati-one-day-tour-package.php',
+        destination: '/tirupati-package/kanchipuram-tirupati-one-day-tour-package',
+        permanent: true,
+      },
+      {
+        source: '/chennai-palani-temple-package',
+        destination: '/temple-tour-package/chennai-kodaikanal-palani-temple-tour-package',
+        permanent: true,
+      },
+      {
+        source: '/chennai-pondicherry-outstation-tour',
+        destination: '/temple-tour-package/chennai-pondicherry-temple-tour-package',
+        permanent: true,
+      },
+      {
+        source: '/chennai-vellore-temple-package',
+        destination: '/temple-tour-package/chennai-vellore-temple-package',
+        permanent: true,
+      },
+      {
+        source: '/chennai-kanyakumari-temple-package',
+        destination: '/temple-tour-package/chennai-kanyakumari-temple-tour-package',
+        permanent: true,
+      },
+      {
+        source: '/chennai-madurai-temple-package',
+        destination: '/temple-tour-package/chennai-madurai-temple-package',
+        permanent: true,
+      },
+      {
+        source: '/chennai-pondicherry-temple-package',
+        destination: '/temple-tour-package/chennai-pondicherry-temple-package',
+        permanent: true,
+      },
+      {
         source: '/chennai-tirupati-car-rental-package',
         destination: '/tirupati-package/chennai-tirupati-car-rental-package',
         permanent: true,
@@ -121,6 +167,15 @@ const nextConfig = withBundleAnalyzer({
 
   async headers() {
     return [
+      {
+        source: '/_next/static/media/(.*)',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex',
+          },
+        ],
+      },
       {
         source: '/(.*)',
         headers: [

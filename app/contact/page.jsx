@@ -12,6 +12,9 @@ export const metadata = {
   title: "Garuda Tours & Travels | Contact Us Chennai",
   description:
     "Get in touch with Garuda Tours & Travels in Chennai for Tirupati and temple tour bookings, enquiries, phone, email and office address with hours of operation.",
+  alternates: {
+    canonical: "/contact",
+  },
 };
 
 export default function ContactPage() {

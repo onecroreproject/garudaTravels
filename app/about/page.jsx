@@ -4,6 +4,9 @@ export const metadata = {
     title: "Garuda Tours & Travels – About Our Temple Journeys",
     description:
         "Learn about Garuda Tours & Travels, specialists in Chennai to Tirupati & South India temple tour packages with expert planning, safety, and devotion for every trip.",
+    alternates: {
+        canonical: "/about",
+    },
 };
 
 export default function Page() {

@@ -5,6 +5,9 @@ export const metadata = {
   title: "Privacy Policy | Garuda Tours and Travels",
   description:
     "Learn how Garuda Tours and Travels collects, uses, and protects your personal information. Read our Privacy Policy.",
+  alternates: {
+    canonical: "/privacy-policy",
+  },
 }
 
 const sections = [
