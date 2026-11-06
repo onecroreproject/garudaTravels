@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
 
 export default function page() {
-  redirect("/tirupati-package/kanchipuram-tirupati-two-days-tour-package");
+  permanentRedirect("/tirupati-package/srivani-vip-break-darshan");
 }

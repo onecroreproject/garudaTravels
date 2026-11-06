@@ -133,6 +133,21 @@ const nextConfig = withBundleAnalyzer({
         permanent: true,
       },
       {
+        source: '/vellore-tirupati-one-day-tour-package',
+        destination: '/tirupati-package/vellore-tirupati-one-day-tour-package',
+        permanent: true,
+      },
+      {
+        source: '/tirupati-balaji-srivani-vip-break-darshan',
+        destination: '/tirupati-package/srivani-vip-break-darshan',
+        permanent: true,
+      },
+      {
+        source: '/kilometer-basis-car-rental-from-chennai',
+        destination: '/tirupati-package/chennai-tirupati-one-day-tour-package',
+        permanent: true,
+      },
+      {
         source: '/kanchipuram-tirupati-one-day-tour-package',
         destination: '/tirupati-package/kanchipuram-tirupati-one-day-tour-package',
         permanent: true,
