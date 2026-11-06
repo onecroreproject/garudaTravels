@@ -60,13 +60,34 @@ export default async function BlogDetailPage({ params }) {
         ],
     }
 
+    const fullImageUrl = post.image
+        ? (post.image.startsWith('http') ? post.image : `https://www.garudatoursandtravels.com${post.image}`)
+        : undefined
+
+    let publishedDate = new Date().toISOString()
+    try {
+        if (post.date) {
+            const parsed = new Date(post.date)
+            if (!isNaN(parsed.getTime())) {
+                publishedDate = parsed.toISOString()
+            }
+        }
+    } catch (e) {}
+
     const articleSchema = {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "headline": post.title,
         "description": post.metaDescription || post.excerpt,
-        "image": post.image ? [post.image] : undefined,
+        "image": fullImageUrl ? [fullImageUrl] : undefined,
         "url": `https://www.garudatoursandtravels.com/blog/${slug}`,
+        "datePublished": publishedDate,
+        "dateModified": new Date().toISOString(),
+        "author": {
+            "@type": "Organization",
+            "name": "Garuda Tours & Travels",
+            "url": "https://www.garudatoursandtravels.com",
+        },
         "publisher": {
             "@type": "Organization",
             "name": "Garuda Tours & Travels",
